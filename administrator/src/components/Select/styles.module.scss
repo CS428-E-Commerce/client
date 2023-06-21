@@ -1,0 +1,14 @@
+.root {
+  text-align: left;
+  &[class~="has-danger"] {
+    &::after {
+      display: none;
+    }
+  }
+}
+
+.errorMessage {
+  margin: 6px 0 0 6px;
+  font-size: 14px;
+  color: var(--danger);
+}

@@ -1,0 +1,23 @@
+.textareaContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.textarea {
+  border-radius: 6px;
+  background-color: var(--background);
+  width: 100%;
+  height: 167px;
+  border: none;
+  &:focus {
+    outline: none;
+  }
+}
+
+.errorMessage {
+  margin: 6px 0 0 6px;
+  font-size: 14px;
+  color: var(--danger);
+}

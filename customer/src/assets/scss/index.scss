@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "./fonts.scss";
+@import "./config.scss";
+
+:root {
+  --black: #18213a;
+  --white: #ffffff;
+  --background: #f6f6f6;
+  --subtext: #6d7588;
+  --border: #cccfd6;
+  --purple: #4f43e0;
+  --code: #407bff;
+  --gray: #888888;
+  --lightGray: #e5e5e5;
+  --searchInputBackground: #473dc2;
+  --hoverPurple: #473dc21c;
+  --hoverPurpleLight: #7266f0;
+  --danger: #ff0000;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0 !important;
+  overflow-x: hidden !important;
+  font-family: "Apercu Pro", sans-serif;
+  font-size: 16px;
+  color: var(--black);
+  background-color: var(--background);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  ::-webkit-scrollbar-track {
+    -webkit-box-shadow: none;
+    border-radius: 6px;
+    background-color: transparent;
+  }
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 4px;
+    border-radius: 6px;
+    background-color: var(--background);
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 6px;
+    -webkit-box-shadow: none;
+    background: var(--gray);
+  }
+}
