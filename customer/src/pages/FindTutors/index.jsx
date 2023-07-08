@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useState } from "react";
 import classes from "./styles.module.scss";
 import Select from "components/Select";
 import {
@@ -12,8 +12,14 @@ import {
 } from "assets/images/icons";
 import mockupAvatarImg from "assets/images/mockup-avatars/albert-dera.jpg";
 import { Pagination } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { push } from "connected-react-router";
 
 const FindTutorsPage = memo(() => {
+  const dispatch = useDispatch();
+
+  const [page, setPage] = useState(1);
+
   return (
     <div className={classes.container}>
       <div className={classes.main}>
@@ -35,7 +41,13 @@ const FindTutorsPage = memo(() => {
         <div className={classes.tutorList}>
           {[...Array(12)]?.map((_, index) => {
             return (
-              <div className={classes.tutorContainer} key={index}>
+              <div
+                className={classes.tutorContainer}
+                key={index}
+                onClick={() => {
+                  dispatch(push(`/tutor-profile`));
+                }}
+              >
                 <p className={classes.price}>
                   <b>~$6</b> / class
                 </p>
@@ -77,13 +89,13 @@ const FindTutorsPage = memo(() => {
         </div>
 
         <Pagination
-            count={12}
-            page={1}
-            // onChange={(_, value) => {
-            //   setPage(value);
-            // }}
-            className={classes.pagination}
-          />
+          count={12}
+          page={page}
+          onChange={(_, value) => {
+            setPage(value);
+          }}
+          className={classes.pagination}
+        />
       </div>
     </div>
   );

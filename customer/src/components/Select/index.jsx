@@ -117,6 +117,7 @@ const Select = memo(
             render={({ field }) => (
               <ReactSelect
                 {...field}
+                isSearchable={false}
                 styles={{ ...customStyles, ...styles }}
                 menuPortalTarget={document.querySelector("body")}
                 getOptionValue={option => option[bindKey || "value"]}
@@ -129,6 +130,7 @@ const Select = memo(
           />
         ) : (
           <ReactSelect
+            isSearchable={false}
             styles={{ ...customStyles, ...styles }}
             menuPortalTarget={document.querySelector("body")}
             getOptionValue={option => option[bindKey || "value"]}
