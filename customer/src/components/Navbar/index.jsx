@@ -26,7 +26,7 @@ const Navbar = memo(() => {
       >
         <ul className={classes.navbarContent}>
           <li className={classes.navItem}>
-            <NavLink to="/" className={classes.navLink}>
+            <NavLink to="/find-tutors" className={classes.navLink}>
               Find tutors
             </NavLink>
           </li>

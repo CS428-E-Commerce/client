@@ -1,0 +1,128 @@
+@import "assets/scss/media-query.scss";
+
+.container {
+  width: 100%;
+}
+
+.main {
+  padding: clamp(16px, 6vw, 88px) 0;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: normal;
+  margin-bottom: 12px;
+}
+
+.filterContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 24px 32px;
+  margin-bottom: 24px;
+}
+
+.tutorList {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  margin-bottom: 48px;
+  .tutorContainer {
+    width: 272px;
+    padding: 12px 16px 24px;
+    border: 1px solid #000000;
+    .price {
+      text-align: right;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 160%;
+      margin-bottom: 7px;
+    }
+    .avatar {
+      width: 128px;
+      height: 128px;
+      object-position: center;
+      object-fit: cover;
+      margin: auto;
+      border-radius: 128px;
+      margin-bottom: 12px;
+    }
+    .name {
+      text-align: center;
+      font-size: 24px;
+      font-weight: 700;
+      line-height: normal;
+      margin-bottom: 0;
+    }
+    .info {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      margin-bottom: 4px;
+      > span {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 160%;
+      }
+    }
+    .role {
+      text-align: center;
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 160%;
+      margin-bottom: 8px;
+    }
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      > div {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 160%;
+        padding: 4px 12px;
+        border-radius: 4px;
+        color: #efefef;
+        background-color: #007bff;
+      }
+    }
+    .description {
+      text-align: center;
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 150%;
+      margin-bottom: 24px;
+    }
+    .horizontalLine {
+      height: 1px;
+      width: 170px;
+      background-color: #dae3ea;
+      margin: auto;
+      margin-bottom: 16px;
+    }
+    .viewProfileButton {
+      text-align: center;
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 150%;
+    }
+  }
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
