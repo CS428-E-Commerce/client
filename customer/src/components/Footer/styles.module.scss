@@ -1,0 +1,102 @@
+@import "assets/scss/media-query.scss";
+
+.footer {
+  --padding-x: 128px;
+  color: var(--light-gray);
+
+  .footerContent {
+    padding: 64px var(--padding-x);
+    background-color: var(--black);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+
+    .footerColumn {
+      flex-shrink: 0;
+
+      .footerLogo {
+        font-size: 24px;
+        font-weight: 700;
+      }
+
+      .footerHeader {
+        font-size: 20px;
+        font-weight: 600;
+      }
+
+      .footerList {
+        margin-top: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        .footerItem {
+          max-width: 272px;
+          display: block;
+        }
+      }
+    }
+
+    .footerColumn:nth-child(1) {
+      flex-grow: 4;
+      max-width: calc(4 / 12 * 100%);
+    }
+
+    .footerColumn:nth-child(2),
+    .footerColumn:nth-child(3) {
+      flex-grow: 3;
+      max-width: calc(3 / 12 * 100%);
+    }
+
+    .footerColumn:last-child {
+      flex-grow: 2;
+      max-width: calc(2 / 12 * 100%);
+    }
+  }
+
+  .footerCopyRight {
+    padding: 12px var(--padding-x);
+    background-color: var(--charcoal-gray);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    .icons {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      & > svg {
+        height: 30px;
+
+        &:last-child {
+          height: 32px;
+        }
+      }
+    }
+  }
+}
+
+@include tablet {
+  .footer {
+    --padding-x: 64px;
+
+    .footerContent {
+      padding-top: 32px;
+      padding-bottom: 32px;
+
+      .footerColumn {
+        flex-grow: 6 !important;
+        max-width: calc(6 / 12 * 100%) !important;
+      }
+    }
+  }
+}
+
+@include mobile-landscape {
+  .footer {
+    --padding-x: 24px;
+  }
+}

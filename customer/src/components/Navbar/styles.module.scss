@@ -1,0 +1,88 @@
+@import "assets/scss/media-query.scss";
+
+.navbar {
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  .brand {
+    font-weight: 700;
+    font-size: 24px;
+  }
+
+  .menuToggler {
+    display: none;
+
+    .menuTogglerIcon {
+      height: 40px;
+    }
+  }
+
+  .navbarContainer {
+    margin-left: auto;
+
+    .navbarContent {
+      display: flex;
+
+      .navLink {
+        padding: 12px 20px;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 160%;
+        transition: all 0.2s;
+
+        &:hover {
+          opacity: 0.7;
+        }
+      }
+
+      .navLinkButton {
+        margin-left: 20px;
+        border-radius: 4px;
+        padding: 10px 20px 12px;
+        background-color: var(--black);
+        color: var(--white);
+      }
+    }
+  }
+}
+
+@include tablet {
+  .navbar {
+    .menuToggler {
+      display: block;
+      margin-left: auto;
+      cursor: pointer;
+    }
+
+    .navbarContainer {
+      display: none;
+      position: absolute;
+      top: 120%;
+      width: 100%;
+      background-color: var(--black);
+      color: var(--light-gray);
+      padding: 8px 0;
+
+      &.show {
+        display: block;
+      }
+
+      .navbarContent {
+        flex-direction: column;
+
+        .navLink {
+          padding: 12px 16px;
+          display: block;
+        }
+
+        .navLinkButton {
+          margin-left: inherit;
+          border-radius: inherit;
+          background-color: inherit;
+          color: inherit;
+        }
+      }
+    }
+  }
+}
