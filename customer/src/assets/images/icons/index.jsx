@@ -15,3 +15,5 @@ export { ReactComponent as DropdownIcon } from "./dropdown.svg";
 export { ReactComponent as StarIcon } from "./star.svg";
 
 export { default as CalendarImgSrc } from "./calendar.png";
+export { default as GoogleImgSrc } from "./google.png";
+export { default as FacebookImgSrc } from "./facebook.png";

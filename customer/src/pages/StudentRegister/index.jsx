@@ -9,18 +9,15 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import clsx from "clsx";
 import Button from "components/Button";
 
-const LoginPage = memo(() => {
+const StudentRegisterPage = memo(() => {
   return (
     <div className={classes.container}>
       <div className={classes.pageHeader}>
-        <h1 className={classes.pageTitle}>Log in</h1>
+        <h1 className={classes.pageTitle}>Sign up as a Student</h1>
         <p className={classes.signUpLinks}>
-          <NavLink to="/student-signup" className={classes.navLink}>
-            Sign up as a student
-          </NavLink>{" "}
-          <span>or</span>{" "}
-          <NavLink to="/tutor-signup" className={classes.navLink}>
-            Sign up as a tutor
+          <span>Already have an account?</span>{" "}
+          <NavLink to="/login" className={classes.navLink}>
+            Log in
           </NavLink>
         </p>
       </div>
@@ -52,11 +49,21 @@ const LoginPage = memo(() => {
 
       <form className={classes.form}>
         <FormControl classes={{ root: classes.formControl }}>
+          <label className={classes.formLabel}>Name</label>
+          <input className={classes.input} placeholder="Your Name" />
+        </FormControl>
+        <FormControl
+          classes={{
+            root: clsx(classes.formControl, classes.formControlMarginTop),
+          }}
+        >
           <label className={classes.formLabel}>Email</label>
           <input className={classes.input} placeholder="Your Email" />
         </FormControl>
         <FormControl
-          classes={{ root: clsx(classes.formControl, classes.lastFormControl) }}
+          classes={{
+            root: clsx(classes.formControl, classes.formControlMarginTop),
+          }}
         >
           <label className={classes.formLabel}>Password</label>
           <input className={classes.input} placeholder="Your Password" />
@@ -68,10 +75,12 @@ const LoginPage = memo(() => {
           label="Remember me"
         />
         <br />
-        <Button className={classes.submitButton} primary>Log in</Button>
+        <Button className={classes.submitButton} primary>
+          Register
+        </Button>
       </form>
     </div>
   );
 });
 
-export default LoginPage;
+export default StudentRegisterPage;

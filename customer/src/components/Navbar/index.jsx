@@ -41,13 +41,13 @@ const Navbar = memo(() => {
             </NavLink>
           </li>
           <li className={classes.navItem}>
-            <NavLink to="/" className={classes.navLink}>
+            <NavLink to="/login" className={classes.navLink}>
               Login
             </NavLink>
           </li>
           <li className={classes.navItem}>
             <NavLink
-              to="/"
+              to="/register"
               className={clsx(classes.navLink, classes.navLinkButton)}
             >
               Register
