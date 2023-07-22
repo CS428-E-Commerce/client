@@ -58,6 +58,7 @@
     .navbarContainer {
       display: none;
       position: absolute;
+      z-index: 1000;
       top: 120%;
       width: 100%;
       background-color: var(--black);

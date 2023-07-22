@@ -1,8 +1,5 @@
 import { memo } from "react";
-import { yupResolver } from "@hookform/resolvers/yup";
-
 import { NavLink } from "react-router-dom";
-import yup from "config/yupGlobal";
 
 import classes from "./styles.module.scss";
 import { FacebookImgSrc, GoogleImgSrc } from "assets/images/icons";
@@ -10,15 +7,18 @@ import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import clsx from "clsx";
 import Button from "components/Button";
+import yup from "config/yupGlobal";
 import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const schema = yup.object().shape({
+  name: yup.string().required("Name is required"),
   email: yup.string().email("Invalid email").required("Email is required"),
   password: yup.string().password().required("Password is required"),
   rememberMe: yup.boolean(),
 });
 
-const LoginPage = memo(() => {
+const TutorRegisterPage = memo(() => {
   const {
     register,
     handleSubmit,
@@ -27,21 +27,16 @@ const LoginPage = memo(() => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = data => {
-    console.log({ data });
-  };
+  console.log({ errors });
 
   return (
     <div className={classes.container}>
       <div className={classes.pageHeader}>
-        <h1 className={classes.pageTitle}>Log in</h1>
+        <h1 className={classes.pageTitle}>Sign up as a Tutor</h1>
         <p className={classes.signUpLinks}>
-          <NavLink to="/student-signup" className={classes.navLink}>
-            Sign up as a student
-          </NavLink>{" "}
-          <span>or</span>{" "}
-          <NavLink to="/tutor-signup" className={classes.navLink}>
-            Sign up as a tutor
+          <span>Already have an account?</span>{" "}
+          <NavLink to="/login" className={classes.navLink}>
+            Log in
           </NavLink>
         </p>
       </div>
@@ -71,8 +66,24 @@ const LoginPage = memo(() => {
         <span className={classes.rightDivider} />
       </div>
 
-      <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className={classes.form}
+        onSubmit={handleSubmit(data => {
+          console.log(data);
+        })}
+      >
         <div className={classes.formGroup}>
+          <label className={classes.formLabel}>Name</label>
+          <input
+            {...register("name")}
+            className={classes.input}
+            placeholder="Your Name"
+          />
+          {errors.name?.message && (
+            <p className={classes.error}>{errors.name.message}</p>
+          )}
+        </div>
+        <div className={clsx(classes.formGroup, classes.formGroupMarginTop)}>
           <label className={classes.formLabel}>Email</label>
           <input
             {...register("email")}
@@ -83,7 +94,6 @@ const LoginPage = memo(() => {
             <p className={classes.error}>{errors.email.message}</p>
           )}
         </div>
-
         <div className={clsx(classes.formGroup, classes.formGroupMarginTop)}>
           <label className={classes.formLabel}>Password</label>
           <input
@@ -96,8 +106,6 @@ const LoginPage = memo(() => {
             <p className={classes.error}>{errors.password.message}</p>
           )}
         </div>
-
-        <div className={classes.forgotPassword}>Forgot your password?</div>
         <FormControlLabel
           classes={{ root: classes.rememberMe }}
           control={<Checkbox {...register("rememberMe")} />}
@@ -105,11 +113,11 @@ const LoginPage = memo(() => {
         />
         <br />
         <Button className={classes.submitButton} primary type="submit">
-          Log in
+          Register
         </Button>
       </form>
     </div>
   );
 });
 
-export default LoginPage;
+export default TutorRegisterPage;
