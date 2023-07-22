@@ -14,13 +14,7 @@ import { useForm } from "react-hook-form";
 
 const schema = yup.object().shape({
   email: yup.string().email("Invalid email").required("Email is required"),
-  password: yup
-    .string()
-    .password(
-      "Password must be greater than 8 characters. " +
-        "Only alphabets, numbers, and _.-@ are allowed"
-    )
-    .required("Password is required"),
+  password: yup.string().password().required("Password is required"),
   rememberMe: yup.boolean(),
 });
 

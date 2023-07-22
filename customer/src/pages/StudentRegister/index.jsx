@@ -14,13 +14,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 const schema = yup.object().shape({
   name: yup.string().required("Name is required"),
   email: yup.string().email("Invalid email").required("Email is required"),
-  password: yup
-    .string()
-    .password(
-      "Password must be greater than 8 characters. " +
-        "Only alphabets, numbers, and _.-@ are allowed"
-    )
-    .required("Password is required"),
+  password: yup.string().password().required("Password is required"),
   rememberMe: yup.boolean(),
 });
 
@@ -74,10 +68,7 @@ const StudentRegisterPage = memo(() => {
         <span className={classes.rightDivider} />
       </div>
 
-      <form
-        className={classes.form}
-        onSubmit={handleSubmit(onSubmit)}
-      >
+      <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
         <div className={classes.formGroup}>
           <label className={classes.formLabel}>Name</label>
           <input
