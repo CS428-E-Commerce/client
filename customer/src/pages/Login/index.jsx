@@ -1,15 +1,42 @@
 import { memo } from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
+
 import { NavLink } from "react-router-dom";
+import yup from "config/yupGlobal";
 
 import classes from "./styles.module.scss";
 import { FacebookImgSrc, GoogleImgSrc } from "assets/images/icons";
 import Checkbox from "@mui/material/Checkbox";
-import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import clsx from "clsx";
 import Button from "components/Button";
+import { useForm } from "react-hook-form";
+
+const schema = yup.object().shape({
+  email: yup.string().email("Invalid email").required("Email is required"),
+  password: yup
+    .string()
+    .password(
+      "Password must be greater than 8 characters. " +
+        "Only alphabets, numbers, and _.-@ are allowed"
+    )
+    .required("Password is required"),
+  rememberMe: yup.boolean(),
+});
 
 const LoginPage = memo(() => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const onSubmit = data => {
+    console.log({ data });
+  };
+
   return (
     <div className={classes.container}>
       <div className={classes.pageHeader}>
@@ -50,25 +77,42 @@ const LoginPage = memo(() => {
         <span className={classes.rightDivider} />
       </div>
 
-      <form className={classes.form}>
-        <FormControl classes={{ root: classes.formControl }}>
+      <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
+        <div className={classes.formGroup}>
           <label className={classes.formLabel}>Email</label>
-          <input className={classes.input} placeholder="Your Email" />
-        </FormControl>
-        <FormControl
-          classes={{ root: clsx(classes.formControl, classes.lastFormControl) }}
-        >
+          <input
+            {...register("email")}
+            className={classes.input}
+            placeholder="Your Email"
+          />
+          {errors.email?.message && (
+            <p className={classes.error}>{errors.email.message}</p>
+          )}
+        </div>
+
+        <div className={clsx(classes.formGroup, classes.formGroupMarginTop)}>
           <label className={classes.formLabel}>Password</label>
-          <input className={classes.input} placeholder="Your Password" />
-        </FormControl>
+          <input
+            {...register("password")}
+            className={classes.input}
+            placeholder="Your Password"
+            type="password"
+          />
+          {errors.password?.message && (
+            <p className={classes.error}>{errors.password.message}</p>
+          )}
+        </div>
+
         <div className={classes.forgotPassword}>Forgot your password?</div>
         <FormControlLabel
           classes={{ root: classes.rememberMe }}
-          control={<Checkbox />}
+          control={<Checkbox {...register("rememberMe")} />}
           label="Remember me"
         />
         <br />
-        <Button className={classes.submitButton} primary>Log in</Button>
+        <Button className={classes.submitButton} primary type="submit">
+          Log in
+        </Button>
       </form>
     </div>
   );
