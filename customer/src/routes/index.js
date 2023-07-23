@@ -15,7 +15,7 @@ const publicRoutes = [
   { path: "/student-signup", component: StudentRegisterPage },
   { path: "/tutor-signup", component: TutorRegisterPage },
   { path: "/find-tutors", component: FindTutorsPage },
-  { path: "/tutor-profile", component: TutorProfilePage },
+  { path: "/tutor/:id", component: TutorProfilePage },
 ];
 
 export { privateRoutes, publicRoutes };

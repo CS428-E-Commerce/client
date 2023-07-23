@@ -13,6 +13,7 @@ export { ReactComponent as PriceIcon } from "./price.svg";
 export { ReactComponent as SortIcon } from "./sort.svg";
 export { ReactComponent as DropdownIcon } from "./dropdown.svg";
 export { ReactComponent as StarIcon } from "./star.svg";
+export { ReactComponent as LoadingIcon } from "./loading.svg";
 
 export { default as CalendarImgSrc } from "./calendar.png";
 export { default as GoogleImgSrc } from "./google.png";

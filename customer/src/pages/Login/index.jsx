@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useEffect } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { NavLink, useHistory, useLocation } from "react-router-dom";
@@ -15,6 +15,7 @@ import ApiService from "services/api_service";
 import { ToastService } from "services/toast_service";
 import { useDispatch } from "react-redux";
 import { setLoading } from "redux/reducers/Status/actionTypes";
+import { push } from "connected-react-router";
 
 const schema = yup.object().shape({
   email: yup.string().email("Invalid email").required("Email is required"),
@@ -34,6 +35,12 @@ const LoginPage = memo(() => {
   } = useForm({
     resolver: yupResolver(schema),
   });
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      dispatch(push(`/`));
+    }
+  }, []);
 
   const onSubmit = async data => {
     const account = {

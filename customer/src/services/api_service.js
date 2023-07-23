@@ -3,7 +3,7 @@ import * as qs from "qs";
 import { ToastService } from "./toast_service";
 
 const getToken = () => {
-  const token = localStorage.getItem("auth");
+  const token = localStorage.getItem("token");
   return `Bearer ${token}`;
 };
 
