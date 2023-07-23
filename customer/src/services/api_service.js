@@ -1,8 +1,9 @@
 import axios from "axios";
 import * as qs from "qs";
+import { ToastService } from "./toast_service";
 
 const getToken = () => {
-  const token = localStorage.getItem("auth");
+  const token = localStorage.getItem("token");
   return `Bearer ${token}`;
 };
 
@@ -20,7 +21,7 @@ api.interceptors.response.use(
       return Promise.reject(error);
     }
     if (error?.response?.data?.error) {
-      ToastSystem.error(error?.response?.data?.error);
+      ToastService.error(error?.response?.data?.error);
     }
     return Promise.reject(error);
   }

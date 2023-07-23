@@ -4,8 +4,12 @@ import clsx from "clsx";
 
 import classes from "./styles.module.scss";
 import { MenuIcon } from "assets/images/icons";
+import { useDispatch } from "react-redux";
+import { push } from "connected-react-router";
 
 const Navbar = memo(() => {
+  const dispatch = useDispatch();
+
   const [show, setShow] = useState(false);
   const toggleShow = () => setShow(show => !show);
 
@@ -41,9 +45,19 @@ const Navbar = memo(() => {
             </NavLink>
           </li>
           <li className={classes.navItem}>
-            <NavLink to="/login" className={clsx(classes.navLink, classes.navLinkButton)}>
-              Login
-            </NavLink>
+            <div
+              onClick={() => {
+                if (localStorage.getItem("token")) {
+                  localStorage.clear();
+                  dispatch(push(`/`));
+                } else {
+                  dispatch(push(`/login`));
+                }
+              }}
+              className={clsx(classes.navLink, classes.navLinkButton)}
+            >
+              {localStorage.getItem("token") ? "Logout" : "Login"}
+            </div>
           </li>
         </ul>
       </div>

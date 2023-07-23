@@ -1,4 +1,4 @@
-import { memo, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import classes from "./styles.module.scss";
 import Select from "components/Select";
 import {
@@ -10,15 +10,34 @@ import {
   TimeIcon,
   TopicIcon,
 } from "assets/images/icons";
-import mockupAvatarImg from "assets/images/mockup-avatars/albert-dera.jpg";
+import placeholderAvatarImage from "assets/images/placeholder-avatar.jpeg";
 import { Pagination } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { push } from "connected-react-router";
+import ApiService from "services/api_service";
+import { ToastService } from "services/toast_service";
+import Loading from "components/Loading";
 
 const FindTutorsPage = memo(() => {
   const dispatch = useDispatch();
 
   const [page, setPage] = useState(1);
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    ApiService.GET(`/api/coach`, {
+      offset: page - 1,
+      limit: 12,
+      name: "",
+    })
+      .then(response => {
+        setData(response?.data);
+      })
+      .catch(error => {
+        console.log(error);
+        ToastService.error("Sorry, an error occurred.");
+      });
+  }, []);
 
   return (
     <div className={classes.container}>
@@ -39,57 +58,82 @@ const FindTutorsPage = memo(() => {
         </div>
 
         <div className={classes.tutorList}>
-          {[...Array(12)]?.map((_, index) => {
-            return (
-              <div
-                className={classes.tutorContainer}
-                key={index}
-                onClick={() => {
-                  dispatch(push(`/tutor-profile`));
-                }}
-              >
-                <p className={classes.price}>
-                  <b>~$6</b> / class
-                </p>
+          {data ? (
+            data?.map((item, index) => {
+              return (
+                <div
+                  className={classes.tutorContainer}
+                  key={`tutor-${index}`}
+                  onClick={() => {
+                    dispatch(push(`/tutor/${item?.coachInfo?.id}`));
+                  }}
+                >
+                  <p className={classes.price}>
+                    <b>
+                      {item?.rateTurn !== null
+                        ? `~$${item?.rateTurn}`
+                        : "~$..."}
+                    </b>{" "}
+                    / class
+                  </p>
 
-                <img
-                  className={classes.avatar}
-                  src={mockupAvatarImg}
-                  alt="Albert Dera's avatar"
-                />
+                  <img
+                    className={classes.avatar}
+                    src={item?.coachInfo?.avatar ?? placeholderAvatarImage}
+                    alt="Avatar"
+                  />
 
-                <p className={classes.name}>Niusha S.</p>
+                  <p className={classes.name}>
+                    {item?.coachInfo?.username ?? "N/A"}
+                  </p>
 
-                <div className={classes.info}>
-                  <StarIcon />
-                  <span>5.0</span>
-                  <span>(1,234 classes)</span>
+                  <div className={classes.info}>
+                    <StarIcon />
+                    <span>{item?.totalRate ?? "N/A"}</span>
+                    {item?.totalCourse ? (
+                      <span>({item?.totalCourse} classes)</span>
+                    ) : null}
+                  </div>
+
+                  <p className={classes.role}>Certified Vietnamese tutor</p>
+
+                  <div className={classes.skills}>
+                    {item?.certificates?.map((cert, certIndex) => {
+                      if (certIndex > 3) {
+                        return null;
+                      } else if (certIndex === 3) {
+                        return (
+                          <div key={`cert-${certIndex}`}>
+                            +{cert?.certificates?.length - 3}
+                          </div>
+                        );
+                      } else {
+                        return (
+                          <div key={`cert-${certIndex}`}>
+                            {cert?.certificate ?? "N/A"}
+                          </div>
+                        );
+                      }
+                    })}
+                  </div>
+
+                  <p className={classes.description}>
+                    {item?.coachInfo?.description ?? "N/A"}
+                  </p>
+
+                  <hr className={classes.horizontalLine} />
+
+                  <div className={classes.viewProfileButton}>VIEW PROFILE</div>
                 </div>
-
-                <p className={classes.role}>Certified Vietnamese tutor</p>
-
-                <div className={classes.skills}>
-                  <div>Grammar</div>
-                  <div>Vocab</div>
-                  <div>Conversation</div>
-                  <div>+4</div>
-                </div>
-
-                <p className={classes.description}>
-                  Niusha is a certified Vietnamese tutor who has been on
-                  Vinglish for 5 years
-                </p>
-
-                <hr className={classes.horizontalLine} />
-
-                <div className={classes.viewProfileButton}>VIEW PROFILE</div>
-              </div>
-            );
-          })}
+              );
+            })
+          ) : (
+            <Loading />
+          )}
         </div>
 
         <Pagination
-          count={12}
+          count={1}
           page={page}
           onChange={(_, value) => {
             setPage(value);
