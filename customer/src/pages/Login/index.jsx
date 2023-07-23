@@ -1,7 +1,7 @@
 import { memo } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory, useLocation } from "react-router-dom";
 import yup from "config/yupGlobal";
 
 import classes from "./styles.module.scss";
@@ -11,6 +11,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import clsx from "clsx";
 import Button from "components/Button";
 import { useForm } from "react-hook-form";
+import ApiService from "services/api_service";
 
 const schema = yup.object().shape({
   email: yup.string().email("Invalid email").required("Email is required"),
@@ -19,6 +20,9 @@ const schema = yup.object().shape({
 });
 
 const LoginPage = memo(() => {
+  const history = useHistory();
+  const location = useLocation();
+
   const {
     register,
     handleSubmit,
@@ -27,8 +31,18 @@ const LoginPage = memo(() => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = data => {
-    console.log({ data });
+  const onSubmit = async data => {
+    const account = {
+      email: data.email,
+      password: data.password,
+    };
+    const response = await ApiService.POST("/api/auth/login", account);
+    localStorage.setItem("auth", response.data);
+
+    if (location.state.prevLocation) {
+      return history.replace(location.state.prevLocation);
+    }
+    history.replace("/");
   };
 
   return (

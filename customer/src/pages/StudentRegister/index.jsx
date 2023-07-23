@@ -10,6 +10,7 @@ import Button from "components/Button";
 import yup from "config/yupGlobal";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import ApiService from "services/api_service";
 
 const schema = yup.object().shape({
   name: yup.string().required("Name is required"),
@@ -27,8 +28,19 @@ const StudentRegisterPage = memo(() => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = data => {
-    console.log({ data });
+  const onSubmit = async data => {
+    const account = {
+      email: data.email,
+      password: data.password,
+      role: "STUDENT",
+    };
+    const response = await ApiService.POST("/api/auth/signup", account);
+    localStorage.setItem("auth", response.data);
+
+    if (location.state.prevLocation) {
+      return history.replace(location.state.prevLocation);
+    }
+    history.replace("/");
   };
 
   return (
