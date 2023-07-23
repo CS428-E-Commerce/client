@@ -27,7 +27,20 @@ const TutorRegisterPage = memo(() => {
     resolver: yupResolver(schema),
   });
 
-  console.log({ errors });
+  const onSubmit = async data => {
+    const account = {
+      email: data.email,
+      password: data.password,
+      role: "STUDENT",
+    };
+    const response = await ApiService.POST("/api/auth/signup", account);
+    localStorage.setItem("auth", response.data);
+
+    if (location.state.prevLocation) {
+      return history.replace(location.state.prevLocation);
+    }
+    history.replace("/");
+  };
 
   return (
     <div className={classes.container}>
@@ -68,9 +81,7 @@ const TutorRegisterPage = memo(() => {
 
       <form
         className={classes.form}
-        onSubmit={handleSubmit(data => {
-          console.log(data);
-        })}
+        onSubmit={handleSubmit(onSubmit)}
       >
         <div className={classes.formGroup}>
           <label className={classes.formLabel}>Name</label>

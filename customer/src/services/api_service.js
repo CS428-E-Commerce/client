@@ -2,7 +2,8 @@ import axios from "axios";
 import * as qs from "qs";
 
 const getToken = () => {
-  return "Bearer ";
+  const token = localStorage.getItem("auth");
+  return `Bearer ${token}`;
 };
 
 const api = axios.create({
