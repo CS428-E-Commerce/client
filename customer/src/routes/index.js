@@ -10,7 +10,7 @@ const privateRoutes = [
 ];
 
 const publicRoutes = [
-  { path: "/", component: FindTutorsPage },
+  { path: "/", component: HomePage },
   { path: "/login", component: LoginPage },
   { path: "/student-signup", component: StudentRegisterPage },
   { path: "/tutor-signup", component: TutorRegisterPage },

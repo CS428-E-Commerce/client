@@ -12,6 +12,9 @@ import clsx from "clsx";
 import Button from "components/Button";
 import { useForm } from "react-hook-form";
 import ApiService from "services/api_service";
+import { ToastService } from "services/toast_service";
+import { useDispatch } from "react-redux";
+import { setLoading } from "redux/reducers/Status/actionTypes";
 
 const schema = yup.object().shape({
   email: yup.string().email("Invalid email").required("Email is required"),
@@ -22,6 +25,7 @@ const schema = yup.object().shape({
 const LoginPage = memo(() => {
   const history = useHistory();
   const location = useLocation();
+  const dispatch = useDispatch();
 
   const {
     register,
@@ -36,13 +40,25 @@ const LoginPage = memo(() => {
       email: data.email,
       password: data.password,
     };
-    const response = await ApiService.POST("/api/auth/login", account);
-    localStorage.setItem("auth", response.data);
 
-    if (location.state.prevLocation) {
-      return history.replace(location.state.prevLocation);
-    }
-    history.replace("/");
+    dispatch(setLoading(true));
+    ApiService.POST("/api/auth/login", account)
+      .then(response => {
+        localStorage.setItem("token", response?.data?.accessToken);
+        localStorage.setItem("email", response?.data?.email);
+
+        if (location?.state?.prevLocation) {
+          return history?.replace(location?.state?.prevLocation);
+        }
+        history?.replace("/");
+      })
+      .catch(error => {
+        console.log(error);
+        ToastService.error("Sorry, an error occurred.");
+      })
+      .finally(() => {
+        dispatch(setLoading(false));
+      });
   };
 
   return (
@@ -61,7 +77,12 @@ const LoginPage = memo(() => {
       </div>
 
       <div className={classes.oauthLogin}>
-        <div className={classes.oauthBadge}>
+        <div
+          className={classes.oauthBadge}
+          onClick={() => {
+            ToastService.error("Sorry, this is currently not available.");
+          }}
+        >
           <img
             className={classes.oauthIcon}
             src={GoogleImgSrc}
@@ -69,7 +90,12 @@ const LoginPage = memo(() => {
           />
           <div className={classes.oauthText}>Continue with Google</div>
         </div>
-        <div className={classes.oauthBadge}>
+        <div
+          className={classes.oauthBadge}
+          onClick={() => {
+            ToastService.error("Sorry, this is currently not available.");
+          }}
+        >
           <img
             className={classes.oauthIcon}
             src={FacebookImgSrc}
@@ -111,7 +137,14 @@ const LoginPage = memo(() => {
           )}
         </div>
 
-        <div className={classes.forgotPassword}>Forgot your password?</div>
+        <div
+          className={classes.forgotPassword}
+          onClick={() => {
+            ToastService.error("Sorry, this is currently not available.");
+          }}
+        >
+          Forgot your password?
+        </div>
         <FormControlLabel
           classes={{ root: classes.rememberMe }}
           control={<Checkbox {...register("rememberMe")} />}

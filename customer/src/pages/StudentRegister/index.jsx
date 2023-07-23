@@ -11,6 +11,10 @@ import yup from "config/yupGlobal";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import ApiService from "services/api_service";
+import { useDispatch } from "react-redux";
+import { ToastService } from "services/toast_service";
+import { setLoading } from "redux/reducers/Status/actionTypes";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const schema = yup.object().shape({
   name: yup.string().required("Name is required"),
@@ -20,6 +24,9 @@ const schema = yup.object().shape({
 });
 
 const StudentRegisterPage = memo(() => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+
   const {
     register,
     handleSubmit,
@@ -34,13 +41,25 @@ const StudentRegisterPage = memo(() => {
       password: data.password,
       role: "STUDENT",
     };
-    const response = await ApiService.POST("/api/auth/signup", account);
-    localStorage.setItem("auth", response.data);
 
-    if (location.state.prevLocation) {
-      return history.replace(location.state.prevLocation);
-    }
-    history.replace("/");
+    dispatch(setLoading(true));
+    ApiService.POST("/api/auth/signup", account)
+      .then(response => {
+        localStorage.setItem("token", response?.data?.accessToken);
+        localStorage.setItem("email", response?.data?.email);
+
+        if (location?.state?.prevLocation) {
+          return history?.replace(location?.state?.prevLocation);
+        }
+        history?.replace("/");
+      })
+      .catch(error => {
+        console.log(error);
+        ToastService.error("Sorry, an error occurred.");
+      })
+      .finally(() => {
+        dispatch(setLoading(false));
+      });
   };
 
   return (
@@ -56,7 +75,12 @@ const StudentRegisterPage = memo(() => {
       </div>
 
       <div className={classes.oauthLogin}>
-        <div className={classes.oauthBadge}>
+        <div
+          className={classes.oauthBadge}
+          onClick={() => {
+            ToastService.error("Sorry, this is currently not available.");
+          }}
+        >
           <img
             className={classes.oauthIcon}
             src={GoogleImgSrc}
@@ -64,7 +88,12 @@ const StudentRegisterPage = memo(() => {
           />
           <div className={classes.oauthText}>Continue with Google</div>
         </div>
-        <div className={classes.oauthBadge}>
+        <div
+          className={classes.oauthBadge}
+          onClick={() => {
+            ToastService.error("Sorry, this is currently not available.");
+          }}
+        >
           <img
             className={classes.oauthIcon}
             src={FacebookImgSrc}

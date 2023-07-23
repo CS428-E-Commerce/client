@@ -27,6 +27,7 @@
     margin-top: 32px;
 
     .oauthBadge {
+      cursor: pointer;
       border: 1px solid var(--black);
       border-radius: 4px;
       padding: 16px 24px;
@@ -107,6 +108,7 @@
     }
 
     .forgotPassword {
+      cursor: pointer;
       margin-top: 4px;
       font-size: 16px;
       font-weight: 500;
