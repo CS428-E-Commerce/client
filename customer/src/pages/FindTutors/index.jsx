@@ -65,7 +65,7 @@ const FindTutorsPage = memo(() => {
                   className={classes.tutorContainer}
                   key={`tutor-${index}`}
                   onClick={() => {
-                    dispatch(push(`/tutor/${item?.coachInfo?.id}`));
+                    dispatch(push(`/tutor/${item?.id}`));
                   }}
                 >
                   <p className={classes.price}>
