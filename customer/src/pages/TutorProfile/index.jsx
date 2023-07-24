@@ -8,6 +8,7 @@ import ApiService from "services/api_service";
 import { useParams } from "react-router-dom";
 import { ToastService } from "services/toast_service";
 import Loading from "components/Loading";
+import { formatNumber } from "services/common_service";
 
 const TutorProfilePage = memo(() => {
   const { id } = useParams();
@@ -46,17 +47,21 @@ const TutorProfilePage = memo(() => {
                   <div className={classes.statBlock}>
                     <div className={classes.stat}>
                       <span className={classes.statTitle}>Students</span> <br />
-                      <span className={classes.statAmount}>12,345</span>
+                      <span className={classes.statAmount}>
+                        {formatNumber(data?.totalStudent)}
+                      </span>
                     </div>
 
                     <div className={classes.stat}>
                       <span className={classes.statTitle}>Classes</span> <br />
-                      <span className={classes.statAmount}>1,345</span>
+                      <span className={classes.statAmount}>
+                        {formatNumber(data?.totalCourse)}
+                      </span>
                     </div>
 
                     <div className={classes.stat}>
                       <span className={classes.statTitle}>Reviews</span> <br />
-                      <span className={classes.statAmount}>1,345</span>
+                      <span className={classes.statAmount}>N/A</span>
                     </div>
                   </div>
                 </div>
@@ -65,11 +70,7 @@ const TutorProfilePage = memo(() => {
               <section className={classes.aboutMeSection}>
                 <h2 className={classes.aboutMeHeading}>About me</h2>
                 <p className={classes.aboutMeParagraph}>
-                  Hello! My name is Niusha, and I&apos;m a passionate Vietnamese
-                  tutor dedicated to helping students learn and master the
-                  beautiful Vietnamese language. With years of experience and a
-                  deep love for teaching, I am excited to share my knowledge and
-                  cultural insights with learners from all backgrounds.
+                  {data?.coachInfo?.description}
                 </p>
               </section>
 
@@ -125,7 +126,7 @@ const TutorProfilePage = memo(() => {
               <div>
                 <img
                   className={classes.userAvatar}
-                  src={placeholderAvatarImage}
+                  src={data?.coachInfo?.avatar ?? placeholderAvatarImage}
                   alt="Avatar"
                 />
               </div>

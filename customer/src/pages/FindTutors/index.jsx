@@ -17,6 +17,7 @@ import { push } from "connected-react-router";
 import ApiService from "services/api_service";
 import { ToastService } from "services/toast_service";
 import Loading from "components/Loading";
+import { formatNumber } from "services/common_service";
 
 const FindTutorsPage = memo(() => {
   const dispatch = useDispatch();
@@ -65,7 +66,7 @@ const FindTutorsPage = memo(() => {
                   className={classes.tutorContainer}
                   key={`tutor-${index}`}
                   onClick={() => {
-                    dispatch(push(`/tutor/${item?.coachInfo?.id}`));
+                    dispatch(push(`/tutor/${item?.id}`));
                   }}
                 >
                   <p className={classes.price}>
@@ -91,7 +92,7 @@ const FindTutorsPage = memo(() => {
                     <StarIcon />
                     <span>{item?.totalRate ?? "N/A"}</span>
                     {item?.totalCourse ? (
-                      <span>({item?.totalCourse} classes)</span>
+                      <span>({formatNumber(item?.totalCourse)} classes)</span>
                     ) : null}
                   </div>
 
