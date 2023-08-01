@@ -1,0 +1,41 @@
+.popover {
+  background-color: var(--white);
+  width: 25%;
+  border: 1px solid var(--black);
+  border-radius: 16px;
+  padding: 24px;
+  position: absolute;
+  right: 0;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.3s ease;
+  transform: translateX(-20px);
+
+  .tutorAvatar {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 200px;
+  }
+
+  .popoverCaretIcon {
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    transform: translate(0.5px, -50%);
+  }
+
+  .tutorName,
+  .speakHeading {
+    font-size: 18px;
+    font-weight: 700;
+    margin-top: 4px;
+    line-height: 160%;
+  }
+
+  &.show {
+    visibility: visible;
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
