@@ -24,6 +24,7 @@ const FindTutorsPage = memo(() => {
 
   const [page, setPage] = useState(1);
   const [data, setData] = useState(null);
+  const [total, setTotal] = useState(null);
 
   useEffect(() => {
     ApiService.GET(`/api/coach`, {
@@ -33,6 +34,7 @@ const FindTutorsPage = memo(() => {
     })
       .then(response => {
         setData(response?.data);
+        setTotal(response?.meta);
       })
       .catch(error => {
         console.log(error);
@@ -134,7 +136,7 @@ const FindTutorsPage = memo(() => {
         </div>
 
         <Pagination
-          count={1}
+          count={Math.ceil((total ?? 0) / 12)}
           page={page}
           onChange={(_, value) => {
             setPage(value);
