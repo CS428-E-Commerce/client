@@ -34,7 +34,7 @@ const FindTutorsPage = memo(() => {
     })
       .then(response => {
         setData(response?.data);
-        setTotal(response?.meta);
+        setTotal(response?.meta?.total);
       })
       .catch(error => {
         console.log(error);
