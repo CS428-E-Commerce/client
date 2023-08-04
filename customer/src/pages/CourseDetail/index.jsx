@@ -1,6 +1,6 @@
-import { memo, useState } from "react";
+import { memo, useEffect, useState } from "react";
 
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 
 import classes from "./styles.module.scss";
 import {
@@ -12,20 +12,53 @@ import {
   StarsIcon,
 } from "assets/images/icons";
 import { Modal } from "react-bootstrap";
+import useQuery from "hooks/useQuery";
+import ApiService from "services/api_service";
+import { ToastService } from "services/toast_service";
+import { useDispatch } from "react-redux";
+import { setLoading } from "redux/reducers/Status/actionTypes";
+import dayjs from "dayjs";
+import { formatNumber } from "services/common_service";
 
 const CourseDetail = memo(() => {
+  const dispatch = useDispatch();
+  const query = useQuery();
+  const params = useParams();
+
+  const [data, setData] = useState({});
   const [openModal, setOpenModal] = useState(false);
+
+  useEffect(() => {
+    const init = async () => {
+      dispatch(setLoading(true));
+      try {
+        const response = await ApiService.GET(
+          `/api/courses/detail/${params.courseId}/${query.get("coachId")}`
+        );
+        setData({
+          coach: response.coach,
+          coach_cert: response.coach_cert,
+          coach_skill: response.coach_skill,
+          course: response.course,
+          schedule: response.schedule,
+        });
+      } catch (error) {
+        console.error(error);
+        ToastService.error("Sorry, an error occurred.");
+      } finally {
+        dispatch(setLoading(false));
+      }
+    };
+
+    init();
+  }, []);
 
   return (
     <div className={classes.main}>
       <div className={classes.leftSection}>
         <header className={classes.pageHeader}>
-          <h1 className={classes.pageHeading}>
-            Verb Tenses: Vietnamese Grammar mastery
-          </h1>
-          <span className={classes.pageSubheading}>
-            Vietnamese grammar online course
-          </span>
+          <h1 className={classes.pageHeading}>{data.course?.title}</h1>
+          <span className={classes.pageSubheading}>{data.course?.code}</span>
         </header>
 
         <section className={classes.overview}>
@@ -40,34 +73,24 @@ const CourseDetail = memo(() => {
             <h2 className={classes.name}>Taught by Niusha S.</h2>
             <div className={classes.stats}>
               <StarIcon className={classes.startIcon} />
-              <span className={classes.rating}>4.9</span>{" "}
+              <span className={classes.rating}>
+                {data.coach?.totalRate}
+              </span>{" "}
               <span className={classes.classesTaught}>
-                &#40;723 classes&#41;
+                &#40;{formatNumber(data.coach?.totalCourse)} classes&#41;
               </span>
             </div>
           </div>
 
           <div className={classes.thumbnail}>
-            <img
-              className={classes.img}
-              src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1548&q=80"
-              alt=""
-            />
+            <img className={classes.img} src={data.course?.banner} alt="" />
           </div>
         </section>
 
         <section className={classes.aboutThisCourse}>
           <h2 className={classes.aboutHeading}>About this course</h2>
           <p className={classes.courseDescription}>
-            This engaging course is designed to propel you towards English
-            language mastery in no time. With a unique blend of interactive
-            lessons, real-world practice, and expert guidance, we make learning
-            English enjoyable and effective. Whether you&apos;re a beginner or
-            looking to polish your skills, this is your ticket to confidently
-            expressing yourself in the global language. Join our vibrant
-            community of learners and embark on a language journey that promises
-            to be fun, rewarding, and life-changing. Get ready to unlock new
-            opportunities and expand your horizons!
+            {data.course?.description}
           </p>
 
           <div className={classes.outlines}>
@@ -113,7 +136,10 @@ const CourseDetail = memo(() => {
               <div>
                 <h2 className={classes.tutorName}>Taught by Niusha S.</h2>
                 <span className={classes.extraInfo}>
-                  On Vinglish since 2018
+                  On Vinglish since{" "}
+                  {dayjs()
+                    .subtract(data.coach?.yearExperience ?? 0, "year")
+                    .year()}
                 </span>
               </div>
             </div>
@@ -126,11 +152,15 @@ const CourseDetail = memo(() => {
             </div>
             <div className={classes.reviews}>
               <StarIcon className={classes.starIcon} />
-              <span>5 &#40;29 reviews&#41;</span>
+              <span>
+                5 &#40;{formatNumber(data.coach?.rateTurn)} reviews&#41;
+              </span>
             </div>
             <div className={classes.lessonsTaught}>
               <GraduateHatIcon className={classes.graduateHatIcon} />
-              <span>1,234 lessons taught</span>
+              <span>
+                {formatNumber(data.coach?.totalCourse)} lessons taught
+              </span>
             </div>
           </div>
         </section>
@@ -201,48 +231,42 @@ const CourseDetail = memo(() => {
         <div className={classes.sidePanelContainer}>
           <div className={classes.sidePanelContent}>
             <div className={classes.classPrice}>
-              <span className={classes.price}>$6.00</span>
+              <span className={classes.price}>${data.course?.cost}</span>
               <span className={classes.divider}>/</span>
               <span className={classes.unit}>class</span>
             </div>
             <div className={classes.upcomingClasses}>UPCOMING CLASSES</div>
             <div className={classes.metadataList}>
-              <div className={classes.metadata}>
-                <div className={classes.classDate}>
-                  <div className={classes.date}>Thu, Jun 30</div>
-                  <div className={classes.time}>
-                    10:00 - 10:55 &#40;GMT+7&#41;
+              {data.schedule?.map(({ startTime, endTime }, index) => {
+                return (
+                  <div key={index} className={classes.metadata}>
+                    <div className={classes.classDate}>
+                      <div className={classes.date}>
+                        {dayjs(startTime).format("ddd, MMM D")}
+                      </div>
+                      <div className={classes.time}>
+                        {dayjs(startTime).format("HH:mm")} -{" "}
+                        {dayjs(endTime).format("HH:mm")}
+                        {/* 10:00 - 10:55 &#40;GMT+7&#41; TIME ZONE WILL BE LEFT FOR LATER */}
+                      </div>
+                      <div className={classes.remain}>
+                        Only{" "}
+                        {data.course?.maxSlot - data.course?.attendeeNumber}{" "}
+                        slots remain
+                      </div>
+                    </div>
+                    <div className={classes.cta}>
+                      <div className={classes.price}>${data.course?.cost}</div>
+                      <button
+                        className={classes.enrollBtn}
+                        onClick={() => setOpenModal(true)}
+                      >
+                        Enroll
+                      </button>
+                    </div>
                   </div>
-                  <div className={classes.remain}>Only 2 slots remain</div>
-                </div>
-                <div className={classes.cta}>
-                  <div className={classes.price}>$6.00</div>
-                  <button
-                    className={classes.enrollBtn}
-                    onClick={() => setOpenModal(true)}
-                  >
-                    Enroll
-                  </button>
-                </div>
-              </div>
-              <div className={classes.metadata}>
-                <div className={classes.classDate}>
-                  <div className={classes.date}>Thu, Jun 30</div>
-                  <div className={classes.time}>
-                    10:00 - 10:55 &#40;GMT+7&#41;
-                  </div>
-                  <div className={classes.remain}>Only 2 slots remain</div>
-                </div>
-                <div className={classes.cta}>
-                  <div className={classes.price}>$6.00</div>
-                  <button
-                    className={classes.enrollBtn}
-                    onClick={() => setOpenModal(true)}
-                  >
-                    Enroll
-                  </button>
-                </div>
-              </div>
+                );
+              })}
             </div>
           </div>
         </div>

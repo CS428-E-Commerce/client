@@ -19,7 +19,7 @@ const publicRoutes = [
   { path: "/find-tutors", component: FindTutorsPage },
   { path: "/tutor/:id", component: TutorProfilePage },
   { path: "/courses", component: AllCoursesPage },
-  { path: "/courses/:id", component: CourseDetail },
+  { path: "/courses/:courseId", component: CourseDetail },
 ];
 
 export { privateRoutes, publicRoutes };
