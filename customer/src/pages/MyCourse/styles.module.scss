@@ -1,0 +1,310 @@
+/* styles.module.scss */
+
+.container {
+width: 100%;
+}
+
+
+.title {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: normal;
+    margin-bottom: 20px;
+    padding-top: clamp(16px, 6vw, 88px);
+}
+
+.sub-title {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: normal;
+    margin-bottom: 20px;
+    padding-top: clamp(16px, 6vw, 88px);
+}
+
+
+.classList {
+    display: flex;
+    /* Use flex layout for the card list */
+    flex-wrap: wrap;
+    /* Allow cards to wrap to the next line */
+    // gap: 20px;
+    border: 1px solid black;
+    /* Apply border to the whole list */
+    border-radius: 16px;
+    /* Apply border radius to the whole list */
+    position: relative;
+    /* Add position relative to the card */
+    padding: 15px;
+    /* Add padding to the whole list */
+
+    margin-bottom: 30px;
+}
+
+.divider {
+    height: 100%;
+    border-left: 1px solid black; // change color as per your preference
+    margin: 10px 0; // adjust margin as per your needs
+}
+
+.card {
+    display: flex;
+    /* Use flex layout for each card */
+    width: 100%;
+    /* Set the width of each card to 33.33% minus gap */
+    gap: 20px;
+    /* Add gap between the image and content */
+    position: relative;
+    /* Add position relative to each card */
+}
+
+.card img {
+    width: 100px;
+    /* Set a fixed width for the image */
+    height: 100px;
+    /* Set a fixed height for the image */
+    border-radius: 10px;
+}
+
+.card-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.card h2 {
+    margin-bottom: 10px;
+}
+
+.card p {
+    /* Add styles for class details if needed */
+}
+
+h1 {
+    font-size: 50px;
+    /* Adjust the font size to make it big */
+    font-weight: bold;
+    /* Make the font bold */
+}
+
+.check-mark {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    font-size: 20px;
+    color: green;
+    /* Change the color of the check mark */
+}
+
+.class-detail {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #555;
+    /* Style the class detail text */
+}
+
+/* New Section Styles */
+
+.classColumn {
+    flex: 1;
+    /* Make the columns grow equally to fill the available space */
+}
+
+.attendeesList {
+    margin-top: 10px;
+}
+
+.attendeesList h3 {
+    margin-bottom: 5px;
+}
+
+.attendeesList ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.attendeesList li {
+    margin-bottom: 5px;
+}
+
+.class-detail {
+    margin-top: 10px;
+}
+
+
+.detailsSection {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+}
+
+.detailColumn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.attendeesSection {
+    margin-right: 30px;
+}
+
+.tutorInfoSection {
+    margin-bottom: 20px;
+}
+
+
+.attendeesSection {
+    margin-right: 30px;
+}
+
+.attendeesList {
+    display: flex;
+    flex-wrap: wrap;
+
+}
+
+.attendee {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 20px;
+    margin-bottom: 20px;
+flex-basis: calc(50% - 50px);
+}
+
+.attendee img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-bottom: 5px;
+}
+
+
+.tutorInfoSection {
+    display: flex;
+    flex-direction: column;
+}
+
+.tutorInfoRow {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.tutorInfoRow img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+button.contactButton {
+    background-color: blue;
+    color: white;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.verifiedRow {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.verifiedRow img {
+    width: 20px;
+    /* Specify the width here */
+    height: 20px;
+    /* Specify the height here */
+    margin-right: 5px;
+}
+
+.reviewRow {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.reviewRow img {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
+
+.lessonsRow {
+    display: flex;
+    align-items: center;
+}
+
+.lessonsRow img {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
+
+/* styles.module.scss */
+
+/* ... existing styles ... */
+
+.upcomingSessionsSection {
+    flex: 2;
+    /* Make the columns grow equally to fill the available space */
+}
+
+.upcomingCard {
+    border: 2px solid black;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    padding: 10px;
+    width: 100%;
+}
+
+.upcomingCard img {
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.upcomingCard h2 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.joinButton {
+    background-color: blue;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.calendar-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f0f0f0;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.calendarButton,
+.inviteButton {
+    display: flex;
+    align-items: center;
+}
+
+.calendarButton img,
+.inviteButton img {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
+
+/* ... existing styles ... */
