@@ -14,6 +14,10 @@ export { ReactComponent as SortIcon } from "./sort.svg";
 export { ReactComponent as DropdownIcon } from "./dropdown.svg";
 export { ReactComponent as StarIcon } from "./star.svg";
 export { ReactComponent as LoadingIcon } from "./loading.svg";
+export { ReactComponent as PopupCaretIcon } from "./popup-caret.svg";
+export { ReactComponent as GraduateHatIcon } from "./graduate-hat.svg";
+export { ReactComponent as CloseRoundedIcon } from "./close-rounded.svg";
+export { ReactComponent as LockIcon } from "./lock.svg";
 
 export { default as CalendarImgSrc } from "./calendar.png";
 export { default as GoogleImgSrc } from "./google.png";

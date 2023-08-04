@@ -1,0 +1,133 @@
+.card {
+  border-radius: 16px;
+  display: flex;
+  width: 75%;
+  padding-right: 24px;
+  flex-shrink: 0;
+
+  .thumbnail {
+    width: 30%;
+    flex-shrink: 0;
+    border: 2px solid var(--black);
+    border-radius: 16px 0 0 16px;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+  }
+
+  .content {
+    background-color: var(--white);
+    border: 2px solid var(--black);
+    border-left: none;
+    border-radius: 0 16px 16px 0;
+    padding: 16px 32px;
+
+    .contentHeader {
+      margin-bottom: 6px;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+
+      .contentHeading {
+        font-size: 24px;
+        font-weight: 700;
+      }
+
+      .pricing {
+        display: flex;
+        align-items: center;
+
+        .coursePrice {
+          font-weight: 700;
+        }
+
+        .priceDivider {
+          margin: 0 4px;
+          display: inline-block;
+        }
+      }
+    }
+
+    .contentDescription {
+      font-size: 16px;
+      line-height: 160%;
+      -webkit-line-clamp: 2;
+      text-overflow: ellipsis;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      display: -webkit-box;
+      margin-bottom: 12px;
+    }
+
+    .courseStartDate {
+      background-color: #e6e8ea;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 4px;
+      padding: 8px;
+      margin-bottom: 12px;
+
+      .calendarIcon {
+        flex-shrink: 0;
+        width: 16px;
+        height: 16px;
+      }
+
+      .date {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 150%;
+      }
+    }
+
+    .contentFooter {
+      .tutor {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .tutorInfo {
+          display: flex;
+          gap: 12px;
+
+          .tutorAvatar {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 200px;
+          }
+
+          .tutorName {
+            font-weight: 700;
+          }
+
+          .rating {
+            display: flex;
+            font-size: 14px;
+            align-items: center;
+
+            .starIcon {
+              height: 18px;
+              margin-top: 2px;
+            }
+
+            .classesTaught {
+              color: #808080;
+            }
+          }
+        }
+
+        .slotsRemain {
+          font-weight: 700;
+          margin-left: 4px;
+        }
+      }
+    }
+  }
+}

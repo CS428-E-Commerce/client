@@ -1,0 +1,587 @@
+.main {
+  padding: 88px 0 0;
+  margin-left: 101px;
+  position: relative;
+  display: flex;
+
+  .leftSection {
+    width: 677px;
+    flex-shrink: 0;
+  }
+}
+
+.pageHeader {
+  .pageHeading {
+    font-size: 32px;
+    font-weight: 700;
+  }
+
+  .pageSubheading {
+    font-size: 20px;
+    line-height: 160%;
+    color: #889faf;
+  }
+}
+
+.overview {
+  margin: 32px 0 40px;
+
+  .tutor {
+    display: flex;
+    align-items: center;
+
+    .tutorAvatarContainer {
+      width: 48px;
+      margin-right: 12px;
+
+      .tutorAvatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 200px;
+      }
+    }
+
+    .name {
+      font-size: 24px;
+      font-weight: 700;
+      margin-right: 16px;
+    }
+
+    .stats {
+      display: flex;
+      margin-top: 2px;
+
+      .startIcon {
+        margin-right: 4px;
+      }
+
+      .rating {
+        margin-right: 12px;
+      }
+    }
+  }
+
+  .thumbnail {
+    margin-top: 24px;
+    aspect-ratio: 2 / 1;
+
+    & .img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+  }
+}
+
+.aboutThisCourse {
+  padding-bottom: 24px;
+  border-bottom: 1px solid #dae3ea;
+
+  .aboutHeading {
+    font-size: 32px;
+    font-weight: 700;
+  }
+
+  .courseDescription {
+    margin-top: 8px;
+    font-size: 16px;
+    line-height: 160%;
+  }
+
+  .outlines {
+    margin-top: 24px;
+
+    .outlineHeading {
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .outlineList {
+      list-style: disc;
+      margin-left: 20px;
+      margin-top: 8px;
+      line-height: 160%;
+    }
+  }
+
+  .prerequisites {
+    margin-top: 24px;
+
+    .prerequisitesHeading {
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .prerequisitesList {
+      list-style: none;
+      margin-left: 20px;
+      margin-top: 8px;
+      line-height: 160%;
+
+      .prerequisitesItem {
+        &::before {
+          content: "\2022";
+          font-weight: bold;
+          display: inline-block;
+          width: 0.8em; /* Also needed for space (tweak if needed) */
+          margin-left: -0.6em; /* Also needed for space (tweak if needed) */
+          color: var(--sky-blue);
+        }
+
+        & .link {
+          color: var(--sky-blue);
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+.courseTutor {
+  padding: 24px 0;
+  border-bottom: 1px solid #dae3ea;
+
+  .tutorInfoContainer {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .tutorInfo {
+    display: flex;
+    align-items: center;
+
+    .tutorAvatarContainer {
+      width: 56px;
+      margin-right: 12px;
+
+      .tutorAvatar {
+        width: 56px;
+        height: 56px;
+        border-radius: 200px;
+      }
+    }
+
+    .tutorName {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .extraInfo {
+      font-size: 14;
+      font-weight: 700;
+      line-height: 150%;
+      color: #889faf;
+    }
+  }
+
+  .contactBtn {
+    cursor: pointer;
+    margin-left: 20px;
+    border-radius: 4px;
+    padding: 8px 24px;
+    background-color: var(--deep-blue);
+    color: var(--white);
+    font-weight: 700;
+    transition: all 0.2s ease;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  .stats {
+    margin-top: 16px;
+    display: flex;
+    gap: 40px;
+
+    .verified {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 20px;
+      font-weight: 500;
+
+      .checkIcon {
+        width: 28px;
+        height: 28px;
+        margin-top: 4px;
+      }
+    }
+
+    .reviews {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 20px;
+      font-weight: 500;
+
+      .starIcon {
+        width: 40px;
+        height: 40px;
+        margin-top: 4px;
+      }
+    }
+
+    .lessonsTaught {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 20px;
+      font-weight: 500;
+
+      .graduateHatIcon {
+        width: 32px;
+        height: 32px;
+      }
+    }
+  }
+}
+
+.testimonials {
+  padding-top: 24px;
+
+  .testimonialsHeading {
+    font-size: 24px;
+    font-weight: 700;
+  }
+
+  .testimonial {
+    padding: 24px 0;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid #dae3ea;
+    }
+
+    .testimonialInfo {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 14px;
+      line-height: 150%;
+
+      .testimonialAuthorContainer {
+        align-items: center;
+        display: flex;
+
+        .testimonialAvatarContainer {
+          width: 56px;
+          margin-right: 12px;
+
+          .testimonialAvatar {
+            height: 56px;
+            width: 56px;
+            border-radius: 200px;
+          }
+        }
+
+        .testimonialAutor {
+          .testimonialAuthorName {
+            font-size: 20px;
+            font-weight: 600;
+            line-height: 16px;
+          }
+
+          .testimonialAuthorOrigin {
+            font-size: 14px;
+          }
+        }
+      }
+
+      .date {
+        color: #aeb6bc;
+      }
+    }
+
+    .testimonialContent {
+      margin-top: 16px;
+
+      .starsIcon {
+        margin-left: -4px;
+      }
+
+      .content {
+        font-size: 16px;
+        line-height: 160%;
+        margin-top: 4px;
+      }
+    }
+  }
+}
+
+.sidePanelContainer {
+  position: sticky;
+  top: 32px;
+  margin-left: 32px;
+
+  .sidePanelContent {
+    box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.25);
+    border-radius: 16px;
+    background-color: var(--white);
+    padding: 16px 24px;
+    min-width: 370px;
+
+    .classPrice {
+      display: flex;
+      align-items: center;
+
+      .price {
+        font-size: 36px;
+        font-weight: 700;
+      }
+
+      .divider,
+      .unit {
+        display: inline-block;
+        margin-top: 6px;
+        font-size: 20px;
+      }
+
+      .divider {
+        margin-left: 12px;
+        margin-right: 8px;
+      }
+    }
+  }
+
+  .upcomingClasses {
+    margin-top: 12px;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 150%;
+    letter-spacing: 0.3em;
+    color: #808080;
+  }
+
+  .metadata {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 28px 0;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid var(--light-gray);
+    }
+
+    .classDate {
+      .date {
+        font-weight: 700;
+        line-height: 150%;
+      }
+
+      .time {
+        font-size: 18px;
+        line-height: 160%;
+      }
+
+      .remain {
+        margin-top: 4px;
+        font-weight: 700;
+        line-height: 150%;
+      }
+    }
+
+    .cta {
+      margin-bottom: 4px;
+      text-align: right;
+
+      .price {
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      .enrollBtn {
+        display: block;
+        margin-top: 4px;
+        border-radius: 4px;
+        padding: 4px 16px;
+        background-color: var(--deep-blue);
+        color: var(--white);
+        font-weight: 700;
+        transition: all 0.2s ease;
+
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+    }
+  }
+}
+
+.modalHeading {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--black);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+
+.modalBody {
+  .courseInfoContainer {
+    display: flex;
+    align-items: center;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #e6e8ea;
+
+    .thumbnail {
+      width: 60px;
+      height: 60px;
+      margin-right: 12px;
+
+      .img {
+        border-radius: 4px;
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .courseInfo {
+      .courseTitle {
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 24px;
+      }
+
+      .courseDate {
+        font-size: 15px;
+        line-height: 150%;
+        color: #929da5;
+      }
+    }
+  }
+
+  .orderDetails {
+    padding: 24px 0;
+    border-bottom: 1px solid #dae3ea;
+
+    .orderDetailsHeading {
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .orderDetail {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    .total {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 16px;
+      font-weight: 700;
+
+      .text {
+        font-size: 18px;
+      }
+    }
+  }
+
+  .cardDetails {
+    padding: 24px 0;
+
+    .cardDetailsHeading {
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .creditCardInputGroup {
+      margin-top: 8px;
+
+      .text {
+        font-size: 16px;
+        line-height: 160%;
+      }
+
+      .input {
+        display: block;
+        border: 2px solid #bbc8d4;
+        width: 100%;
+        padding: 8px 16px;
+        border-radius: 4px;
+        letter-spacing: 6.4px;
+        font-weight: 600;
+        margin-top: 8px;
+      }
+    }
+
+    .metadataInputGroup {
+      margin-top: 24px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+
+      .expiryDateContainer {
+        width: 100%;
+
+        .expiryDateInput {
+          display: block;
+          border: 2px solid #bbc8d4;
+          width: 100%;
+          padding: 8px 16px;
+          border-radius: 4px;
+          letter-spacing: 6.4px;
+          font-weight: 600;
+          margin-top: 8px;
+        }
+      }
+
+      .cvvContainer {
+        width: 100%;
+
+        .cvvInput {
+          display: block;
+          border: 2px solid #bbc8d4;
+          width: 100%;
+          padding: 8px 16px;
+          border-radius: 4px;
+          letter-spacing: 6.4px;
+          font-weight: 600;
+          margin-top: 8px;
+        }
+      }
+    }
+
+    .saveCardCheckboxGroup {
+      margin-top: 16px;
+      display: flex;
+      gap: 4px;
+
+      .label {
+        display: block;
+        margin-top: -2px;
+      }
+    }
+  }
+
+  .payment {
+    padding: 16px 0;
+
+    .btn {
+      cursor: pointer;
+      width: 100%;
+      border-radius: 4px;
+      padding: 12px;
+      background-color: var(--deep-blue);
+      color: var(--white);
+      font-weight: 700;
+      transition: all 0.2s ease;
+      letter-spacing: 0.02em;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+
+    .securePaymentContainer {
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      justify-content: center;
+      margin-left: -12px;
+    }
+  }
+}

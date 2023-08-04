@@ -40,7 +40,7 @@ const Navbar = memo(() => {
             </NavLink>
           </li>
           <li className={classes.navItem}>
-            <NavLink to="/" className={classes.navLink}>
+            <NavLink to="/courses" className={classes.navLink}>
               Find a class
             </NavLink>
           </li>

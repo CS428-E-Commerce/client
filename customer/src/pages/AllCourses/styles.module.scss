@@ -1,0 +1,37 @@
+@import "assets/scss/media-query.scss";
+
+.container {
+  width: 100%;
+}
+
+.main {
+  padding: clamp(16px, 6vw, 88px) 0;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: normal;
+  margin-bottom: 12px;
+}
+
+.filterContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 24px 32px;
+  margin-bottom: 40px;
+}
+
+.allCourses {
+  position: relative;
+  margin-bottom: 48px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
