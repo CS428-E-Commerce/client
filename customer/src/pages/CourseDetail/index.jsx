@@ -7,7 +7,6 @@ import {
   CheckIcon,
   CloseRoundedIcon,
   GraduateHatIcon,
-  LockIcon,
   StarIcon,
   StarsIcon,
 } from "assets/images/icons";
@@ -19,30 +18,35 @@ import { useDispatch } from "react-redux";
 import { setLoading } from "redux/reducers/Status/actionTypes";
 import dayjs from "dayjs";
 import { formatNumber } from "services/common_service";
+// Stripe
 import {
   PaymentElement,
+  Elements,
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import PaymentForm from "./PaymentForm";
+
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE);
 
 const CourseDetail = memo(() => {
   const dispatch = useDispatch();
   const query = useQuery();
   const params = useParams();
-  const stripe = useStripe();
-  const elements = useElements();
 
   const [data, setData] = useState({});
   const [user, setUser] = useState(null);
   const [openModal, setOpenModal] = useState(false);
   const [modalType, setModalType] = useState("prepayment");
+  const [clientSecret, setClientSecret] = useState("");
 
   useEffect(() => {
     const init = async () => {
       dispatch(setLoading(true));
       try {
         const response = await ApiService.GET(
-          `/api/courses/detail/${params.courseId}/${query.get("coachId")}`
+          `/api/courses/detail/${params.courseId}/${query.get("coachId")}`,
         );
         setData({
           coach: response.coach,
@@ -56,12 +60,15 @@ const CourseDetail = memo(() => {
         setUser(user);
 
         const attendees = await ApiService.GET(
-          `/api/attendees/${response.course.id}`
+          `/api/attendees/${response.course.id}`,
         );
         const isUserAttending = attendees.data.find(
-          attendee => attendee.userId === user.data.id
+          attendee => attendee.userId === user.data.id,
         );
         if (isUserAttending) setModalType("payment-successfully");
+
+        const intentResponse = await ApiService.GET("/api/payment/1");
+        setClientSecret(intentResponse.data?.client_secret);
       } catch (error) {
         console.error(error);
         ToastService.error("Sorry, an error occurred.");
@@ -73,39 +80,11 @@ const CourseDetail = memo(() => {
     init();
   }, []);
 
-  const handleSubmit = async e => {
-    e.preventDefault();
-
-    if (!stripe || !elements || !data.course) {
-      return ToastService.error(
-        "Something went wrong. Please contact admins to get support."
-      );
-    }
-
-    dispatch(setLoading(true));
-
-    const { error } = await stripe.confirmPayment({
-      elements,
-      redirect: "if_required",
-    });
-
-    if (error) {
-      dispatch(setLoading(false));
-      // TODO: Handle error later
-      ToastService.error(error.message);
-      return;
-    }
-    // TODO: setState to show another modal
-    dispatch(setLoading(false));
-    ToastService.success("Success");
-    setModalType("payment-successfully");
-    await ApiService.POST("/api/attendees", {
-      courseId: data.course.id,
-      userId: user.data.id,
-    });
-  };
-
   const slotRemains = data.course?.maxSlot - data.course?.attendeeNumber;
+
+  const options = {
+    clientSecret,
+  };
 
   return (
     <div className={classes.main}>
@@ -362,14 +341,9 @@ const CourseDetail = memo(() => {
                   <span className={classes.value}>$6.00</span>
                 </div>
               </div>
-              <form className={classes.payment} onSubmit={handleSubmit}>
-                <PaymentElement />
-                <button className={classes.btn}>Pay $6.00</button>
-                <div className={classes.securePaymentContainer}>
-                  <LockIcon />
-                  <span>Secure payment</span>
-                </div>
-              </form>
+              <Elements stripe={stripePromise} options={options}>
+                <PaymentForm user={user} course={data.course} setModalType={setModalType} />
+              </Elements>
             </>
           )}
           {modalType === "payment-successfully" && (
