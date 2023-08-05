@@ -7,7 +7,6 @@ import {
   CheckIcon,
   CloseRoundedIcon,
   GraduateHatIcon,
-  LockIcon,
   StarIcon,
   StarsIcon,
 } from "assets/images/icons";
@@ -19,6 +18,17 @@ import { useDispatch } from "react-redux";
 import { setLoading } from "redux/reducers/Status/actionTypes";
 import dayjs from "dayjs";
 import { formatNumber } from "services/common_service";
+// Stripe
+import {
+  PaymentElement,
+  Elements,
+  useElements,
+  useStripe,
+} from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import PaymentForm from "./PaymentForm";
+
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE);
 
 const CourseDetail = memo(() => {
   const dispatch = useDispatch();
@@ -26,14 +36,17 @@ const CourseDetail = memo(() => {
   const params = useParams();
 
   const [data, setData] = useState({});
+  const [user, setUser] = useState(null);
   const [openModal, setOpenModal] = useState(false);
+  const [modalType, setModalType] = useState("prepayment");
+  const [clientSecret, setClientSecret] = useState("");
 
   useEffect(() => {
     const init = async () => {
       dispatch(setLoading(true));
       try {
         const response = await ApiService.GET(
-          `/api/courses/detail/${params.courseId}/${query.get("coachId")}`
+          `/api/courses/detail/${params.courseId}/${query.get("coachId")}`,
         );
         setData({
           coach: response.coach,
@@ -42,6 +55,20 @@ const CourseDetail = memo(() => {
           course: response.course,
           schedule: response.schedule,
         });
+
+        const user = await ApiService.GET("/api/user");
+        setUser(user);
+
+        const attendees = await ApiService.GET(
+          `/api/attendees/${response.course.id}`,
+        );
+        const isUserAttending = attendees.data.find(
+          attendee => attendee.userId === user.data.id,
+        );
+        if (isUserAttending) setModalType("payment-successfully");
+
+        const intentResponse = await ApiService.GET("/api/payment/1");
+        setClientSecret(intentResponse.data?.client_secret);
       } catch (error) {
         console.error(error);
         ToastService.error("Sorry, an error occurred.");
@@ -52,6 +79,12 @@ const CourseDetail = memo(() => {
 
     init();
   }, []);
+
+  const slotRemains = data.course?.maxSlot - data.course?.attendeeNumber;
+
+  const options = {
+    clientSecret,
+  };
 
   return (
     <div className={classes.main}>
@@ -250,9 +283,7 @@ const CourseDetail = memo(() => {
                         {/* 10:00 - 10:55 &#40;GMT+7&#41; TIME ZONE WILL BE LEFT FOR LATER */}
                       </div>
                       <div className={classes.remain}>
-                        Only{" "}
-                        {data.course?.maxSlot - data.course?.attendeeNumber}{" "}
-                        slots remain
+                        Only {slotRemains < 0 ? 0 : slotRemains} slots remain
                       </div>
                     </div>
                     <div className={classes.cta}>
@@ -296,56 +327,31 @@ const CourseDetail = memo(() => {
               </div>
             </div>
           </div>
-          <div className={classes.orderDetails}>
-            <div className={classes.orderDetailsHeading}>Order details</div>
-            <div className={classes.orderDetail}>
-              <span>$6.00 x 1 class</span>
-              <span>$6.00</span>
-            </div>
-            <div className={classes.total}>
-              <span className={classes.text}>Total</span>
-              <span className={classes.value}>$6.00</span>
-            </div>
-          </div>
-          <div className={classes.cardDetails}>
-            <div className={classes.cardDetailsHeading}>Card details</div>
 
-            <div className={classes.creditCardInputGroup}>
-              <label className={classes.text}>Credit Card Number</label>
-              <input
-                className={classes.input}
-                placeholder="xxxx xxxx xxxx xxxx"
-              />
-            </div>
-
-            <div className={classes.metadataInputGroup}>
-              <div className={classes.expiryDateContainer}>
-                <label className={classes.expiryDateLabel}>Expiry Date</label>
-                <input
-                  className={classes.expiryDateInput}
-                  placeholder="mm / yy"
-                />
+          {modalType === "prepayment" && (
+            <>
+              <div className={classes.orderDetails}>
+                <div className={classes.orderDetailsHeading}>Order details</div>
+                <div className={classes.orderDetail}>
+                  <span>$6.00 x 1 class</span>
+                  <span>$6.00</span>
+                </div>
+                <div className={classes.total}>
+                  <span className={classes.text}>Total</span>
+                  <span className={classes.value}>$6.00</span>
+                </div>
               </div>
-              <div className={classes.cvvContainer}>
-                <label className={classes.cvvLabel}>CVV</label>
-                <input className={classes.cvvInput} placeholder="xxx" />
-              </div>
+              <Elements stripe={stripePromise} options={options}>
+                <PaymentForm user={user} course={data.course} setModalType={setModalType} />
+              </Elements>
+            </>
+          )}
+          {modalType === "payment-successfully" && (
+            <div className={classes.payment}>
+              <div className="text-xl">You have registered this class</div>
+              <button className={classes.btn}>Go to My Classes</button>
             </div>
-
-            <div className={classes.saveCardCheckboxGroup}>
-              <input className={classes.checkbox} type="checkbox" />
-              <label className={classes.label}>
-                Save this card for future payments
-              </label>
-            </div>
-          </div>
-          <div className={classes.payment}>
-            <button className={classes.btn}>Pay $6.00</button>
-            <div className={classes.securePaymentContainer}>
-              <LockIcon />
-              <span>Secure payment</span>
-            </div>
-          </div>
+          )}
         </Modal.Body>
       </Modal>
     </div>
