@@ -18,11 +18,16 @@ export { ReactComponent as PopupCaretIcon } from "./icons/popup-caret.svg";
 export { ReactComponent as GraduateHatIcon } from "./icons/graduate-hat.svg";
 export { ReactComponent as CloseRoundedIcon } from "./icons/close-rounded.svg";
 export { ReactComponent as LockIcon } from "./icons/lock.svg";
+export { ReactComponent as TestimonialIcon } from "./icons/testimonial-icon.svg";
+export { ReactComponent as ArrowBack } from "./icons/arrow-back.svg";
+export { ReactComponent as ArrowForward } from "./icons/arrow-forward.svg";
 
 export { default as HeroImageSrc } from "./hero.png";
 export { default as HowItWorksImageSrc } from "./how-it-works.png";
 export { default as HeroBackgroundSrc } from "./hero-background.png";
 export { default as BookImageSrc } from "./book.png";
+export { default as TestimonialAvatarMaskSrc } from "./testimonial-avatar-mask.png";
+
 export { default as CalendarImageSrc } from "./icons/calendar.png";
 export { default as GoogleImageSrc } from "./icons/google.png";
 export { default as FacebookImageSrc } from "./icons/facebook.png";
