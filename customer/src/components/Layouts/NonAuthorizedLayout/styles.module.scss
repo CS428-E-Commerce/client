@@ -1,17 +1,17 @@
-@import "assets/scss/media-query.scss";
+// @import "assets/scss/media-query.scss";
 
-.container {
-  padding: 48px 128px;
-}
+// .container {
+//   padding: 48px 128px;
+// }
 
-@include tablet {
-  .container {
-    padding: 48px 64px;
-  }
-}
+// @include tablet {
+//   .container {
+//     padding: 48px 64px;
+//   }
+// }
 
-@include mobile-landscape {
-  .container {
-    padding: 24px 32px;
-  }
-}
+// @include mobile-landscape {
+//   .container {
+//     padding: 24px 32px;
+//   }
+// }

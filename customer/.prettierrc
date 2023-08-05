@@ -1,5 +1,8 @@
 {
   "arrowParens": "avoid",
   "semi": true,
-  "singleQuote": false
+  "singleQuote": false,
+  "plugins": ["prettier-plugin-css-order"],
+  "cssDeclarationSorterOrder": "concentric-css",
+  "cssDeclarationSorterKeepOverrides": false
 }

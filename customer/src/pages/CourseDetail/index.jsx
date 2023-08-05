@@ -9,7 +9,7 @@ import {
   GraduateHatIcon,
   StarIcon,
   StarsIcon,
-} from "assets/images/icons";
+} from "assets/images";
 import { Modal } from "react-bootstrap";
 import useQuery from "hooks/useQuery";
 import ApiService from "services/api_service";

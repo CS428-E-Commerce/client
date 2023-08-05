@@ -1,4 +1,4 @@
-import { CalendarImgSrc, StarIcon } from "assets/images/icons";
+import { CalendarImageSrc, StarIcon } from "assets/images";
 
 import classes from "./styles.module.scss";
 import { memo } from "react";
@@ -40,7 +40,7 @@ const Card = memo(
           <div className={classes.courseStartDate}>
             <img
               className={classes.calendarIcon}
-              src={CalendarImgSrc}
+              src={CalendarImageSrc}
               alt="Calendar"
             />
             <span className={classes.date}>{courseStartDate}</span>
