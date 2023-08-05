@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Switch } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 import { privateRoutes, publicRoutes } from "./routes";
@@ -7,11 +7,34 @@ import AuthorizedLayout from "components/Layouts/AuthorizedLayout";
 import NonAuthorizedLayout from "components/Layouts/NonAuthorizedLayout";
 import AppStatus from "components/AppStatus";
 
+// Stripe
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import ApiService from "services/api_service";
+import LoadingScreen from "components/LoadingScreen";
+
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE);
+
 const App = props => {
   const { history } = props;
+  // TODO: Consider another flow for Stripe
+  const [clientSecret, setClientSecret] = useState("");
 
-  return (
-    <Fragment>
+  useEffect(() => {
+    const init = async () => {
+      const response = await ApiService.GET("/api/payment/1");
+      setClientSecret(response.data?.client_secret);
+    };
+
+    init();
+  }, []);
+
+  const options = {
+    clientSecret,
+  };
+
+  return clientSecret ? (
+    <Elements stripe={stripePromise} options={options}>
       <ConnectedRouter history={history}>
         <AppStatus />
 
@@ -39,7 +62,9 @@ const App = props => {
           ))}
         </Switch>
       </ConnectedRouter>
-    </Fragment>
+    </Elements>
+  ) : (
+    <LoadingScreen />
   );
 };
 
