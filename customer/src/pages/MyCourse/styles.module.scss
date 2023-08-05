@@ -13,14 +13,11 @@ width: 100%;
     padding-top: clamp(16px, 6vw, 88px);
 }
 
-.sub-title {
-    font-size: 20px;
-    font-weight: 700;
-    line-height: normal;
+.class-title {
+    font-weight: 600;
+    font-size: 24px;
     margin-bottom: 20px;
-    padding-top: clamp(16px, 6vw, 88px);
 }
-
 
 .classList {
     display: flex;
@@ -200,12 +197,12 @@ flex-basis: calc(50% - 50px);
 }
 
 button.contactButton {
-    background-color: blue;
+    background-color: #005C9C;
     color: white;
     padding: 10px;
     width: 100%;
     border: none;
-    border-radius: 5px;
+    border-radius: 4px;
     margin-bottom: 10px;
 }
 
@@ -246,9 +243,7 @@ button.contactButton {
     margin-right: 5px;
 }
 
-/* styles.module.scss */
 
-/* ... existing styles ... */
 
 .upcomingSessionsSection {
     flex: 2;
@@ -256,13 +251,27 @@ button.contactButton {
 }
 
 .upcomingCard {
-    border: 2px solid black;
+    border: 1px solid black;
     border-radius: 10px;
     margin-bottom: 20px;
-    padding: 10px;
     width: 100%;
+    overflow: hidden;
 }
 
+.upcomingCardContent {
+    display: flex;
+    padding: 20px;
+    flex-direction: row;
+    align-items: center;
+}
+
+.imageContainer {
+    margin-right: 20px; // Adjust this value as per your requirement
+}
+
+.textContainer {
+    flex-grow: 1;
+}
 .upcomingCard img {
     width: 100px;
     height: 100px;
@@ -277,23 +286,23 @@ button.contactButton {
 }
 
 .joinButton {
-    background-color: blue;
+    background-color: #0AB3E4;
     color: white;
-    padding: 8px 15px;
+    padding: 13px 25px;
     border: none;
     border-radius: 5px;
-    margin-bottom: 10px;
+    margin-bottom:  20px;
+    margin-left:  130px;
 }
 
 .calendar-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #f0f0f0;
-    padding: 5px 10px;
+    background-color: #C5D0D8;
+    padding: 15px 20px;
     border-radius: 5px;
 }
-
 .calendarButton,
 .inviteButton {
     display: flex;
@@ -306,5 +315,3 @@ button.contactButton {
     height: 20px;
     margin-right: 5px;
 }
-
-/* ... existing styles ... */
