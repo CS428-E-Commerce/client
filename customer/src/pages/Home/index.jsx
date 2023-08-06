@@ -23,7 +23,7 @@ import clsx from "clsx";
 import Panorama from "./components/Panorama";
 
 import { register } from "swiper/element/bundle";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 register();
 
 const HomePage = memo(() => {
@@ -65,7 +65,9 @@ const HomePage = memo(() => {
             online Vietnamese language learning platform worldwide. Book a
             lesson with a private Vietnamese teacher today and start learning.
           </p>
-          <Button>Learn Now</Button>
+          <Button as={Link} to="/find-tutors" className={classes.heroButton}>
+            Learn Now
+          </Button>
         </div>
         <div className={classes.heroImageContainer}>
           <img
@@ -85,7 +87,7 @@ const HomePage = memo(() => {
         </header>
         <div>
           <img className={classes.img} src={HowItWorksImageSrc} alt="" />
-          <Button>Get Started</Button>
+          <Button as={Link} to="/courses" className={classes.btn}>Get Started</Button>
         </div>
       </section>
 
@@ -167,49 +169,51 @@ const HomePage = memo(() => {
         <div className={classes.swiper}>
           <swiper-container slides-per-view="3" ref={swiperElRef} init="false">
             {/* TODO: call API */}
-            {Array(20).fill(null).map((_, index) => (
-              <swiper-slide key={index}>
-                <div className={classes.swiperSlide}>
-                  <div className={classes.info}>
-                    <div
-                      className={classes.avatar}
-                      style={{
-                        WebkitMaskImage: `url(${TestimonialAvatarMaskSrc})`,
-                        WebkitMaskRepeat: "no-repeat",
-                        maskImage: `url(${TestimonialAvatarMaskSrc})`,
-                        maskRepeat: "no-repeat",
-                        WebkitMaskPosition: "top right",
-                        maskPosition: "top right",
-                      }}
-                    >
-                      <img
-                        className={classes.img}
-                        src={MockupAvatarSrc}
-                        alt=""
-                      />
+            {Array(20)
+              .fill(null)
+              .map((_, index) => (
+                <swiper-slide key={index}>
+                  <div className={classes.swiperSlide}>
+                    <div className={classes.info}>
+                      <div
+                        className={classes.avatar}
+                        style={{
+                          WebkitMaskImage: `url(${TestimonialAvatarMaskSrc})`,
+                          WebkitMaskRepeat: "no-repeat",
+                          maskImage: `url(${TestimonialAvatarMaskSrc})`,
+                          maskRepeat: "no-repeat",
+                          WebkitMaskPosition: "top right",
+                          maskPosition: "top right",
+                        }}
+                      >
+                        <img
+                          className={classes.img}
+                          src={MockupAvatarSrc}
+                          alt=""
+                        />
+                      </div>
+                      <div className={classes.to}>
+                        <TestimonialIcon className={classes.testimonialIcon} />
+                        <TestimonialIcon className={classes.testimonialIcon} />
+                        <span className={classes.to}>
+                          <span>- to </span>
+                          <NavLink to="/" className={classes.tutor}>
+                            Nguyen Vinh
+                          </NavLink>
+                        </span>
+                      </div>
                     </div>
-                    <div className={classes.to}>
-                      <TestimonialIcon className={classes.testimonialIcon} />
-                      <TestimonialIcon className={classes.testimonialIcon} />
-                      <span className={classes.to}>
-                        <span>- to </span>
-                        <NavLink to="/" className={classes.tutor}>
-                          Nguyen Vinh
-                        </NavLink>
-                      </span>
+                    <p className={classes.testimonial}>
+                      I highly recommend Nguyen as a Vietnamese tutor.
+                      Dedicated, knowledgeable, and inspiring. Cảm ơn Nguyên!
+                    </p>
+                    <div className={classes.from}>
+                      <span>-</span> from{" "}
+                      <span className={classes.student}>Alex Nguyen</span>
                     </div>
                   </div>
-                  <p className={classes.testimonial}>
-                    I highly recommend Nguyen as a Vietnamese tutor. Dedicated,
-                    knowledgeable, and inspiring. Cảm ơn Nguyên!
-                  </p>
-                  <div className={classes.from}>
-                    <span>-</span> from{" "}
-                    <span className={classes.student}>Alex Nguyen</span>
-                  </div>
-                </div>
-              </swiper-slide>
-            ))}
+                </swiper-slide>
+              ))}
           </swiper-container>
           <ArrowBack className={clsx("swiper-button-prev", classes.btnPrev)} />
           <ArrowForward

@@ -43,6 +43,7 @@ const CourseDetail = memo(() => {
 
   useEffect(() => {
     const init = async () => {
+      if (!data.course) return;
       dispatch(setLoading(true));
       try {
         const response = await ApiService.GET(
@@ -67,7 +68,9 @@ const CourseDetail = memo(() => {
         );
         if (isUserAttending) setModalType("payment-successfully");
 
-        const intentResponse = await ApiService.GET("/api/payment/1");
+        const intentResponse = await ApiService.GET(
+          `/api/payment/${response.course.id}`,
+        );
         setClientSecret(intentResponse.data?.client_secret);
       } catch (error) {
         console.error(error);
@@ -342,7 +345,11 @@ const CourseDetail = memo(() => {
                 </div>
               </div>
               <Elements stripe={stripePromise} options={options}>
-                <PaymentForm user={user} course={data.course} setModalType={setModalType} />
+                <PaymentForm
+                  user={user}
+                  course={data.course}
+                  setModalType={setModalType}
+                />
               </Elements>
             </>
           )}

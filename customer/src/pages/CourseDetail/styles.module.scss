@@ -1,25 +1,25 @@
 .main {
-  padding: 88px 0 0;
-  margin-left: 101px;
-  position: relative;
   display: flex;
+  position: relative;
+  justify-content: center;
+  padding: 176px 0 64px;
 
   .leftSection {
-    width: 677px;
     flex-shrink: 0;
+    width: 677px;
   }
 }
 
 .pageHeader {
   .pageHeading {
-    font-size: 32px;
     font-weight: 700;
+    font-size: 32px;
   }
 
   .pageSubheading {
+    color: #889faf;
     font-size: 20px;
     line-height: 160%;
-    color: #889faf;
   }
 }
 
@@ -31,20 +31,20 @@
     align-items: center;
 
     .tutorAvatarContainer {
-      width: 48px;
       margin-right: 12px;
+      width: 48px;
 
       .tutorAvatar {
+        border-radius: 200px;
         width: 48px;
         height: 48px;
-        border-radius: 200px;
       }
     }
 
     .name {
-      font-size: 24px;
-      font-weight: 700;
       margin-right: 16px;
+      font-weight: 700;
+      font-size: 24px;
     }
 
     .stats {
@@ -66,21 +66,21 @@
     aspect-ratio: 2 / 1;
 
     & .img {
+      border-radius: 4px;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      border-radius: 4px;
     }
   }
 }
 
 .aboutThisCourse {
-  padding-bottom: 24px;
   border-bottom: 1px solid #dae3ea;
+  padding-bottom: 24px;
 
   .aboutHeading {
-    font-size: 32px;
     font-weight: 700;
+    font-size: 32px;
   }
 
   .courseDescription {
@@ -93,15 +93,15 @@
     margin-top: 24px;
 
     .outlineHeading {
-      font-size: 20px;
       font-weight: 600;
+      font-size: 20px;
     }
 
     .outlineList {
-      list-style: disc;
-      margin-left: 20px;
       margin-top: 8px;
+      margin-left: 20px;
       line-height: 160%;
+      list-style: disc;
     }
   }
 
@@ -109,24 +109,24 @@
     margin-top: 24px;
 
     .prerequisitesHeading {
-      font-size: 20px;
       font-weight: 600;
+      font-size: 20px;
     }
 
     .prerequisitesList {
-      list-style: none;
-      margin-left: 20px;
       margin-top: 8px;
+      margin-left: 20px;
       line-height: 160%;
+      list-style: none;
 
       .prerequisitesItem {
         &::before {
-          content: "\2022";
-          font-weight: bold;
           display: inline-block;
-          width: 0.8em; /* Also needed for space (tweak if needed) */
           margin-left: -0.6em; /* Also needed for space (tweak if needed) */
+          width: 0.8em; /* Also needed for space (tweak if needed) */
+          content: "\2022";
           color: var(--sky-blue);
+          font-weight: bold;
         }
 
         & .link {
@@ -139,8 +139,8 @@
 }
 
 .courseTutor {
-  padding: 24px 0;
   border-bottom: 1px solid #dae3ea;
+  padding: 24px 0;
 
   .tutorInfoContainer {
     display: flex;
@@ -152,38 +152,38 @@
     align-items: center;
 
     .tutorAvatarContainer {
-      width: 56px;
       margin-right: 12px;
+      width: 56px;
 
       .tutorAvatar {
+        border-radius: 200px;
         width: 56px;
         height: 56px;
-        border-radius: 200px;
       }
     }
 
     .tutorName {
-      font-size: 20px;
       font-weight: 700;
+      font-size: 20px;
     }
 
     .extraInfo {
-      font-size: 14;
-      font-weight: 700;
-      line-height: 150%;
       color: #889faf;
+      font-weight: 700;
+      font-size: 14;
+      line-height: 150%;
     }
   }
 
   .contactBtn {
+    transition: all 0.2s ease;
     cursor: pointer;
     margin-left: 20px;
     border-radius: 4px;
-    padding: 8px 24px;
     background-color: var(--deep-blue);
+    padding: 8px 24px;
     color: var(--white);
     font-weight: 700;
-    transition: all 0.2s ease;
 
     &:hover {
       opacity: 0.8;
@@ -191,21 +191,21 @@
   }
 
   .stats {
-    margin-top: 16px;
     display: flex;
     gap: 40px;
+    margin-top: 16px;
 
     .verified {
       display: flex;
       align-items: center;
       gap: 12px;
-      font-size: 20px;
       font-weight: 500;
+      font-size: 20px;
 
       .checkIcon {
+        margin-top: 4px;
         width: 28px;
         height: 28px;
-        margin-top: 4px;
       }
     }
 
@@ -213,13 +213,13 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      font-size: 20px;
       font-weight: 500;
+      font-size: 20px;
 
       .starIcon {
+        margin-top: 4px;
         width: 40px;
         height: 40px;
-        margin-top: 4px;
       }
     }
 
@@ -227,8 +227,8 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      font-size: 20px;
       font-weight: 500;
+      font-size: 20px;
 
       .graduateHatIcon {
         width: 32px;
@@ -242,8 +242,8 @@
   padding-top: 24px;
 
   .testimonialsHeading {
-    font-size: 24px;
     font-weight: 700;
+    font-size: 24px;
   }
 
   .testimonial {
@@ -255,30 +255,30 @@
 
     .testimonialInfo {
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       font-size: 14px;
       line-height: 150%;
 
       .testimonialAuthorContainer {
-        align-items: center;
         display: flex;
+        align-items: center;
 
         .testimonialAvatarContainer {
-          width: 56px;
           margin-right: 12px;
+          width: 56px;
 
           .testimonialAvatar {
-            height: 56px;
-            width: 56px;
             border-radius: 200px;
+            width: 56px;
+            height: 56px;
           }
         }
 
         .testimonialAutor {
           .testimonialAuthorName {
-            font-size: 20px;
             font-weight: 600;
+            font-size: 20px;
             line-height: 16px;
           }
 
@@ -301,9 +301,9 @@
       }
 
       .content {
+        margin-top: 4px;
         font-size: 16px;
         line-height: 160%;
-        margin-top: 4px;
       }
     }
   }
@@ -326,8 +326,8 @@
       align-items: center;
 
       .price {
-        font-size: 36px;
         font-weight: 700;
+        font-size: 36px;
       }
 
       .divider,
@@ -338,25 +338,25 @@
       }
 
       .divider {
-        margin-left: 12px;
         margin-right: 8px;
+        margin-left: 12px;
       }
     }
   }
 
   .upcomingClasses {
     margin-top: 12px;
-    font-size: 18px;
+    color: #808080;
     font-weight: 500;
+    font-size: 18px;
     line-height: 150%;
     letter-spacing: 0.3em;
-    color: #808080;
   }
 
   .metadata {
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
     padding: 28px 0;
 
     &:not(:last-child) {
@@ -386,19 +386,19 @@
       text-align: right;
 
       .price {
-        font-size: 14px;
         font-weight: 700;
+        font-size: 14px;
       }
 
       .enrollBtn {
         display: block;
+        transition: all 0.2s ease;
         margin-top: 4px;
         border-radius: 4px;
-        padding: 4px 16px;
         background-color: var(--deep-blue);
+        padding: 4px 16px;
         color: var(--white);
         font-weight: 700;
-        transition: all 0.2s ease;
 
         &:hover {
           opacity: 0.8;
@@ -409,24 +409,24 @@
 }
 
 .modalHeading {
-  font-size: 16px;
-  font-weight: 700;
   color: var(--black);
-  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 16px;
   letter-spacing: 0.2em;
+  text-transform: uppercase;
 }
 
 .modalBody {
   .courseInfoContainer {
     display: flex;
     align-items: center;
-    padding-bottom: 24px;
     border-bottom: 1px solid #e6e8ea;
+    padding-bottom: 24px;
 
     .thumbnail {
+      margin-right: 12px;
       width: 60px;
       height: 60px;
-      margin-right: 12px;
 
       .img {
         border-radius: 4px;
@@ -443,20 +443,20 @@
       }
 
       .courseDate {
+        color: #929da5;
         font-size: 15px;
         line-height: 150%;
-        color: #929da5;
       }
     }
   }
 
   .orderDetails {
-    padding: 24px 0;
     border-bottom: 1px solid #dae3ea;
+    padding: 24px 0;
 
     .orderDetailsHeading {
-      font-size: 20px;
       font-weight: 600;
+      font-size: 20px;
     }
 
     .orderDetail {
@@ -483,8 +483,8 @@
     padding: 24px 0;
 
     .cardDetailsHeading {
-      font-size: 24px;
       font-weight: 700;
+      font-size: 24px;
     }
 
     .creditCardInputGroup {
@@ -497,34 +497,34 @@
 
       .input {
         display: block;
-        border: 2px solid #bbc8d4;
-        width: 100%;
-        padding: 8px 16px;
-        border-radius: 4px;
-        letter-spacing: 6.4px;
-        font-weight: 600;
         margin-top: 8px;
+        border: 2px solid #bbc8d4;
+        border-radius: 4px;
+        padding: 8px 16px;
+        width: 100%;
+        font-weight: 600;
+        letter-spacing: 6.4px;
       }
     }
 
     .metadataInputGroup {
-      margin-top: 24px;
       display: flex;
       align-items: center;
       gap: 24px;
+      margin-top: 24px;
 
       .expiryDateContainer {
         width: 100%;
 
         .expiryDateInput {
           display: block;
-          border: 2px solid #bbc8d4;
-          width: 100%;
-          padding: 8px 16px;
-          border-radius: 4px;
-          letter-spacing: 6.4px;
-          font-weight: 600;
           margin-top: 8px;
+          border: 2px solid #bbc8d4;
+          border-radius: 4px;
+          padding: 8px 16px;
+          width: 100%;
+          font-weight: 600;
+          letter-spacing: 6.4px;
         }
       }
 
@@ -533,21 +533,21 @@
 
         .cvvInput {
           display: block;
-          border: 2px solid #bbc8d4;
-          width: 100%;
-          padding: 8px 16px;
-          border-radius: 4px;
-          letter-spacing: 6.4px;
-          font-weight: 600;
           margin-top: 8px;
+          border: 2px solid #bbc8d4;
+          border-radius: 4px;
+          padding: 8px 16px;
+          width: 100%;
+          font-weight: 600;
+          letter-spacing: 6.4px;
         }
       }
     }
 
     .saveCardCheckboxGroup {
-      margin-top: 16px;
       display: flex;
       gap: 4px;
+      margin-top: 16px;
 
       .label {
         display: block;
@@ -560,16 +560,16 @@
     padding: 16px 0;
 
     .btn {
+      transition: all 0.2s ease;
       cursor: pointer;
-      width: 100%;
+      margin-top: 24px;
       border-radius: 4px;
-      padding: 12px;
       background-color: var(--deep-blue);
+      padding: 12px;
+      width: 100%;
       color: var(--white);
       font-weight: 700;
-      transition: all 0.2s ease;
       letter-spacing: 0.02em;
-      margin-top: 24px;
 
       &:hover {
         opacity: 0.8;
@@ -577,11 +577,11 @@
     }
 
     .securePaymentContainer {
-      margin-top: 8px;
       display: flex;
+      justify-content: center;
       align-items: center;
       gap: 4px;
-      justify-content: center;
+      margin-top: 8px;
       margin-left: -12px;
     }
   }

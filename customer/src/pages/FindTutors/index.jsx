@@ -17,7 +17,7 @@ import { push } from "connected-react-router";
 import ApiService from "services/api_service";
 import { ToastService } from "services/toast_service";
 import Loading from "components/Loading";
-import { formatNumber } from "services/common_service";
+import { formatCent, formatNumber } from "services/common_service";
 
 const FindTutorsPage = memo(() => {
   const dispatch = useDispatch();
@@ -73,8 +73,8 @@ const FindTutorsPage = memo(() => {
                 >
                   <p className={classes.price}>
                     <b>
-                      {item?.rateTurn !== null
-                        ? `~$${item?.rateTurn}`
+                      {item?.averageCost !== null
+                        ? `~${formatCent(item?.averageCost)}`
                         : "~$..."}
                     </b>{" "}
                     / class
