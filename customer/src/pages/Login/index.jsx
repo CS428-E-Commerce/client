@@ -5,7 +5,7 @@ import { NavLink, useHistory, useLocation } from "react-router-dom";
 import yup from "config/yupGlobal";
 
 import classes from "./styles.module.scss";
-import { FacebookImgSrc, GoogleImgSrc } from "assets/images/icons";
+import { FacebookImageSrc, GoogleImageSrc } from "assets/images";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import clsx from "clsx";
@@ -92,7 +92,7 @@ const LoginPage = memo(() => {
         >
           <img
             className={classes.oauthIcon}
-            src={GoogleImgSrc}
+            src={GoogleImageSrc}
             alt="Google Icon"
           />
           <div className={classes.oauthText}>Continue with Google</div>
@@ -105,7 +105,7 @@ const LoginPage = memo(() => {
         >
           <img
             className={classes.oauthIcon}
-            src={FacebookImgSrc}
+            src={FacebookImageSrc}
             alt="Facebook Icon"
           />
           <span className={classes.oauthText}>Continue with Facebook</span>

@@ -1,6 +1,6 @@
 import clsx from "clsx";
 
-import { PopupCaretIcon } from "assets/images/icons";
+import { PopupCaretIcon } from "assets/images";
 
 import classes from "./styles.module.scss";
 import { memo } from "react";

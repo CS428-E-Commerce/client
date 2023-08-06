@@ -1,6 +1,6 @@
 import { memo, useEffect, useState } from "react";
 import classes from "./styles.module.scss";
-import { StarsIcon, CheckIcon } from "assets/images/icons";
+import { StarsIcon, CheckIcon } from "assets/images";
 import CalendarImg from "assets/images/icons/calendar.png";
 import mockupCourseCoverImg1 from "assets/images/mockup-avatars/vietnamese.png";
 import placeholderAvatarImage from "assets/images/placeholder-avatar.jpeg";

@@ -12,7 +12,7 @@ const NonAuthorizedLayout = memo(props => {
   return (
     <>
       <div className={classes.container}>
-        <Navbar />
+        <Navbar theme={props.location.pathname === "/" ? "white" : null} />
         {children}
       </div>
       <Footer />

@@ -7,7 +7,7 @@ import {
   InstagramIcon,
   TwitterIcon,
   YoutubeIcon,
-} from "assets/images/icons";
+} from "assets/images";
 
 const Footer = () => {
   return (

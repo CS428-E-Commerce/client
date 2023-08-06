@@ -10,7 +10,7 @@ import {
   SortIcon,
   TimeIcon,
   TopicIcon,
-} from "assets/images/icons";
+} from "assets/images";
 
 import classes from "./styles.module.scss";
 import Course from "./components/Course";

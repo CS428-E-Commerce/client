@@ -4,7 +4,7 @@ import {
   useStripe,
 } from "@stripe/react-stripe-js";
 
-import { LockIcon } from "assets/images/icons";
+import { LockIcon } from "assets/images";
 import { memo } from "react";
 
 import classes from "./styles.module.scss";

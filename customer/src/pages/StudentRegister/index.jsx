@@ -2,7 +2,7 @@ import { memo } from "react";
 import { NavLink } from "react-router-dom";
 
 import classes from "./styles.module.scss";
-import { FacebookImgSrc, GoogleImgSrc } from "assets/images/icons";
+import { FacebookImageSrc, GoogleImageSrc } from "assets/images";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import clsx from "clsx";
@@ -83,7 +83,7 @@ const StudentRegisterPage = memo(() => {
         >
           <img
             className={classes.oauthIcon}
-            src={GoogleImgSrc}
+            src={GoogleImageSrc}
             alt="Google Icon"
           />
           <div className={classes.oauthText}>Continue with Google</div>
@@ -96,7 +96,7 @@ const StudentRegisterPage = memo(() => {
         >
           <img
             className={classes.oauthIcon}
-            src={FacebookImgSrc}
+            src={FacebookImageSrc}
             alt="Facebook Icon"
           />
           <span className={classes.oauthText}>Continue with Facebook</span>

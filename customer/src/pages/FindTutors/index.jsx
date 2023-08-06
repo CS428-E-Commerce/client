@@ -9,7 +9,7 @@ import {
   StarIcon,
   TimeIcon,
   TopicIcon,
-} from "assets/images/icons";
+} from "assets/images";
 import placeholderAvatarImage from "assets/images/placeholder-avatar.jpeg";
 import { Pagination } from "@mui/material";
 import { useDispatch } from "react-redux";

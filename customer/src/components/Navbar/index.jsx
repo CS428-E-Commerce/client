@@ -3,18 +3,22 @@ import { NavLink } from "react-router-dom";
 import clsx from "clsx";
 
 import classes from "./styles.module.scss";
-import { MenuIcon } from "assets/images/icons";
+import { MenuIcon } from "assets/images";
 import { useDispatch } from "react-redux";
 import { push } from "connected-react-router";
 
-const Navbar = memo(() => {
+const Navbar = memo(({ theme }) => {
   const dispatch = useDispatch();
 
   const [show, setShow] = useState(false);
   const toggleShow = () => setShow(show => !show);
 
   return (
-    <nav className={classes.navbar}>
+    <nav
+      className={clsx(classes.container, classes.navbar, {
+        [classes[theme]]: !!theme,
+      })}
+    >
       <NavLink to="/" className={classes.brand}>
         Vinglish
       </NavLink>
