@@ -1,23 +1,24 @@
 .container {
+  margin: 0px auto;
+  padding: 88px 0;
   max-width: 374px;
-  margin: 0 auto 40px;
 
   .pageHeader {
     margin-top: 88px;
 
     .pageTitle {
+      font-weight: 700;
       font-size: 40px;
       line-height: 115%;
-      font-weight: 700;
     }
 
     .signUpLinks {
-      font-size: 20px;
       margin-top: 24px;
+      font-size: 20px;
 
       .navLink {
-        line-height: 160%;
         color: var(--sky-blue);
+        line-height: 160%;
         text-decoration: underline;
       }
     }
@@ -27,23 +28,23 @@
     margin-top: 32px;
 
     .oauthBadge {
+      display: flex;
+      align-items: center;
+      gap: 24px;
       cursor: pointer;
       border: 1px solid var(--black);
       border-radius: 4px;
       padding: 16px 24px;
-      display: flex;
-      gap: 24px;
-      align-items: center;
 
       .oauthIcon {
         width: 32px;
       }
 
       .oauthText {
-        font-size: 20px;
-        font-weight: 600;
-        line-height: 160%;
         margin-bottom: 2px;
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 160%;
       }
 
       &:last-child {
@@ -61,9 +62,9 @@
     .leftDivider,
     .rightDivider {
       margin-top: 4px;
-      height: 1px;
-      width: 100%;
       background-color: #c5d0d8;
+      width: 100%;
+      height: 1px;
     }
 
     .text {
@@ -80,21 +81,21 @@
       width: 100%;
 
       .formLabel {
-        font-size: 20px;
         font-weight: 600;
+        font-size: 20px;
         line-height: 160%;
       }
 
       .input {
-        width: 100%;
+        display: block;
+        margin-top: 4px;
+        border: 2px solid #bbc8d4;
+        border-radius: 4px;
         padding: 16px;
+        width: 100%;
+        font-weight: 500;
         font-size: 16px;
         line-height: 160%;
-        font-weight: 500;
-        border-radius: 4px;
-        border: 2px solid #bbc8d4;
-        margin-top: 4px;
-        display: block;
         letter-spacing: 2px;
 
         &::placeholder {
@@ -110,10 +111,10 @@
     .forgotPassword {
       cursor: pointer;
       margin-top: 4px;
-      font-size: 16px;
-      font-weight: 500;
-      line-height: 160%;
       color: var(--sky-blue);
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 160%;
       text-decoration: underline;
     }
 

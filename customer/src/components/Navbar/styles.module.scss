@@ -18,13 +18,13 @@
   }
 }
 
-
 .navbar {
   display: flex;
-  align-items: center;
   position: absolute;
   top: 0;
   left: 0;
+  align-items: center;
+  z-index: 1000;
   width: 100%;
 
   .brand {
@@ -48,11 +48,11 @@
       align-items: center;
 
       .navLink {
+        transition: all 0.2s;
         padding: 12px 20px;
         font-weight: 500;
         font-size: 16px;
         line-height: 160%;
-        transition: all 0.2s;
 
         &:hover {
           opacity: 0.7;
@@ -63,8 +63,8 @@
         cursor: pointer;
         margin-left: 20px;
         border-radius: 4px;
-        padding: 10px 20px 12px;
         background-color: var(--black);
+        padding: 10px 20px 12px;
         color: var(--white);
       }
     }
@@ -83,20 +83,19 @@
   .navbar {
     .menuToggler {
       display: block;
-      margin-left: auto;
       cursor: pointer;
+      margin-left: auto;
     }
 
     .navbarContainer {
       display: none;
       position: absolute;
-      z-index: 1000;
       top: 120%;
       left: 0;
-      width: 100%;
       background-color: var(--black);
-      color: var(--light-gray);
       padding: 8px 0;
+      width: 100%;
+      color: var(--light-gray);
 
       &.show {
         display: block;
@@ -106,8 +105,8 @@
         flex-direction: column;
 
         .navLink {
-          padding: 12px 16px;
           display: block;
+          padding: 12px 16px;
         }
 
         .navLinkButton {

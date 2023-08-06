@@ -1,20 +1,5 @@
 @import "assets/scss/media-query.scss";
-
-.container {
-  padding: 48px 128px;
-}
-
-@include tablet {
-  .container {
-    padding: 48px 64px;
-  }
-}
-
-@include mobile-landscape {
-  .container {
-    padding: 24px 32px;
-  }
-}
+@import "assets/scss/container.scss";
 
 .heroSection {
   display: flex;
@@ -43,19 +28,7 @@
     }
 
     .heroButton {
-      transition: all 0.2s ease;
-      margin-top: 32px;
-      border-radius: 4px;
-      background-color: var(--deep-blue);
-      padding: 16px 40px;
-      color: var(--white);
-      font-weight: 700;
-      font-size: 18px;
-      line-height: 24px;
-
-      &:hover {
-        opacity: 0.8;
-      }
+      display: inline-block;
     }
   }
 
@@ -90,19 +63,7 @@
   }
 
   .btn {
-    transition: all 0.2s ease;
-    margin-top: 32px;
-    border-radius: 4px;
-    background-color: var(--deep-blue);
-    padding: 16px 40px;
-    color: var(--white);
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 24px;
-
-    &:hover {
-      opacity: 0.8;
-    }
+    display: inline-block;
   }
 }
 
@@ -261,6 +222,7 @@
       transform: translateY(40px);
       width: 40px;
       height: 40px;
+      user-select: none;
     }
 
     .btnPrev {

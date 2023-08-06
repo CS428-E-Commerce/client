@@ -12,3 +12,10 @@ export const exportCSV = (data, filename) => {
 export const formatNumber = number => {
   return number ? Number(number)?.toLocaleString("en-US") : "N/A";
 };
+
+export const formatCent = number => {
+  return (number / 100).toLocaleString("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
+};

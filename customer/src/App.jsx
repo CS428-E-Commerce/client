@@ -5,6 +5,7 @@ import Middleware from "./routes/middleware";
 import AuthorizedLayout from "components/Layouts/AuthorizedLayout";
 import NonAuthorizedLayout from "components/Layouts/NonAuthorizedLayout";
 import AppStatus from "components/AppStatus";
+import ScrollToTop from "routes/ScrollToTop";
 
 const App = props => {
   const { history } = props;
@@ -12,6 +13,7 @@ const App = props => {
   return (
     <ConnectedRouter history={history}>
       <AppStatus />
+      <ScrollToTop />
 
       <Switch>
         {publicRoutes?.map((route, idx) => (
