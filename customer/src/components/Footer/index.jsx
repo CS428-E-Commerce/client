@@ -1,13 +1,14 @@
 import { NavLink } from "react-router-dom";
 
-import classes from "./styles.module.scss";
-
 import {
   FacebookIcon,
   InstagramIcon,
   TwitterIcon,
   YoutubeIcon,
 } from "assets/images";
+
+import classes from "./styles.module.scss";
+
 
 const Footer = () => {
   return (

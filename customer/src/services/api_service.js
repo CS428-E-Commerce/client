@@ -1,5 +1,6 @@
 import axios from "axios";
 import * as qs from "qs";
+
 import { ToastService } from "./toast_service";
 
 const getToken = () => {
@@ -24,7 +25,7 @@ api.interceptors.response.use(
       ToastService.error(error?.response?.data?.error);
     }
     return Promise.reject(error);
-  }
+  },
 );
 
 const GET = async (url, data, config = {}) => {

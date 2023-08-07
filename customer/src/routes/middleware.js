@@ -1,6 +1,6 @@
-import { memo } from "react";
 import PropTypes from "prop-types";
-import { Route, Redirect } from "react-router-dom";
+import { memo } from "react";
+import { Redirect, Route } from "react-router-dom";
 
 const Middleware = memo(
   ({ component: Component, layout: Layout, isAuthProtected, ...rest }) => (

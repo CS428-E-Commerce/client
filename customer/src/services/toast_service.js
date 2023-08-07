@@ -1,8 +1,9 @@
 import { toast } from "react-toastify";
+
 import {
-  MessageSuccessComponent,
-  MessageFailureComponent,
   CloseButton,
+  MessageFailureComponent,
+  MessageSuccessComponent,
 } from "../components/Toast";
 
 export class ToastService {
@@ -58,7 +59,7 @@ export class ToastService {
               message={message ? message.toString() : ""}
             />
           ),
-          options
+          options,
         )
       : toast(
           message && typeof message !== "string" ? (
@@ -68,7 +69,7 @@ export class ToastService {
               message={message ? message.toString() : ""}
             />
           ),
-          options
+          options,
         );
   }
 

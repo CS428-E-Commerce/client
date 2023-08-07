@@ -1,4 +1,5 @@
 import { memo } from "react";
+
 import CloseIcon from "assets/images/icons/close.svg";
 
 export const SvgSuccessIcon = memo(() => {

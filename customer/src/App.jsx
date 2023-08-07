@@ -1,11 +1,13 @@
-import { Switch } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
-import { privateRoutes, publicRoutes } from "./routes";
-import Middleware from "./routes/middleware";
+import { Switch } from "react-router-dom";
+
+import AppStatus from "components/AppStatus";
 import AuthorizedLayout from "components/Layouts/AuthorizedLayout";
 import NonAuthorizedLayout from "components/Layouts/NonAuthorizedLayout";
-import AppStatus from "components/AppStatus";
 import ScrollToTop from "routes/ScrollToTop";
+
+import { privateRoutes, publicRoutes } from "./routes";
+import Middleware from "./routes/middleware";
 
 const App = props => {
   const { history } = props;

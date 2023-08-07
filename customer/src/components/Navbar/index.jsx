@@ -1,11 +1,12 @@
-import { memo, useState } from "react";
-import { NavLink } from "react-router-dom";
 import clsx from "clsx";
+import { push } from "connected-react-router";
+import { memo, useState } from "react";
+import { useDispatch } from "react-redux";
+import { NavLink } from "react-router-dom";
+
+import { MenuIcon } from "assets/images";
 
 import classes from "./styles.module.scss";
-import { MenuIcon } from "assets/images";
-import { useDispatch } from "react-redux";
-import { push } from "connected-react-router";
 
 const Navbar = memo(({ theme }) => {
   const dispatch = useDispatch();

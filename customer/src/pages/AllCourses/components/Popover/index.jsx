@@ -1,9 +1,9 @@
 import clsx from "clsx";
+import { memo } from "react";
 
 import { PopupCaretIcon } from "assets/images";
 
 import classes from "./styles.module.scss";
-import { memo } from "react";
 
 const Popover = memo(
   ({ show, tutorName, tutorAvatar, tutorCertificates, tutorLanguages }) => {

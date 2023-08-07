@@ -1,8 +1,8 @@
 import { memo } from "react";
 import { withRouter } from "react-router-dom";
 
-import Navbar from "components/Navbar";
 import Footer from "components/Footer";
+import Navbar from "components/Navbar";
 
 import classes from "./styles.module.scss";
 

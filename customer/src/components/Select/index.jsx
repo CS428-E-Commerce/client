@@ -1,9 +1,11 @@
+import clsx from "clsx";
 import { Fragment, memo } from "react";
 import { Controller } from "react-hook-form";
 import ReactSelect, { components } from "react-select";
-import clsx from "clsx";
-import classes from "./styles.module.scss";
 import { FormGroup } from "reactstrap";
+
+import classes from "./styles.module.scss";
+
 
 const Select = memo(
   ({
