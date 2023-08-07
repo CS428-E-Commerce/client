@@ -1,11 +1,11 @@
+import AllCoursesPage from "pages/AllCourses";
+import CourseDetail from "pages/CourseDetail";
 import FindTutorsPage from "pages/FindTutors";
 import HomePage from "pages/Home";
 import LoginPage from "pages/Login";
 import StudentRegisterPage from "pages/StudentRegister";
 import TutorProfilePage from "pages/TutorProfile";
 import TutorRegisterPage from "pages/TutorRegister";
-import AllCoursesPage from "pages/AllCourses";
-import CourseDetail from "pages/CourseDetail";
 
 const privateRoutes = [
   // { path: "/", component: HomePage }

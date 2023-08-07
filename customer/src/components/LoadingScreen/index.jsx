@@ -1,4 +1,5 @@
 import { memo } from "react";
+
 import classes from "./styles.module.scss";
 
 const LoadingScreen = memo(() => {

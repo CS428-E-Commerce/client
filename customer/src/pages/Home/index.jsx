@@ -1,6 +1,7 @@
+import clsx from "clsx";
 import { memo, useEffect, useRef } from "react";
-
-import Button from "./components/Button";
+import { Link, NavLink } from "react-router-dom";
+import { register } from "swiper/element/bundle";
 
 import {
   ArrowBack,
@@ -15,15 +16,12 @@ import {
   TestimonialAvatarMaskSrc,
   TestimonialIcon,
 } from "assets/images";
-
 import MockupAvatarSrc from "assets/images/mockup-avatars/albert-dera.jpg";
 
-import classes from "./styles.module.scss";
-import clsx from "clsx";
+import Button from "./components/Button";
 import Panorama from "./components/Panorama";
+import classes from "./styles.module.scss";
 
-import { register } from "swiper/element/bundle";
-import { Link, NavLink } from "react-router-dom";
 register();
 
 const HomePage = memo(() => {

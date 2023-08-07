@@ -1,7 +1,9 @@
-import { memo } from "react";
-import classes from "./styles.module.scss";
 import clsx from "clsx";
+import { memo } from "react";
+
 import { LoadingIcon } from "assets/images";
+
+import classes from "./styles.module.scss";
 
 const Loading = memo(props => {
   const { className, ...rest } = props;

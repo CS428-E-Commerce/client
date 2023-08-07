@@ -1,6 +1,7 @@
-import { memo } from "react";
-import classes from "./styles.module.scss";
 import clsx from "clsx";
+import { memo } from "react";
+
+import classes from "./styles.module.scss";
 
 const Button = memo(({ type, onClick, primary, children, className }) => {
   type ??= "button";

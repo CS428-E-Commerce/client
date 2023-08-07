@@ -1,21 +1,21 @@
-import { memo, useEffect } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
-
-import { NavLink, useHistory, useLocation } from "react-router-dom";
-import yup from "config/yupGlobal";
-
-import classes from "./styles.module.scss";
-import { FacebookImageSrc, GoogleImageSrc } from "assets/images";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import clsx from "clsx";
-import Button from "components/Button";
+import { push } from "connected-react-router";
+import { memo, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { NavLink, useHistory, useLocation } from "react-router-dom";
+
+import { FacebookImageSrc, GoogleImageSrc } from "assets/images";
+import Button from "components/Button";
+import yup from "config/yupGlobal";
+import { setLoading } from "redux/reducers/Status/actionTypes";
 import ApiService from "services/api_service";
 import { ToastService } from "services/toast_service";
-import { useDispatch } from "react-redux";
-import { setLoading } from "redux/reducers/Status/actionTypes";
-import { push } from "connected-react-router";
+
+import classes from "./styles.module.scss";
 
 const schema = yup.object().shape({
   email: yup.string().email("Invalid email").required("Email is required"),

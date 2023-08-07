@@ -3,15 +3,15 @@ import {
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
+import { memo } from "react";
+import { useDispatch } from "react-redux";
 
 import { LockIcon } from "assets/images";
-import { memo } from "react";
+import { setLoading } from "redux/reducers/Status/actionTypes";
+import ApiService from "services/api_service";
+import { ToastService } from "services/toast_service";
 
 import classes from "./styles.module.scss";
-import { useDispatch } from "react-redux";
-import { setLoading } from "redux/reducers/Status/actionTypes";
-import { ToastService } from "services/toast_service";
-import ApiService from "services/api_service";
 
 const PaymentForm = memo(({ course, user, setModalType }) => {
   const dispatch = useDispatch();

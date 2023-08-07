@@ -1,6 +1,8 @@
+import { Pagination } from "@mui/material";
+import { push } from "connected-react-router";
 import { memo, useEffect, useState } from "react";
-import classes from "./styles.module.scss";
-import Select from "components/Select";
+import { useDispatch } from "react-redux";
+
 import {
   DayIcon,
   LevelIcon,
@@ -11,13 +13,13 @@ import {
   TopicIcon,
 } from "assets/images";
 import placeholderAvatarImage from "assets/images/placeholder-avatar.jpeg";
-import { Pagination } from "@mui/material";
-import { useDispatch } from "react-redux";
-import { push } from "connected-react-router";
-import ApiService from "services/api_service";
-import { ToastService } from "services/toast_service";
 import Loading from "components/Loading";
+import Select from "components/Select";
+import ApiService from "services/api_service";
 import { formatCent, formatNumber } from "services/common_service";
+import { ToastService } from "services/toast_service";
+
+import classes from "./styles.module.scss";
 
 const FindTutorsPage = memo(() => {
   const dispatch = useDispatch();

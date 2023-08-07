@@ -1,8 +1,16 @@
+import {
+  Elements,
+  PaymentElement,
+  useElements,
+  useStripe,
+} from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import dayjs from "dayjs";
 import { memo, useEffect, useState } from "react";
-
+import { Modal } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 import { NavLink, useParams } from "react-router-dom";
 
-import classes from "./styles.module.scss";
 import {
   CheckIcon,
   CloseRoundedIcon,
@@ -10,23 +18,16 @@ import {
   StarIcon,
   StarsIcon,
 } from "assets/images";
-import { Modal } from "react-bootstrap";
 import useQuery from "hooks/useQuery";
-import ApiService from "services/api_service";
-import { ToastService } from "services/toast_service";
-import { useDispatch } from "react-redux";
 import { setLoading } from "redux/reducers/Status/actionTypes";
-import dayjs from "dayjs";
+import ApiService from "services/api_service";
 import { formatNumber } from "services/common_service";
+import { ToastService } from "services/toast_service";
+
 // Stripe
-import {
-  PaymentElement,
-  Elements,
-  useElements,
-  useStripe,
-} from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
+
 import PaymentForm from "./PaymentForm";
+import classes from "./styles.module.scss";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE);
 

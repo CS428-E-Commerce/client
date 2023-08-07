@@ -1,5 +1,6 @@
-import { forwardRef, memo } from "react";
 import clsx from "clsx";
+import { forwardRef, memo } from "react";
+
 import classes from "./styles.module.scss";
 
 const Input = memo(

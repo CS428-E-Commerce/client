@@ -1,7 +1,8 @@
+import { memo } from "react";
+
 import { CalendarImageSrc, StarIcon } from "assets/images";
 
 import classes from "./styles.module.scss";
-import { memo } from "react";
 
 const Card = memo(
   ({

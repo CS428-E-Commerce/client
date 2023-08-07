@@ -1,9 +1,10 @@
 import { memo, useState } from "react";
 
+import classes from "./styles.module.scss";
+
 import Card from "../Card";
 import Popover from "../Popover";
 
-import classes from "./styles.module.scss";
 
 // TODO: Consider splitting card & popover
 const Course = memo(

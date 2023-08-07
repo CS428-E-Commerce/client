@@ -1,7 +1,8 @@
-import { memo, useEffect, useState } from "react";
-
 import { Pagination } from "@mui/material";
-import Select from "components/Select";
+import dayjs from "dayjs";
+import { memo, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 import {
   DayIcon,
@@ -11,15 +12,14 @@ import {
   TimeIcon,
   TopicIcon,
 } from "assets/images";
-
-import classes from "./styles.module.scss";
-import Course from "./components/Course";
+import Select from "components/Select";
+import { setLoading } from "redux/reducers/Status/actionTypes";
 import ApiService from "services/api_service";
 import { ToastService } from "services/toast_service";
-import { setLoading } from "redux/reducers/Status/actionTypes";
-import { useDispatch } from "react-redux";
-import dayjs from "dayjs";
-import { Link } from "react-router-dom";
+
+import Course from "./components/Course";
+import classes from "./styles.module.scss";
+
 
 const AllCourses = memo(() => {
   const dispatch = useDispatch();

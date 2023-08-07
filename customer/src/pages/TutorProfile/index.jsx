@@ -1,15 +1,17 @@
+import dayjs from "dayjs";
 import { memo, useEffect, useState } from "react";
-import classes from "./styles.module.scss";
-import { StarsIcon, CheckIcon } from "assets/images";
+import { useParams } from "react-router-dom";
+
+import { CheckIcon, StarsIcon } from "assets/images";
 import CalendarImg from "assets/images/icons/calendar.png";
 import mockupCourseCoverImg1 from "assets/images/mockup-avatars/vietnamese.png";
 import placeholderAvatarImage from "assets/images/placeholder-avatar.jpeg";
-import ApiService from "services/api_service";
-import { useParams } from "react-router-dom";
-import { ToastService } from "services/toast_service";
 import Loading from "components/Loading";
+import ApiService from "services/api_service";
 import { formatCent, formatNumber } from "services/common_service";
-import dayjs from "dayjs";
+import { ToastService } from "services/toast_service";
+
+import classes from "./styles.module.scss";
 
 const TutorProfilePage = memo(() => {
   const { id } = useParams();

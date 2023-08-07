@@ -1,6 +1,7 @@
-import { memo, useLayoutEffect } from "react";
-import { withRouter, useHistory } from "react-router-dom";
 import { Container } from "@mui/material";
+import { memo, useLayoutEffect } from "react";
+import { useHistory, withRouter } from "react-router-dom";
+
 import classes from "./styles.module.scss";
 
 const AuthorizedLayout = memo(props => {
