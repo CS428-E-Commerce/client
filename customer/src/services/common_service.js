@@ -19,3 +19,8 @@ export const formatCent = number => {
     currency: "USD",
   });
 };
+
+export const formatPixelValue = numberOrPixel => {
+  if (numberOrPixel.endsWith("px")) return numberOrPixel;
+  return `${numberOrPixel}px`;
+};
