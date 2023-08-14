@@ -158,9 +158,7 @@ const LoginPage = memo(() => {
           label="Remember me"
         />
         <br />
-        <Button className={classes.submitButton} primary type="submit">
-          Log in
-        </Button>
+        <Button width="100%">Log in</Button>
       </form>
     </div>
   );

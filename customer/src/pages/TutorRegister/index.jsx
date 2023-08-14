@@ -5,8 +5,7 @@ import clsx from "clsx";
 import { memo } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { NavLink } from "react-router-dom";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { NavLink, useHistory } from "react-router-dom";
 
 import { FacebookImageSrc, GoogleImageSrc } from "assets/images";
 import Button from "components/Button";
@@ -40,7 +39,7 @@ const TutorRegisterPage = memo(() => {
     const account = {
       email: data.email,
       password: data.password,
-      role: "STUDENT",
+      role: "COACH",
     };
 
     dispatch(setLoading(true));
@@ -151,9 +150,7 @@ const TutorRegisterPage = memo(() => {
           label="Remember me"
         />
         <br />
-        <Button className={classes.submitButton} primary type="submit">
-          Register
-        </Button>
+        <Button width="100%">Register</Button>
       </form>
     </div>
   );

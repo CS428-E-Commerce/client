@@ -17,8 +17,8 @@ import {
   TestimonialIcon,
 } from "assets/images";
 import MockupAvatarSrc from "assets/images/mockup-avatars/albert-dera.jpg";
+import Button from "components/Button";
 
-import Button from "./components/Button";
 import Panorama from "./components/Panorama";
 import classes from "./styles.module.scss";
 
@@ -85,7 +85,9 @@ const HomePage = memo(() => {
         </header>
         <div>
           <img className={classes.img} src={HowItWorksImageSrc} alt="" />
-          <Button as={Link} to="/courses" className={classes.btn}>Get Started</Button>
+          <Button as={Link} to="/courses" className={classes.btn}>
+            Get Started
+          </Button>
         </div>
       </section>
 

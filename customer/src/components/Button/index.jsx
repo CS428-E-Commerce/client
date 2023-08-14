@@ -1,20 +1,22 @@
-import clsx from "clsx";
-import { memo } from "react";
+import styled from "@emotion/styled";
 
-import classes from "./styles.module.scss";
+import { formatPixelValue } from "services/common_service";
 
-const Button = memo(({ type, onClick, primary, children, className }) => {
-  type ??= "button";
+const Button = styled.button`
+  transition: all 0.2s ease;
+  margin-top: 32px;
+  border-radius: 4px;
+  background-color: var(--deep-blue);
+  padding: 16px 40px;
+  color: var(--white);
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 24px;
+  width: ${({ width }) => width && formatPixelValue(width)};
 
-  return (
-    <button
-      type={type}
-      onClick={onClick}
-      className={clsx({ [classes.primary]: primary }, className)}
-    >
-      {children}
-    </button>
-  );
-});
+  &:hover {
+    opacity: 0.8;
+  }
+`;
 
 export default Button;

@@ -151,9 +151,7 @@ const StudentRegisterPage = memo(() => {
           label="Remember me"
         />
         <br />
-        <Button className={classes.submitButton} primary type="submit">
-          Register
-        </Button>
+        <Button width="100%">Register</Button>
       </form>
     </div>
   );
