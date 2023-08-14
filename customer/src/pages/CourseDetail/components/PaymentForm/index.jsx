@@ -47,7 +47,7 @@ const PaymentForm = memo(({ course, user, setModalType }) => {
     setModalType("payment-successfully");
     await ApiService.POST("/api/attendees", {
       courseId: course.id,
-      userId: user.data.id,
+      userId: user.data.id ?? user.data.coachInfo.id,
     });
   };
 

@@ -70,29 +70,33 @@ const CourseDetail = memo(() => {
 
   useEffect(() => {
     const initPayment = async () => {
+      if (!data) return;
       try {
         const user = await ApiService.GET("/api/user");
         setUser(user);
 
         const attendees = await ApiService.GET(
-          `/api/attendees/${response.course.id}`,
+          `/api/attendees/${data.course.id}`,
         );
         const isUserAttending = attendees.data?.find(
-          attendee => attendee.userId === user.data?.id,
+          attendee =>
+            attendee.userId === (user.data?.id ?? user.data?.coachInfo?.id),
         );
+
         if (isUserAttending) setModalType("payment-successfully");
 
         const intentResponse = await ApiService.GET(
-          `/api/payment/${response.course.id}`,
+          `/api/payment/${data.course.id}`,
         );
         setClientSecret(intentResponse.data?.client_secret);
-      } catch {
+      } catch (error) {
+        console.error(error);
         setClientSecret("");
       }
     };
 
     initPayment();
-  }, []);
+  }, [data]);
 
   const slotRemains =
     data?.course?.maxSlot ?? 0 - data?.course?.attendeeNumber ?? 0;
