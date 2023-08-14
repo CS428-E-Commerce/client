@@ -1,41 +1,42 @@
 .card {
-  border-radius: 16px;
   display: flex;
-  width: 75%;
-  padding-right: 24px;
   flex-shrink: 0;
+  border-radius: 16px;
+  padding-right: 24px;
+  width: 100%;
 
   .thumbnail {
-    width: 30%;
     flex-shrink: 0;
     border: 2px solid var(--black);
     border-radius: 16px 0 0 16px;
+    width: 30%;
     overflow: hidden;
 
     img {
+      display: block;
       width: 100%;
       height: 100%;
-      display: block;
       object-fit: cover;
     }
   }
 
   .content {
-    background-color: var(--white);
     border: 2px solid var(--black);
     border-left: none;
     border-radius: 0 16px 16px 0;
+    background-color: var(--white);
     padding: 16px 32px;
+    width: 100%;
 
     .contentHeader {
-      margin-bottom: 6px;
       display: flex;
-      align-items: baseline;
       justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 6px;
 
       .contentHeading {
-        font-size: 24px;
         font-weight: 700;
+        font-size: 24px;
       }
 
       .pricing {
@@ -47,31 +48,31 @@
         }
 
         .priceDivider {
-          margin: 0 4px;
           display: inline-block;
+          margin: 0 4px;
         }
       }
     }
 
     .contentDescription {
-      font-size: 16px;
-      line-height: 160%;
-      -webkit-line-clamp: 2;
-      text-overflow: ellipsis;
       -webkit-box-orient: vertical;
-      overflow: hidden;
       display: -webkit-box;
       margin-bottom: 12px;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
+      font-size: 16px;
+      line-height: 160%;
+      text-overflow: ellipsis;
     }
 
     .courseStartDate {
-      background-color: #e6e8ea;
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      border-radius: 4px;
-      padding: 8px;
       margin-bottom: 12px;
+      border-radius: 4px;
+      background-color: #e6e8ea;
+      padding: 8px;
 
       .calendarIcon {
         flex-shrink: 0;
@@ -80,8 +81,8 @@
       }
 
       .date {
-        font-size: 14px;
         font-weight: 500;
+        font-size: 14px;
         line-height: 150%;
       }
     }
@@ -89,18 +90,19 @@
     .contentFooter {
       .tutor {
         display: flex;
-        align-items: center;
         justify-content: space-between;
+        align-items: center;
 
         .tutorInfo {
           display: flex;
+          align-items: center;
           gap: 12px;
 
           .tutorAvatar {
+            border-radius: 200px;
             width: 40px;
             height: 40px;
             object-fit: cover;
-            border-radius: 200px;
           }
 
           .tutorName {
@@ -109,12 +111,12 @@
 
           .rating {
             display: flex;
-            font-size: 14px;
             align-items: center;
+            font-size: 14px;
 
             .starIcon {
-              height: 18px;
               margin-top: 2px;
+              height: 18px;
             }
 
             .classesTaught {
@@ -124,8 +126,8 @@
         }
 
         .slotsRemain {
-          font-weight: 700;
           margin-left: 4px;
+          font-weight: 700;
         }
       }
     }

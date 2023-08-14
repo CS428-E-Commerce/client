@@ -17,16 +17,7 @@ const Navbar = memo(({ theme }) => {
   const [show, setShow] = useState(false);
   const toggleShow = () => setShow(show => !show);
 
-  const [data, setData] = useState(null);
-
-  useEffect(() => {
-    ApiService.GET("/api/user")
-      .then(response => setData(response.data))
-      .catch(error => {
-        console.log(error);
-        ToastService.error("Sorry, an error occurred.");
-      });
-  }, []);
+  const email = localStorage.getItem("email");
 
   return (
     <nav
@@ -64,8 +55,8 @@ const Navbar = memo(({ theme }) => {
             </NavLink>
           </li>
           <li className={classes.navItem}>
-            {!!data?.email ? (
-              <UserMenu title={data?.email} userId={data?.id} />
+            {!!email ? (
+              <UserMenu title={email} />
             ) : (
               <div
                 onClick={() => dispatch(push(`/login`))}

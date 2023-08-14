@@ -4,6 +4,7 @@ import { memo, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import {
+  AvatarPlaceholderSrc,
   DayIcon,
   LevelIcon,
   PriceIcon,
@@ -12,7 +13,6 @@ import {
   TimeIcon,
   TopicIcon,
 } from "assets/images";
-import placeholderAvatarImage from "assets/images/placeholder-avatar.jpeg";
 import Loading from "components/Loading";
 import Select from "components/Select";
 import ApiService from "services/api_service";
@@ -20,6 +20,19 @@ import { formatCent, formatNumber } from "services/common_service";
 import { ToastService } from "services/toast_service";
 
 import classes from "./styles.module.scss";
+
+const sliceCerts = certs => {
+  const result = certs.slice(0, 3);
+
+  if (certs.length > 3) {
+    result.push({
+      id: Date.now() * Math.random(),
+      certificate: `+${certs.slice(3).length}`,
+    });
+  }
+
+  return result;
+};
 
 const FindTutorsPage = memo(() => {
   const dispatch = useDispatch();
@@ -84,7 +97,7 @@ const FindTutorsPage = memo(() => {
 
                   <img
                     className={classes.avatar}
-                    src={item?.coachInfo?.avatar ?? placeholderAvatarImage}
+                    src={item?.coachInfo?.avatar ?? AvatarPlaceholderSrc}
                     alt="Avatar"
                   />
 
@@ -103,23 +116,12 @@ const FindTutorsPage = memo(() => {
                   <p className={classes.role}>Certified Vietnamese tutor</p>
 
                   <div className={classes.skills}>
-                    {item?.certificates?.map((cert, certIndex) => {
-                      if (certIndex > 3) {
-                        return null;
-                      } else if (certIndex === 3) {
-                        return (
-                          <div key={`cert-${certIndex}`}>
-                            +{cert?.certificates?.length - 3}
-                          </div>
-                        );
-                      } else {
-                        return (
-                          <div key={`cert-${certIndex}`}>
-                            {cert?.certificate ?? "N/A"}
-                          </div>
-                        );
-                      }
-                    })}
+                    {item?.certificates &&
+                      sliceCerts(item?.certificates).map(cert => (
+                        <div key={`cert-${cert.id}`} className={classes.skill}>
+                          {cert?.certificate ?? "N/A"}
+                        </div>
+                      ))}
                   </div>
 
                   <p className={classes.description}>

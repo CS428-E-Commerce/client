@@ -21,6 +21,7 @@ export const formatCent = number => {
 };
 
 export const formatPixelValue = numberOrPixel => {
-  if (numberOrPixel.endsWith("px")) return numberOrPixel;
+  const eov = /(px|%|vw|vh)$/;
+  if (eov.test(numberOrPixel)) return numberOrPixel;
   return `${numberOrPixel}px`;
 };

@@ -11,7 +11,7 @@ import { push } from "connected-react-router";
 import { memo, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 
-const UserMenu = memo(({ title, userId }) => {
+const UserMenu = memo(({ title }) => {
   const dispatch = useDispatch();
 
   const [openMenu, setOpenMenu] = useState(false);
@@ -27,7 +27,7 @@ const UserMenu = memo(({ title, userId }) => {
   };
 
   const navigateProfile = () => {
-    dispatch(push(`/profile/${userId}`));
+    dispatch(push("/my-profile"));
   };
   const logout = () => {
     localStorage.clear();

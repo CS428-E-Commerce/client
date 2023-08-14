@@ -6,7 +6,7 @@
 }
 
 .main {
-  margin: 0 auto;
+  margin: 40px auto 0;
   padding: clamp(16px, 6vw, 88px) 0;
   max-width: 780px;
 
@@ -36,24 +36,6 @@
           display: block;
           margin: 4px 0 24px;
         }
-
-        .statBlock {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 24px;
-
-          .statTitle {
-            font-weight: 700;
-            font-size: 24px;
-          }
-
-          .statAmount {
-            display: block;
-            margin-top: -4px;
-            font-weight: 700;
-            font-size: 20px;
-          }
-        }
       }
 
       .aboutMeSection {
@@ -73,19 +55,17 @@
       }
 
       .coursesSection {
-        .courses {
-          display: flex;
-          gap: 32px;
-        }
-
         .coursesHeading {
           font-weight: 700;
           font-size: 32px;
         }
 
-        .courseCard {
+        .courses {
           display: flex;
-          flex-direction: column;
+          gap: 32px;
+        }
+
+        .courseCard {
           cursor: pointer;
           margin-top: 8px;
           border: 1px solid var(--black);
@@ -104,17 +84,13 @@
           }
 
           .courseBody {
+            border-bottom: 1px solid var(--light-gray);
             padding: 16px;
 
             .courseTitle {
-              -webkit-box-orient: vertical;
-              display: -webkit-box;
-              -webkit-line-clamp: 2;
-              overflow: hidden;
               font-weight: 700;
               font-size: 20px;
               line-height: 120%;
-              text-overflow: ellipsis;
             }
 
             .courseInfo {
@@ -160,8 +136,6 @@
             display: flex;
             justify-content: space-between;
             align-items: baseline;
-            margin-top: auto;
-            border-top: 1px solid var(--light-gray);
             padding: 16px;
 
             .coursePrice {

@@ -1,8 +1,6 @@
 import { Pagination } from "@mui/material";
-import dayjs from "dayjs";
 import { memo, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
 
 import {
   DayIcon,
@@ -20,7 +18,6 @@ import { ToastService } from "services/toast_service";
 import Course from "./components/Course";
 import classes from "./styles.module.scss";
 
-
 const AllCourses = memo(() => {
   const dispatch = useDispatch();
 
@@ -32,8 +29,14 @@ const AllCourses = memo(() => {
       dispatch(setLoading(true));
       try {
         const response = await ApiService.GET("/api/courses", {
-          windowIndex: 0,
-          // ...
+          code: null,
+          coachId: null,
+          userId: null,
+          status: null,
+          level: null,
+          // TODO: integrate pagination
+          offset: 0,
+          limit: 5,
         });
         setCourses(response?.data ?? []);
       } catch (error) {
@@ -69,28 +72,7 @@ const AllCourses = memo(() => {
 
         <section className={classes.allCourses}>
           {courses.map(course => (
-            // TODO: Fix this link
-            <Link
-              to={`/courses/${course.courseId}?coachId=${course.coachId}`}
-              key={course.courseId}
-            >
-              <Course
-                thumbnailSrc={course.banner}
-                courseTitle={course.title}
-                coursePrice={course.cost}
-                courseDescription={course.description}
-                courseStartDate={`${dayjs(course.startTime).format(
-                  "ddd, HH:mm - "
-                )}${dayjs(course.endTime).format("HH:mm")}`}
-                tutorAvatar={course.coachAvatar}
-                tutorName={course.coachname}
-                tutorRating={course.coachRate}
-                tutorClassesTaught={course.coachTotalCourse}
-                slotRemain={course.maxSlot /** - numberAttendees */}
-                tutorCertificates={["Certified Vietnamese tutor"]}
-                tutorLanguages={["English", "Vietnamese"]}
-              />
-            </Link>
+            <Course key={course.courseId} course={course} />
           ))}
         </section>
 

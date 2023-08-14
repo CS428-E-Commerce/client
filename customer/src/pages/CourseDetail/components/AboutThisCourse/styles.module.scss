@@ -1,0 +1,63 @@
+.aboutThisCourse {
+  border-bottom: 1px solid #dae3ea;
+  padding-bottom: 24px;
+
+  .aboutHeading {
+    font-weight: 700;
+    font-size: 32px;
+  }
+
+  .courseDescription {
+    margin-top: 8px;
+    font-size: 16px;
+    line-height: 160%;
+  }
+
+  .outlines {
+    margin-top: 24px;
+
+    .outlineHeading {
+      font-weight: 600;
+      font-size: 20px;
+    }
+
+    .outlineList {
+      margin-top: 8px;
+      margin-left: 20px;
+      line-height: 160%;
+      list-style: disc;
+    }
+  }
+
+  .prerequisites {
+    margin-top: 24px;
+
+    .prerequisitesHeading {
+      font-weight: 600;
+      font-size: 20px;
+    }
+
+    .prerequisitesList {
+      margin-top: 8px;
+      margin-left: 20px;
+      line-height: 160%;
+      list-style: none;
+
+      .prerequisitesItem {
+        &::before {
+          display: inline-block;
+          margin-left: -0.6em; /* Also needed for space (tweak if needed) */
+          width: 0.8em; /* Also needed for space (tweak if needed) */
+          content: "\2022";
+          color: var(--sky-blue);
+          font-weight: bold;
+        }
+
+        & .link {
+          color: var(--sky-blue);
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}

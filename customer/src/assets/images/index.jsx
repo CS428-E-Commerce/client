@@ -22,6 +22,7 @@ export { ReactComponent as TestimonialIcon } from "./icons/testimonial-icon.svg"
 export { ReactComponent as ArrowBack } from "./icons/arrow-back.svg";
 export { ReactComponent as ArrowForward } from "./icons/arrow-forward.svg";
 
+export { default as AvatarPlaceholderSrc } from "./user.png";
 export { default as HeroImageSrc } from "./hero.png";
 export { default as HowItWorksImageSrc } from "./how-it-works.png";
 export { default as HeroBackgroundSrc } from "./hero-background.png";
