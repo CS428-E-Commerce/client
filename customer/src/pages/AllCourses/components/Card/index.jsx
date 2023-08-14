@@ -26,13 +26,13 @@ const Card = memo(
         onMouseLeave={onMouseLeave}
       >
         <div className={classes.thumbnail}>
-          <img style={{height: "224px"}} src={thumbnailSrc} alt="" />
+          <img style={{ height: "224px" }} src={thumbnailSrc} alt="" />
         </div>
         <div className={classes.content}>
           <div className={classes.contentHeader}>
             <h2 className={classes.contentHeading}>{courseTitle}</h2>
             <div className={classes.pricing}>
-              <span className={classes.coursePrice}>${coursePrice}</span>
+              <span className={classes.coursePrice}>{coursePrice}</span>
               <span className={classes.priceDivider}>/</span>
               <span>class</span>
             </div>
@@ -53,7 +53,7 @@ const Card = memo(
                 <div>
                   <h3 className={classes.tutorName}>{tutorName}</h3>
                   <div className={classes.rating}>
-                    <span className={classes.rate}>{tutorRating}</span>
+                    <span className={classes.rate}>{Number(tutorRating)}</span>
                     <StarIcon className={classes.starIcon} />
                     <span className={classes.classesTaught}>
                       • {tutorClassesTaught} classes taught
@@ -72,7 +72,7 @@ const Card = memo(
         </div>
       </div>
     );
-  }
+  },
 );
 
 export default Card;

@@ -21,7 +21,7 @@ const Middleware = memo(
         );
       }}
     />
-  )
+  ),
 );
 
 Middleware.propTypes = {

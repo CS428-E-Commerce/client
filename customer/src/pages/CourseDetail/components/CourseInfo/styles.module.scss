@@ -1,0 +1,98 @@
+.sidePanelContainer {
+  position: sticky;
+  top: 32px;
+  margin-left: 32px;
+
+  .sidePanelContent {
+    box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.25);
+    border-radius: 16px;
+    background-color: var(--white);
+    padding: 16px 24px;
+    min-width: 370px;
+
+    .classPrice {
+      display: flex;
+      align-items: center;
+
+      .price {
+        font-weight: 700;
+        font-size: 36px;
+      }
+
+      .divider,
+      .unit {
+        display: inline-block;
+        margin-top: 6px;
+        font-size: 20px;
+      }
+
+      .divider {
+        margin-right: 8px;
+        margin-left: 12px;
+      }
+    }
+  }
+
+  .upcomingClasses {
+    margin-top: 12px;
+    color: #808080;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 150%;
+    letter-spacing: 0.3em;
+  }
+
+  .metadata {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px 0;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid var(--light-gray);
+    }
+
+    .classDate {
+      .date {
+        font-weight: 700;
+        line-height: 150%;
+      }
+
+      .time {
+        font-size: 18px;
+        line-height: 160%;
+      }
+
+      .remain {
+        margin-top: 4px;
+        font-weight: 700;
+        line-height: 150%;
+      }
+    }
+
+    .cta {
+      margin-bottom: 4px;
+      text-align: right;
+
+      .price {
+        font-weight: 700;
+        font-size: 14px;
+      }
+
+      .enrollBtn {
+        display: block;
+        transition: all 0.2s ease;
+        margin-top: 4px;
+        border-radius: 4px;
+        background-color: var(--deep-blue);
+        padding: 4px 16px;
+        color: var(--white);
+        font-weight: 700;
+
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+    }
+  }
+}

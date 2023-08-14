@@ -1,5 +1,10 @@
 .course {
   display: flex;
-  margin-bottom: 32px;
   position: relative;
+  margin-bottom: 32px;
+
+  .link {
+    display: block;
+    width: 75%;
+  }
 }
