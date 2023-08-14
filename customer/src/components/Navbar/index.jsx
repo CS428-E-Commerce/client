@@ -1,13 +1,11 @@
 import clsx from "clsx";
 import { push } from "connected-react-router";
-import { memo, useEffect, useState } from "react";
+import { memo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 
 import { MenuIcon } from "assets/images";
 import UserMenu from "components/BasicMenu";
-import ApiService from "services/api_service";
-import { ToastService } from "services/toast_service";
 
 import classes from "./styles.module.scss";
 
@@ -45,7 +43,7 @@ const Navbar = memo(({ theme }) => {
             </NavLink>
           </li>
           <li className={classes.navItem}>
-            <NavLink to="/" className={classes.navLink}>
+            <NavLink to="/tutor-signup" className={classes.navLink}>
               Become a tutor
             </NavLink>
           </li>

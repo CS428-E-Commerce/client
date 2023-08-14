@@ -54,7 +54,7 @@ const PaymentForm = memo(({ course, user, setModalType }) => {
   return (
     <form className={classes.payment} onSubmit={handleSubmit}>
       <PaymentElement />
-      <button className={classes.btn}>Pay $6.00</button>
+      <button className={classes.btn}>Pay</button>
       <div className={classes.securePaymentContainer}>
         <LockIcon />
         <span>Secure payment</span>
