@@ -1,5 +1,6 @@
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import { push } from "connected-react-router";
 import dayjs from "dayjs";
 import { memo, useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
@@ -195,7 +196,12 @@ const CourseDetail = memo(() => {
           {modalType === "payment-successfully" && (
             <div className={classes.payment}>
               <div className="text-xl">You have registered this class</div>
-              <button className={classes.btn}>Go to My Classes</button>
+              <button
+                className={classes.btn}
+                onClick={() => dispatch(push("/my-course"))}
+              >
+                Go to My Courses
+              </button>
             </div>
           )}
         </Modal.Body>

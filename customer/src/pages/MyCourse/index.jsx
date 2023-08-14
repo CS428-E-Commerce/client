@@ -1,54 +1,93 @@
-import React, { memo, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
+
+import ApiService from "services/api_service";
+
 import classes from "./styles.module.scss";
 
 const MyCourse = memo(() => {
-  const classData = [
-    {
-      id: 1,
-      title: "Class 1",
-      detail: "Details of Class 1",
-      attendees: [
-        { name: "Alice", avatarUrl: "https://placehold.co/50" },
-        { name: "Bob", avatarUrl: "https://placehold.co/50" },
-        { name: "Charlie", avatarUrl: "https://placehold.co/50" },
-        // Add more attendees as needed
-      ],
-      tutor: {
-        name: "John Doe",
-        rating: 5,
-        since: "2022",
-        verified: true,
-        reviewCount: 10,
-        lessonsTaught: 1000,
-        avatarUrl: "https://placehold.co/100",
-      },
-      imageUrl: "https://placehold.co/100",
-      upcomingSessions: ["Session 1", "Session 2", "Session 3"],
+  const [courses, setCourses] = useState([]);
+
+  useEffect(() => {
+    const init = async () => {
+      const response = await ApiService.GET("/api/user");
+      const myCourses = await ApiService.GET("/api/courses", {
+        userId: response?.data?.id ?? response?.data?.coachInfo?.id,
+      });
+      setCourses(myCourses.data);
+    };
+
+    init();
+  }, []);
+
+  const classData = courses.map(course => ({
+    id: course.courseId,
+    title: course.title,
+    detail: course.description,
+    attendees: [
+      { name: "Alice", avatarUrl: "https://placehold.co/50" },
+      { name: "Bob", avatarUrl: "https://placehold.co/50" },
+      { name: "Charlie", avatarUrl: "https://placehold.co/50" },
+    ],
+    tutor: {
+      name: course.coachname,
+      rating: Number(course.coachRate),
+      since: "2022",
+      verified: true,
+      reviewCount: 10,
+      lessonsTaught: 1245,
+      avatarUrl: "https://placehold.co/100",
     },
-    {
-      id: 2,
-      title: "Class 2",
-      detail: "Details of Class 2",
-      attendees: [
-        { name: "David", avatarUrl: "https://placehold.co/50" },
-        { name: "Eva", avatarUrl: "https://placehold.co/50" },
-        { name: "Frank", avatarUrl: "https://placehold.co/50" },
-        // Add more attendees as needed
-      ],
-      tutor: {
-        name: "Jane Smith",
-        rating: 4.5,
-        since: "2021",
-        verified: true,
-        reviewCount: 15,
-        lessonsTaught: 2500,
-        avatarUrl: "https://placehold.co/100",
-      },
-      imageUrl: "https://placehold.co/100",
-      upcomingSessions: ["Session B", "Session C"],
-    },
-    // Add more class data as needed
-  ];
+    imageUrl: course.banner,
+    upcomingSessions: ["Session 1", "Session 2", "Session 3"],
+  }));
+
+  // const classData = [
+  //   {
+  //     id: 1,
+  //     title: "Class 1",
+  //     detail: "Details of Class 1",
+  //     attendees: [
+  //       { name: "Alice", avatarUrl: "https://placehold.co/50" },
+  //       { name: "Bob", avatarUrl: "https://placehold.co/50" },
+  //       { name: "Charlie", avatarUrl: "https://placehold.co/50" },
+  //       // Add more attendees as needed
+  //     ],
+  //     tutor: {
+  //       name: "John Doe",
+  //       rating: 5,
+  //       since: "2022",
+  //       verified: true,
+  //       reviewCount: 10,
+  //       lessonsTaught: 1000,
+  //       avatarUrl: "https://placehold.co/100",
+  //     },
+  //     imageUrl: "https://placehold.co/100",
+  //     upcomingSessions: ["Session 1", "Session 2", "Session 3"],
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "Class 2",
+  //     detail: "Details of Class 2",
+  //     attendees: [
+  //       { name: "David", avatarUrl: "https://placehold.co/50" },
+  //       { name: "Eva", avatarUrl: "https://placehold.co/50" },
+  //       { name: "Frank", avatarUrl: "https://placehold.co/50" },
+  //       // Add more attendees as needed
+  //     ],
+  //     tutor: {
+  //       name: "Jane Smith",
+  //       rating: 4.5,
+  //       since: "2021",
+  //       verified: true,
+  //       reviewCount: 15,
+  //       lessonsTaught: 2500,
+  //       avatarUrl: "https://placehold.co/100",
+  //     },
+  //     imageUrl: "https://placehold.co/100",
+  //     upcomingSessions: ["Session B", "Session C"],
+  //   },
+  //   // Add more class data as needed
+  // ];
 
   const [selectedClass, setSelectedClass] = useState(null);
 
@@ -100,7 +139,7 @@ const MyCourse = memo(() => {
                       />
                       <p>{attendee.name}</p>
                     </div>
-                  )
+                  ),
                 )}
               </div>
             </div>
@@ -199,7 +238,7 @@ const MyCourse = memo(() => {
                     </div>
                   </div>
                 </div>
-              )
+              ),
             )}
           </div>
         </div>
