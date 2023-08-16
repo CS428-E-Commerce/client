@@ -1,21 +1,15 @@
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { push } from "connected-react-router";
-import dayjs from "dayjs";
 import { memo, useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import {
-  AvatarPlaceholderSrc,
-  CloseRoundedIcon,
-  StarsIcon,
-} from "assets/images";
+import { AvatarPlaceholderSrc, CloseRoundedIcon } from "assets/images";
 import useQuery from "hooks/useQuery";
 import { setLoading } from "redux/reducers/Status/actionTypes";
 import ApiService from "services/api_service";
-import { formatCent } from "services/common_service";
 import { ToastService } from "services/toast_service";
 
 // Stripe
@@ -29,8 +23,6 @@ import PaymentForm from "./components/PaymentForm";
 import Testimonial from "./components/Testimonial";
 import classes from "./styles.module.scss";
 
-const stripePromise = loadStripe(process.env.REACT_APP_STRIPE);
-
 const CourseDetail = memo(() => {
   const dispatch = useDispatch();
   const query = useQuery();
@@ -38,6 +30,7 @@ const CourseDetail = memo(() => {
 
   const [data, setData] = useState(null);
   const [user, setUser] = useState(null);
+  const [stripePromise, setStripePromise] = useState(null);
   const [discussions, setDiscussions] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [modalType, setModalType] = useState("prepayment");
@@ -73,6 +66,9 @@ const CourseDetail = memo(() => {
     const initPayment = async () => {
       if (!data) return;
       try {
+        const stripePromise = loadStripe(process.env.REACT_APP_STRIPE);
+        setStripePromise(stripePromise);
+
         const user = await ApiService.GET("/api/user");
         setUser(user);
 
@@ -180,7 +176,7 @@ const CourseDetail = memo(() => {
                   <span className={classes.value}>$6.00</span>
                 </div>
               </div>
-              {clientSecret ? (
+              {clientSecret && stripePromise ? (
                 <Elements stripe={stripePromise} options={options}>
                   <PaymentForm
                     user={user}

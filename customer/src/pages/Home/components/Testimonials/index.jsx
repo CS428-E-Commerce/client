@@ -2,7 +2,13 @@ import clsx from "clsx";
 import { memo, useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
 
-import { ArrowBack, ArrowForward, TestimonialIcon } from "assets/images";
+import {
+  ArrowBack,
+  ArrowForward,
+  AvatarPlaceholderSrc,
+  TestimonialAvatarMaskSrc,
+  TestimonialIcon,
+} from "assets/images";
 import ApiService from "services/api_service";
 import { ToastService } from "services/toast_service";
 
@@ -51,6 +57,7 @@ const Testimonials = memo(() => {
     init();
   }, []);
 
+  // Change API to return FE needs
   return (
     <div className={classes.swiper}>
       <swiper-container slides-per-view="3" ref={swiperElRef} init="false">
