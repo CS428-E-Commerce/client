@@ -62,7 +62,7 @@ const CourseSchedule = memo(() => {
 
     ApiService.POST("/api/courses/schedule", { coachId, ...data }) // TODO: How to insert coachId ????
       .then(() => {
-        ToastService.success("Create course successfully");
+        ToastService.success("Create course schedule successfully");
       })
       .catch(() => {
         ToastService.error("Sorry, an error occured");

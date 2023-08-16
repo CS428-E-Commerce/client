@@ -9,10 +9,8 @@ import yup from "config/yupGlobal";
 import classes from "./styles.module.scss";
 
 const schema = yup.object().shape({
-  name: yup.string().required("Name is required"),
   email: yup.string().email("Invalid email").required("Email is required"),
   password: yup.string().password().required("Password is required"),
-  rememberMe: yup.boolean(),
 });
 
 const RegisterFormStep1 = memo(({ next }) => {
@@ -59,7 +57,7 @@ const RegisterFormStep1 = memo(({ next }) => {
           <p className={classes.error}>{errors.password.message}</p>
         )}
       </div>
-      <Button width="100%">Register</Button>
+      <Button width="100%">Next</Button>
     </form>
   );
 });

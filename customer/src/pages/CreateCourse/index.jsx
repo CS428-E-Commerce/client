@@ -23,7 +23,9 @@ const levels = ["Beginner", "Intermediate", "Advance"];
 
 const CreateCourse = memo(() => {
   const dispatch = useDispatch();
-  const [data, setData] = useState({});
+  const [data, setData] = useState({
+    level: "Beginner",
+  });
   const [coachId, setCoachId] = useState("");
 
   useEffect(() => {
@@ -46,11 +48,14 @@ const CreateCourse = memo(() => {
 
   const handleChange = e => {
     const { name, value } = e.target;
+    console.log(name, value);
     setData(state => ({ ...state, [name]: value }));
   };
 
   const handleSubmit = () => {
-    data.cost = data.cost *= 100;
+    data.cost *= 100;
+
+    console.log({ data });
     ApiService.POST("/api/courses", { coachId, ...data }) // TODO: How to insert coachId ????
       .then(() => {
         ToastService.success("Create course successfully");

@@ -13,7 +13,7 @@ const schema = yup.object().shape({
   avatar: yup.string().required("Avatar is required"),
   certificates: yup.string().required("Certificates is required"),
   skills: yup.string().required("Skills is required"),
-  yearExperience: yup.string().required("YearExperience is required"),
+  yearExperience: yup.number().required("YearExperience is required"),
   description: yup.string().required("Description is required"),
   address: yup.string().required("Address is required"),
   phone: yup.string().required("Phone is required"),

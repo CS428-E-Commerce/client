@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import clsx from "clsx";
-import { memo, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { NavLink, useHistory } from "react-router-dom";
@@ -34,6 +34,21 @@ const TutorRegisterPage = memo(() => {
   const history = useHistory();
   const dispatch = useDispatch();
   const [step, setStep] = useState(STEPS.ONE);
+  const [user, setUser] = useState(null);
+  const [isRegistered, setIsRegistered] = useState(false);
+
+  useEffect(() => {
+    if (isRegistered) {
+      ApiService.GET("/api/user")
+        .then(response => {
+          setUser(response?.data);
+        })
+        .catch(error => {
+          console.error(error);
+          ToastService.error("Sorry, an error occurred.");
+        });
+    }
+  }, [isRegistered]);
 
   const onFormStep1Submit = async data => {
     const account = {
@@ -48,6 +63,7 @@ const TutorRegisterPage = memo(() => {
         localStorage.setItem("token", response?.data?.accessToken);
         localStorage.setItem("email", response?.data?.email);
         setStep(STEPS.FINAL);
+        setIsRegistered(true);
 
         // if (location?.state?.prevLocation) {
         //   return history?.replace(location?.state?.prevLocation);
@@ -64,21 +80,23 @@ const TutorRegisterPage = memo(() => {
   };
 
   const onFromFinalStepSubmit = async data => {
-    // dispatch(setLoading(true));
-    // ApiService.PUT(`/api/coach/${}`, data) // TODO: How to get coachId?
-    //   .then(() => {
-    //     if (location?.state?.prevLocation) {
-    //       return history?.replace(location?.state?.prevLocation);
-    //     }
-    //     history?.replace("/");
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //     ToastService.error("Sorry, an error occurred.");
-    //   })
-    //   .finally(() => {
-    //     dispatch(setLoading(false));
-    //   });
+    dispatch(setLoading(true));
+    data.skills = data.skills.split(", ");
+    data.certificates = data.certificates.split(", ");
+    ApiService.PUT(`/api/coach/${user?.coachInfo?.id}`, data) // TODO: How to get coachId?
+      .then(() => {
+        if (location?.state?.prevLocation) {
+          return history?.replace(location?.state?.prevLocation);
+        }
+        history?.replace("/");
+      })
+      .catch(error => {
+        console.log(error);
+        ToastService.error("Sorry, an error occurred.");
+      })
+      .finally(() => {
+        dispatch(setLoading(false));
+      });
   };
 
   return (
