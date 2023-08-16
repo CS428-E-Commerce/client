@@ -62,6 +62,8 @@ const AuthorizedLayout = memo(props => {
           </div>
 
           <div>
+            <p className="label mb-0">Welcome,</p>
+            <p className="label mb-2">{localStorage.getItem("email") ?? "N/A"}</p>
             <Menu>
               <MenuItem onClick={() => { localStorage.clear(); dispatch(push("/login")) }}>Logout</MenuItem>
             </Menu>

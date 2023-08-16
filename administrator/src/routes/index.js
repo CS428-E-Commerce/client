@@ -3,15 +3,15 @@ import TutorsPage from "pages/Tutors";
 import LoginPage from "pages/Login";
 import SignupPage from "pages/Signup";
 import { Redirect } from "react-router";
-// import TutorDetailPage from "pages/TutorDetail";
-// import CourseDetailPage from "pages/CourseDetail";
+import TutorProfilePage from "pages/Profile";
+import CourseDetail from "pages/CourseDetail";
 
 const privateRoutes = [
   { path: "/", exact: true, component: () => <Redirect to="/tutors" /> },
   { path: "/tutors", component: TutorsPage },
   { path: "/courses", component: CoursesPage },
-  // { path: "/tutor/:tutorId", component: TutorDetailPage },
-  // { path: "/courses/:courseId", component: CourseDetailPage },
+  { path: "/tutor/:tutorId", component: TutorProfilePage },
+  { path: "/course/:courseId", component: CourseDetail },
 ];
 
 const publicRoutes = [

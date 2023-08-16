@@ -34,6 +34,7 @@
   align-items: center;
   gap: 32px;
   margin-bottom: 48px;
+
   .tutorContainer {
     transition: all 0.2s;
     cursor: pointer;
@@ -41,10 +42,12 @@
     border-radius: 4px;
     padding: 12px 16px 24px;
     width: 272px;
+
     &:hover {
       transform: scale(1.02);
       transition: all 0.2s;
     }
+
     .price {
       margin-bottom: 7px;
       font-weight: 700;
@@ -52,6 +55,7 @@
       line-height: 160%;
       text-align: right;
     }
+
     .avatar {
       margin: auto;
       margin-bottom: 12px;
@@ -61,6 +65,7 @@
       object-fit: cover;
       object-position: center;
     }
+
     .name {
       margin-bottom: 0;
       font-weight: 700;
@@ -68,6 +73,7 @@
       line-height: normal;
       text-align: center;
     }
+
     .info {
       display: flex;
       flex-direction: row;
@@ -75,12 +81,14 @@
       align-items: center;
       gap: 4px;
       margin-bottom: 4px;
-      > span {
+
+      >span {
         font-weight: 400;
         font-size: 16px;
         line-height: 160%;
       }
     }
+
     .role {
       margin-bottom: 8px;
       font-weight: 500;
@@ -88,7 +96,9 @@
       line-height: 160%;
       text-align: center;
     }
+
     .skills {
+      height: 80px;
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
@@ -96,6 +106,7 @@
       align-items: center;
       gap: 12px;
       margin-bottom: 16px;
+
       .skill {
         border-radius: 4px;
         background-color: #007bff;
@@ -110,6 +121,7 @@
         white-space: nowrap;
       }
     }
+
     .description {
       -webkit-box-orient: vertical;
       display: -webkit-box;
@@ -121,6 +133,7 @@
       line-height: 150%;
       text-align: center;
     }
+
     .horizontalLine {
       margin: auto;
       margin-bottom: 16px;
@@ -128,6 +141,7 @@
       width: 170px;
       height: 1px;
     }
+
     .viewProfileButton {
       font-weight: 500;
       font-size: 18px;

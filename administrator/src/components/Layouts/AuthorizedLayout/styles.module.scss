@@ -33,6 +33,10 @@
     font-size: 18px;
     font-weight: 700;
     color: var(--gray);
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    padding-right: 24px;
   }
 
   [class~="ps-menu-button"] {

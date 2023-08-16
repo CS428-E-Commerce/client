@@ -1,0 +1,190 @@
+.main {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  padding: 75px 0;
+
+  .leftSection {
+    flex-shrink: 0;
+    width: 677px;
+  }
+}
+
+.modalHeading {
+  color: var(--black);
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.modalBody {
+  .courseInfoContainer {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #e6e8ea;
+    padding-bottom: 24px;
+
+    .thumbnail {
+      margin-right: 12px;
+      width: 60px;
+      height: 60px;
+
+      .img {
+        border-radius: 4px;
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .courseInfo {
+      .courseTitle {
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 24px;
+      }
+
+      .courseDate {
+        color: #929da5;
+        font-size: 15px;
+        line-height: 150%;
+      }
+    }
+  }
+
+  .orderDetails {
+    border-bottom: 1px solid #dae3ea;
+    padding: 24px 0;
+
+    .orderDetailsHeading {
+      font-weight: 600;
+      font-size: 20px;
+    }
+
+    .orderDetail {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    .total {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 16px;
+      font-weight: 700;
+
+      .text {
+        font-size: 18px;
+      }
+    }
+  }
+
+  .cardDetails {
+    padding: 24px 0;
+
+    .cardDetailsHeading {
+      font-weight: 700;
+      font-size: 24px;
+    }
+
+    .creditCardInputGroup {
+      margin-top: 8px;
+
+      .text {
+        font-size: 16px;
+        line-height: 160%;
+      }
+
+      .input {
+        display: block;
+        margin-top: 8px;
+        border: 2px solid #bbc8d4;
+        border-radius: 4px;
+        padding: 8px 16px;
+        width: 100%;
+        font-weight: 600;
+        letter-spacing: 6.4px;
+      }
+    }
+
+    .metadataInputGroup {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-top: 24px;
+
+      .expiryDateContainer {
+        width: 100%;
+
+        .expiryDateInput {
+          display: block;
+          margin-top: 8px;
+          border: 2px solid #bbc8d4;
+          border-radius: 4px;
+          padding: 8px 16px;
+          width: 100%;
+          font-weight: 600;
+          letter-spacing: 6.4px;
+        }
+      }
+
+      .cvvContainer {
+        width: 100%;
+
+        .cvvInput {
+          display: block;
+          margin-top: 8px;
+          border: 2px solid #bbc8d4;
+          border-radius: 4px;
+          padding: 8px 16px;
+          width: 100%;
+          font-weight: 600;
+          letter-spacing: 6.4px;
+        }
+      }
+    }
+
+    .saveCardCheckboxGroup {
+      display: flex;
+      gap: 4px;
+      margin-top: 16px;
+
+      .label {
+        display: block;
+        margin-top: -2px;
+      }
+    }
+  }
+
+  .payment {
+    padding: 16px 0;
+
+    .btn {
+      transition: all 0.2s ease;
+      cursor: pointer;
+      margin-top: 24px;
+      border-radius: 4px;
+      background-color: var(--deep-blue);
+      padding: 12px;
+      width: 100%;
+      color: var(--white);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+
+    .securePaymentContainer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+      margin-top: 8px;
+      margin-left: -12px;
+    }
+  }
+}

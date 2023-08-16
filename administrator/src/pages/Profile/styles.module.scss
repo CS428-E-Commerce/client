@@ -1,0 +1,196 @@
+@import "assets/scss/media-query.scss";
+@import "assets/scss/container.scss";
+
+.container {
+  width: 100%;
+}
+
+.main {
+  margin: 0 auto;
+  padding: clamp(16px, 6vw, 88px) 0;
+  max-width: 780px;
+
+  .twoColumnLayout {
+    display: flex;
+    justify-content: space-between;
+    gap: 32px;
+
+    .leftColumn {
+      .userInfo {
+        .userRole {
+          color: var(--slate-blue);
+          font-weight: 700;
+          line-height: 150%;
+          letter-spacing: 0.3em;
+          text-transform: uppercase;
+        }
+
+        .username {
+          margin-top: -4px;
+          font-weight: 700;
+          font-size: 48px;
+          line-height: 115%;
+        }
+
+        .shortDescription {
+          display: block;
+          margin: 4px 0 24px;
+        }
+
+        .statBlock {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 24px;
+
+          .statTitle {
+            font-weight: 700;
+            font-size: 24px;
+          }
+
+          .statAmount {
+            display: block;
+            margin-top: -4px;
+            font-weight: 700;
+            font-size: 20px;
+          }
+        }
+      }
+
+      .aboutMeSection {
+        padding: 32px 0;
+
+        .aboutMeHeading {
+          font-weight: 700;
+          font-size: 32px;
+        }
+
+        .aboutMeParagraph {
+          margin-top: 8px;
+          font-size: 16px;
+          line-height: 160%;
+          white-space: pre-line;
+        }
+      }
+
+      .coursesSection {
+        .courses {
+          display: flex;
+          gap: 32px;
+        }
+
+        .coursesHeading {
+          font-weight: 700;
+          font-size: 32px;
+        }
+
+        .courseCard {
+          display: flex;
+          flex-direction: column;
+          cursor: pointer;
+          margin-top: 8px;
+          border: 1px solid var(--black);
+          border-radius: 4px;
+          max-width: 272px;
+          overflow: hidden;
+
+          .coverImageWrapper {
+            border-bottom: 1px solid var(--black);
+
+            .coverImage {
+              width: 100%;
+              max-height: 190px;
+              object-fit: cover;
+            }
+          }
+
+          .courseBody {
+            padding: 16px;
+
+            .courseTitle {
+              -webkit-box-orient: vertical;
+              display: -webkit-box;
+              -webkit-line-clamp: 2;
+              overflow: hidden;
+              font-weight: 700;
+              font-size: 20px;
+              line-height: 120%;
+              text-overflow: ellipsis;
+            }
+
+            .courseInfo {
+              margin-top: 8px;
+
+              .courseAuthor {
+                display: flex;
+                align-items: center;
+                gap: 4px;
+              }
+
+              .courseReview {
+                display: flex;
+                align-items: center;
+                gap: 4px;
+                font-weight: 700;
+              }
+
+              .courseDate {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                border-radius: 4px;
+                background-color: var(--light-gray);
+                padding: 8px;
+                width: fit-content;
+
+                .calendarIcon {
+                  width: 16px;
+                  height: 16px;
+                }
+
+                .date {
+                  font-weight: 500;
+                  font-size: 14px;
+                  line-height: 150%;
+                }
+              }
+            }
+          }
+
+          .courseFooter {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-top: auto;
+            border-top: 1px solid var(--light-gray);
+            padding: 16px;
+
+            .coursePrice {
+              font-weight: 700;
+            }
+
+            .seatRemain {
+              font-weight: 700;
+              font-size: 14px;
+            }
+          }
+        }
+      }
+    }
+
+    .rightColumn {
+      flex-shrink: 0;
+
+      .userAvatar {
+        border: 4px solid var(--black);
+        border-radius: 200px;
+        width: 169px;
+        height: 169px;
+        object-fit: cover;
+      }
+    }
+
+    @include mobile-landscape {
+      flex-direction: column-reverse;
+    }
+  }
+}

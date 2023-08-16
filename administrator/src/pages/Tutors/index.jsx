@@ -20,17 +20,29 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { setLoading } from "redux/reducers/Status/actionTypes";
+import { push } from "connected-react-router";
 
 const TutorPages = memo(() => {
   const dispatch = useDispatch();
 
-  const email = useRef()
-  const password = useRef()
+  const email = useRef();
+  const password = useRef();
+  const username = useRef();
+  const description = useRef();
+  const address = useRef();
+  const phone = useRef();
+  const yearExperience = useRef();
+  const skills = useRef();
+  const certificates = useRef();
 
   const [page, setPage] = useState(1);
   const [data, setData] = useState(null);
   const [total, setTotal] = useState(null);
   const [open, setOpen] = useState(false);
+  const [edit, setEdit] = useState({
+    isOpen: false,
+    data: null
+  });
 
   useEffect(() => {
     getData()
@@ -56,8 +68,14 @@ const TutorPages = memo(() => {
     setOpen(true);
   };
 
+  const handleOpenEdit = (e, data) => {
+    e?.stopPropagation();
+    setEdit({ isOpen: true, data });
+  };
+
   const handleClose = () => {
     setOpen(false);
+    setEdit({ isOpen: false, data: null })
   };
 
   const handleCreateAccount = () => {
@@ -70,13 +88,37 @@ const TutorPages = memo(() => {
     dispatch(setLoading(true));
     ApiService.POST("/api/auth/signup", account)
       .then(() => {
-        getData()
+        getData();
       })
       .catch(error => {
         console.log(error);
         ToastService.error("Sorry, an error occurred.");
       })
       .finally(() => {
+        dispatch(setLoading(false));
+      });
+  }
+
+  const handleEditProfile = () => {
+    dispatch(setLoading(true));
+    ApiService.PUT(`/api/coach/${edit?.data?.id}`, {
+      username: username?.current?.value ?? "N/A",
+      description: description?.current?.value ?? "",
+      address: address?.current?.value ?? "",
+      phone: phone?.current?.value ?? "",
+      yearExperience: +yearExperience?.current?.value ?? 0,
+      skills: skills?.current?.value ? skills?.current?.value?.split(`,`)?.map(i => i?.trim()) : [],
+      certificates: certificates?.current?.value ? certificates?.current?.value?.split(`,`)?.map(i => i?.trim()) : [],
+    })
+      .then(() => {
+        getData();
+      })
+      .catch(error => {
+        console.log(error);
+        ToastService.error("Sorry, an error occurred.");
+      })
+      .finally(() => {
+        handleClose();
         dispatch(setLoading(false));
       });
   }
@@ -97,14 +139,16 @@ const TutorPages = memo(() => {
                 <TableCell>Email</TableCell>
                 <TableCell>Name</TableCell>
                 <TableCell>Description</TableCell>
+                <TableCell>Year(s) of experience</TableCell>
                 <TableCell>Total classes</TableCell>
                 <TableCell>Rate</TableCell>
+                <TableCell />
               </TableRow>
             </TableHead>
             <TableBody>
               {data?.map((row, index) => (
                 <TableRow
-                  onClick={() => { console.log(1) }}
+                  onClick={() => { dispatch(push(`/tutor/${row?.id}`)) }}
                   className={classes.row}
                   key={`tutor-${index}`}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -115,10 +159,14 @@ const TutorPages = memo(() => {
                   <TableCell>{row?.coachInfo?.email ?? "N/A"}</TableCell>
                   <TableCell>{row?.coachInfo?.username ?? "N/A"}</TableCell>
                   <TableCell>{row?.coachInfo?.description ?? "N/A"}</TableCell>
+                  <TableCell>{row?.yearExperience ?? 0}</TableCell>
                   <TableCell>{row?.totalCourse ? (
                     <span>{formatNumber(row?.totalCourse)} classes</span>
                   ) : "N/A"}</TableCell>
                   <TableCell>{row?.totalRate ?? "N/A"}</TableCell>
+                  <TableCell>
+                    <Button variant="outlined" onClick={(e) => { handleOpenEdit(e, row) }}>Edit</Button>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -146,7 +194,6 @@ const TutorPages = memo(() => {
               inputRef={email}
               autoFocus
               margin="dense"
-              id="email"
               label="Email Address"
               type="email"
               fullWidth
@@ -156,7 +203,6 @@ const TutorPages = memo(() => {
             <TextField
               inputRef={password}
               margin="dense"
-              id="password"
               label="Password"
               type="password"
               fullWidth
@@ -168,6 +214,84 @@ const TutorPages = memo(() => {
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={handleCreateAccount}>Submit</Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog open={edit?.isOpen} onClose={handleClose}>
+        <DialogTitle>Edit tutor profile</DialogTitle>
+        <DialogContent sx={{ width: 550 }}>
+          {/* <DialogContentText>
+            Please enter new information.
+          </DialogContentText> */}
+          <form>
+            <TextField
+              inputRef={username}
+              defaultValue={edit?.data?.coachInfo?.username ?? "N/A"}
+              fullWidth
+              margin="dense"
+              variant="standard"
+              label="Name"
+              autoComplete="off"
+            />
+            <TextField
+              inputRef={description}
+              defaultValue={edit?.data?.coachInfo?.description}
+              fullWidth
+              margin="dense"
+              variant="standard"
+              label="Description"
+              autoComplete="off"
+            />
+            <TextField
+              inputRef={address}
+              defaultValue={edit?.data?.coachInfo?.address}
+              fullWidth
+              margin="dense"
+              variant="standard"
+              label="Address"
+              autoComplete="off"
+            />
+            <TextField
+              inputRef={phone}
+              defaultValue={edit?.data?.coachInfo?.phone}
+              fullWidth
+              margin="dense"
+              variant="standard"
+              label="Phone number"
+              autoComplete="off"
+            />
+            <TextField
+              inputRef={yearExperience}
+              defaultValue={edit?.data?.yearExperience ?? 0}
+              fullWidth
+              margin="dense"
+              variant="standard"
+              label="Year(s) of experience"
+              autoComplete="off"
+            />
+            <TextField
+              inputRef={skills}
+              defaultValue={edit?.data?.skills?.map(i => i?.skill)?.join(`, `)}
+              fullWidth
+              margin="dense"
+              variant="standard"
+              label="Skill(s)"
+              autoComplete="off"
+            />
+            <TextField
+              inputRef={certificates}
+              defaultValue={edit?.data?.certificates?.map(i => i?.certificate)?.join(`, `)}
+              fullWidth
+              margin="dense"
+              variant="standard"
+              label="Certificate(s)"
+              autoComplete="off"
+            />
+          </form>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleEditProfile}>Save</Button>
         </DialogActions>
       </Dialog>
     </div>

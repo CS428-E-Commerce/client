@@ -1,4 +1,4 @@
-import { Pagination } from "@mui/material";
+import { Button, Pagination } from "@mui/material";
 import { memo, useEffect, useState } from "react";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -11,13 +11,35 @@ import Loading from "components/Loading";
 import ApiService from "services/api_service";
 import { ToastService } from "services/toast_service";
 import classes from "./styles.module.scss";
+import { push } from "connected-react-router";
+import { useDispatch } from "react-redux";
+import dayjs from "dayjs";
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import { setLoading } from "redux/reducers/Status/actionTypes";
 
 const CoursesPage = memo(() => {
+  const dispatch = useDispatch();
+
   const [page, setPage] = useState(1);
   const [data, setData] = useState(null);
   const [total, setTotal] = useState(null);
+  const [courseId, setCourseId] = useState(null);
+  const [status, setStatus] = useState(``);
 
   useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = () => {
     ApiService.GET(`/api/courses`, {
       code: null,
       coachId: null,
@@ -35,7 +57,40 @@ const CoursesPage = memo(() => {
         console.log(error);
         ToastService.error("Sorry, an error occurred.");
       });
-  }, []);
+  }
+
+  const handleChange = (event) => {
+    setStatus(event?.target?.value);
+  };
+
+  const handleOpen = (e, data) => {
+    e?.stopPropagation();
+    setCourseId(data?.courseId);
+    setStatus(data?.status)
+  }
+
+  const handleClose = () => {
+    setCourseId(null);
+  };
+
+  const handleEdit = () => {
+    dispatch(setLoading(true));
+    ApiService.POST("/api/verify", {
+      courseId,
+      verificationCode: status,
+    })
+      .then(() => {
+        getData();
+      })
+      .catch(error => {
+        console.log(error);
+        ToastService.error("Sorry, an error occurred.");
+      })
+      .finally(() => {
+        handleClose();
+        dispatch(setLoading(false));
+      });
+  }
 
   return (
     <div className={classes.container}>
@@ -47,17 +102,21 @@ const CoursesPage = memo(() => {
             <TableHead>
               <TableRow>
                 <TableCell>ID</TableCell>
+                <TableCell>Level</TableCell>
                 <TableCell>Name</TableCell>
                 <TableCell>Description</TableCell>
+                <TableCell>Start time</TableCell>
                 <TableCell>Tutor</TableCell>
-                <TableCell>Available slot</TableCell>
+                <TableCell>Max slot(s)</TableCell>
                 <TableCell>Cost</TableCell>
+                <TableCell>Status</TableCell>
+                <TableCell />
               </TableRow>
             </TableHead>
             <TableBody>
               {data?.map((row, index) => (
                 <TableRow
-                  onClick={() => { console.log(1) }}
+                  onClick={() => { dispatch(push(`/course/${row?.courseId}?coachId=${row?.coachId}`)) }}
                   className={classes.row}
                   key={`tutor-${index}`}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -65,11 +124,17 @@ const CoursesPage = memo(() => {
                   <TableCell>
                     {12 * (page - 1) + index + 1}
                   </TableCell>
+                  <TableCell>{row?.level ?? "N/A"}</TableCell>
                   <TableCell>{row?.title ?? "N/A"}</TableCell>
                   <TableCell>{row?.description ?? "N/A"}</TableCell>
+                  <TableCell>{row?.startTime ? dayjs(row?.startTime)?.format("DD/MM/YYYY") : "N/A"}</TableCell>
                   <TableCell>{row?.coachname ?? "N/A"}</TableCell>
                   <TableCell>{row?.maxSlot ?? "N/A"}</TableCell>
                   <TableCell>{row?.cost ?? "N/A"}</TableCell>
+                  <TableCell sx={{ color: row?.status === "Await" ? "orange" : row?.status === "Active" ? "green" : "red" }}>{row?.status ?? "N/A"}</TableCell>
+                  <TableCell>
+                    <Button variant="outlined" onClick={(e) => { handleOpen(e, row) }}>Edit</Button>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -85,6 +150,35 @@ const CoursesPage = memo(() => {
           className={classes.pagination}
         />
       </div>
+
+      <Dialog open={!!courseId} onClose={handleClose}>
+        <DialogTitle>Course status</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            You can update the status of the course here.
+          </DialogContentText>
+          <Box sx={{ minWidth: 120, marginTop: "24px" }}>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Status</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={status}
+                label="Status"
+                onChange={handleChange}
+              >
+                <MenuItem value={"Await"}>Await</MenuItem>
+                <MenuItem value={"Active"}>Active</MenuItem>
+                <MenuItem value={"Declined"}>Declined</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleEdit}>Save</Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 });
