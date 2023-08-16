@@ -9,9 +9,11 @@ import {
   Typography,
 } from "@mui/material";
 import { FormControl } from "@mui/material";
-import { memo, useState } from "react";
+import { memo, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
 import Button from "components/Button";
+import { setLoading } from "redux/reducers/Status/actionTypes";
 import ApiService from "services/api_service";
 import { ToastService } from "services/toast_service";
 
@@ -19,8 +21,28 @@ import classes from "./styles.module.scss";
 
 const levels = ["Beginner", "Intermediate", "Advance"];
 
-const TutorCourses = memo(() => {
+const CreateCourse = memo(() => {
+  const dispatch = useDispatch();
   const [data, setData] = useState({});
+  const [coachId, setCoachId] = useState("");
+
+  useEffect(() => {
+    const init = async () => {
+      try {
+        dispatch(setLoading(true));
+        const response = await ApiService.GET("/api/user");
+        const coachId = response?.data?.coachInfo?.id;
+        setCoachId(coachId);
+      } catch (error) {
+        console.error(error);
+        ToastService.error("Sorry, an error occurred");
+      } finally {
+        dispatch(setLoading(false));
+      }
+    };
+
+    init();
+  }, []);
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -28,7 +50,8 @@ const TutorCourses = memo(() => {
   };
 
   const handleSubmit = () => {
-    ApiService.POST("/api/courses", { ...data }) // TODO: How to insert coachId ????
+    data.cost = data.cost *= 100;
+    ApiService.POST("/api/courses", { coachId, ...data }) // TODO: How to insert coachId ????
       .then(() => {
         ToastService.success("Create course successfully");
       })
@@ -245,4 +268,4 @@ const TutorCourses = memo(() => {
   );
 });
 
-export default TutorCourses;
+export default CreateCourse;

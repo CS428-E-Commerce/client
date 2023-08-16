@@ -23,7 +23,7 @@ const CourseSchedule = memo(() => {
   const dispatch = useDispatch();
   const [data, setData] = useState({});
   const [courses, setCourses] = useState([]);
-  const [levels, setLevels] = useState([]);
+  const [coachId, setCoachId] = useState("");
 
   useEffect(() => {
     const init = async () => {
@@ -31,6 +31,7 @@ const CourseSchedule = memo(() => {
         dispatch(setLoading(true));
         const response = await ApiService.GET("/api/user");
         const coachId = response?.data?.coachInfo?.id;
+        setCoachId(coachId);
         const coursesResponse = await ApiService.GET("/api/courses", {
           coachId,
         });
@@ -52,7 +53,14 @@ const CourseSchedule = memo(() => {
   };
 
   const handleSubmit = () => {
-    ApiService.POST("/api/courses", { ...data }) // TODO: How to insert coachId ????
+    try {
+      data.startTime = new Date(data.startTime).toISOString();
+      data.endTime = new Date(data.endTime).toISOString();
+    } catch (error) {
+      console.error(error);
+    }
+
+    ApiService.POST("/api/courses/schedule", { coachId, ...data }) // TODO: How to insert coachId ????
       .then(() => {
         ToastService.success("Create course successfully");
       })
@@ -85,8 +93,8 @@ const CourseSchedule = memo(() => {
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   label="Course"
-                  name="course"
-                  value={courses[0]?.title ?? "N/A"}
+                  name="courseId"
+                  value={data?.courseId ?? "N/A"}
                   onChange={handleChange}
                 >
                   {courses.map(course => (

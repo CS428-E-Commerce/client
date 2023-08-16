@@ -59,6 +59,16 @@ const DashboardLayout = memo(props => {
               <ListItemIcon>
                 <StarBorder />
               </ListItemIcon>
+              <ListItemText primary="View my courses" />
+            </ListItemButton>
+
+            <ListItemButton
+              onClick={() => dispatch(push("/dashboard/courses/create"))}
+              sx={{ pl: 4 }}
+            >
+              <ListItemIcon>
+                <StarBorder />
+              </ListItemIcon>
               <ListItemText primary="Create a course" />
             </ListItemButton>
 

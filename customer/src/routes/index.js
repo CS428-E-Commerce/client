@@ -1,14 +1,15 @@
 import AllCoursesPage from "pages/AllCourses";
 import CourseDetail from "pages/CourseDetail";
 import CourseSchedule from "pages/CourseSchedule";
+import CreateCourse from "pages/CreateCourse";
 import FindTutorsPage from "pages/FindTutors";
 import HomePage from "pages/Home";
 import LoginPage from "pages/Login";
 import MyCourse from "pages/MyCourse";
 import MyProfilePage from "pages/MyProfile";
+import MyTutorCourses from "pages/MyTutorCourses";
 import ProfilePage from "pages/Profile";
 import StudentRegisterPage from "pages/StudentRegister";
-import TutorCourses from "pages/TutorCourses";
 import TutorRegisterPage from "pages/TutorRegister";
 
 const privateRoutes = [
@@ -29,7 +30,8 @@ const publicRoutes = [
 ];
 
 const tutorRoutes = [
-  { path: "/dashboard/courses", component: TutorCourses },
+  { path: "/dashboard/courses", component: MyTutorCourses },
+  { path: "/dashboard/courses/create", component: CreateCourse },
   { path: "/dashboard/schedules", component: CourseSchedule },
 ];
 
