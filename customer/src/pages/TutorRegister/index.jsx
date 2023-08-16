@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import clsx from "clsx";
-import { memo } from "react";
+import { memo, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { NavLink, useHistory } from "react-router-dom";
@@ -14,6 +14,8 @@ import { setLoading } from "redux/reducers/Status/actionTypes";
 import ApiService from "services/api_service";
 import { ToastService } from "services/toast_service";
 
+import RegisterFormFinalStep from "./components/RegisterFormFinalStep";
+import RegisterFormStep1 from "./components/RegisterFormStep1";
 import classes from "./styles.module.scss";
 
 const schema = yup.object().shape({
@@ -23,19 +25,32 @@ const schema = yup.object().shape({
   rememberMe: yup.boolean(),
 });
 
+const STEPS = {
+  ONE: "1",
+  FINAL: "2",
+};
+
 const TutorRegisterPage = memo(() => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const [step, setStep] = useState(STEPS.ONE);
+  const [user, setUser] = useState(null);
+  const [isRegistered, setIsRegistered] = useState(false);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
-  });
+  useEffect(() => {
+    if (isRegistered) {
+      ApiService.GET("/api/user")
+        .then(response => {
+          setUser(response?.data);
+        })
+        .catch(error => {
+          console.error(error);
+          ToastService.error("Sorry, an error occurred.");
+        });
+    }
+  }, [isRegistered]);
 
-  const onSubmit = async data => {
+  const onFormStep1Submit = async data => {
     const account = {
       email: data.email,
       password: data.password,
@@ -47,7 +62,29 @@ const TutorRegisterPage = memo(() => {
       .then(response => {
         localStorage.setItem("token", response?.data?.accessToken);
         localStorage.setItem("email", response?.data?.email);
+        setStep(STEPS.FINAL);
+        setIsRegistered(true);
 
+        // if (location?.state?.prevLocation) {
+        //   return history?.replace(location?.state?.prevLocation);
+        // }
+        // history?.replace("/");
+      })
+      .catch(error => {
+        console.log(error);
+        ToastService.error("Sorry, an error occurred.");
+      })
+      .finally(() => {
+        dispatch(setLoading(false));
+      });
+  };
+
+  const onFromFinalStepSubmit = async data => {
+    dispatch(setLoading(true));
+    data.skills = data.skills.split(", ");
+    data.certificates = data.certificates.split(", ");
+    ApiService.PUT(`/api/coach/${user?.coachInfo?.id}`, data) // TODO: How to get coachId?
+      .then(() => {
         if (location?.state?.prevLocation) {
           return history?.replace(location?.state?.prevLocation);
         }
@@ -109,49 +146,10 @@ const TutorRegisterPage = memo(() => {
         <span className={classes.rightDivider} />
       </div>
 
-      <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
-        <div className={classes.formGroup}>
-          <label className={classes.formLabel}>Name</label>
-          <input
-            {...register("name")}
-            className={classes.input}
-            placeholder="Your Name"
-          />
-          {errors.name?.message && (
-            <p className={classes.error}>{errors.name.message}</p>
-          )}
-        </div>
-        <div className={clsx(classes.formGroup, classes.formGroupMarginTop)}>
-          <label className={classes.formLabel}>Email</label>
-          <input
-            {...register("email")}
-            className={classes.input}
-            placeholder="Your Email"
-          />
-          {errors.email?.message && (
-            <p className={classes.error}>{errors.email.message}</p>
-          )}
-        </div>
-        <div className={clsx(classes.formGroup, classes.formGroupMarginTop)}>
-          <label className={classes.formLabel}>Password</label>
-          <input
-            {...register("password")}
-            className={classes.input}
-            placeholder="Your Password"
-            type="password"
-          />
-          {errors.password?.message && (
-            <p className={classes.error}>{errors.password.message}</p>
-          )}
-        </div>
-        <FormControlLabel
-          classes={{ root: classes.rememberMe }}
-          control={<Checkbox {...register("rememberMe")} />}
-          label="Remember me"
-        />
-        <br />
-        <Button width="100%">Register</Button>
-      </form>
+      {step === STEPS.ONE && <RegisterFormStep1 next={onFormStep1Submit} />}
+      {step === STEPS.FINAL && (
+        <RegisterFormFinalStep next={onFromFinalStepSubmit} />
+      )}
     </div>
   );
 });

@@ -47,14 +47,14 @@ const PaymentForm = memo(({ course, user, setModalType }) => {
     setModalType("payment-successfully");
     await ApiService.POST("/api/attendees", {
       courseId: course.id,
-      userId: user.data.id,
+      userId: user.data.id ?? user.data.coachInfo.id,
     });
   };
 
   return (
     <form className={classes.payment} onSubmit={handleSubmit}>
       <PaymentElement />
-      <button className={classes.btn}>Pay $6.00</button>
+      <button className={classes.btn}>Pay</button>
       <div className={classes.securePaymentContainer}>
         <LockIcon />
         <span>Secure payment</span>

@@ -1,0 +1,52 @@
+.form {
+  margin-top: 24px;
+
+  .formGroup {
+    width: 100%;
+
+    .formLabel {
+      font-weight: 600;
+      font-size: 20px;
+      line-height: 160%;
+    }
+
+    .input {
+      display: block;
+      margin-top: 4px;
+      border: 2px solid #bbc8d4;
+      border-radius: 4px;
+      padding: 16px;
+      width: 100%;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 160%;
+
+      &::placeholder {
+        color: #bbc8d4;
+      }
+    }
+
+    &.formGroupMarginTop {
+      margin-top: 16px;
+    }
+  }
+
+  .forgotPassword {
+    margin-top: 4px;
+    color: var(--sky-blue);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 160%;
+    text-decoration: underline;
+  }
+
+  .rememberMe {
+    margin-top: 16px;
+    font-size: 16px;
+    line-height: 160%;
+  }
+
+  .submitButton {
+    margin-top: 32px;
+  }
+}

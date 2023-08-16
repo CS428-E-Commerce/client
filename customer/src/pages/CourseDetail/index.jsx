@@ -1,20 +1,15 @@
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import dayjs from "dayjs";
+import { push } from "connected-react-router";
 import { memo, useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import {
-  AvatarPlaceholderSrc,
-  CloseRoundedIcon,
-  StarsIcon,
-} from "assets/images";
+import { AvatarPlaceholderSrc, CloseRoundedIcon } from "assets/images";
 import useQuery from "hooks/useQuery";
 import { setLoading } from "redux/reducers/Status/actionTypes";
 import ApiService from "services/api_service";
-import { formatCent } from "services/common_service";
 import { ToastService } from "services/toast_service";
 
 // Stripe
@@ -28,8 +23,6 @@ import PaymentForm from "./components/PaymentForm";
 import Testimonial from "./components/Testimonial";
 import classes from "./styles.module.scss";
 
-const stripePromise = loadStripe(process.env.REACT_APP_STRIPE);
-
 const CourseDetail = memo(() => {
   const dispatch = useDispatch();
   const query = useQuery();
@@ -37,6 +30,7 @@ const CourseDetail = memo(() => {
 
   const [data, setData] = useState(null);
   const [user, setUser] = useState(null);
+  const [stripePromise, setStripePromise] = useState(null);
   const [discussions, setDiscussions] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [modalType, setModalType] = useState("prepayment");
@@ -70,29 +64,36 @@ const CourseDetail = memo(() => {
 
   useEffect(() => {
     const initPayment = async () => {
+      if (!data) return;
       try {
+        const stripePromise = loadStripe(process.env.REACT_APP_STRIPE);
+        setStripePromise(stripePromise);
+
         const user = await ApiService.GET("/api/user");
         setUser(user);
 
         const attendees = await ApiService.GET(
-          `/api/attendees/${response.course.id}`,
+          `/api/attendees/${data.course.id}`,
         );
         const isUserAttending = attendees.data?.find(
-          attendee => attendee.userId === user.data?.id,
+          attendee =>
+            attendee.userId === (user.data?.id ?? user.data?.coachInfo?.id),
         );
+
         if (isUserAttending) setModalType("payment-successfully");
 
         const intentResponse = await ApiService.GET(
-          `/api/payment/${response.course.id}`,
+          `/api/payment/${data.course.id}`,
         );
         setClientSecret(intentResponse.data?.client_secret);
-      } catch {
+      } catch (error) {
+        console.error(error);
         setClientSecret("");
       }
     };
 
     initPayment();
-  }, []);
+  }, [data]);
 
   const slotRemains =
     data?.course?.maxSlot ?? 0 - data?.course?.attendeeNumber ?? 0;
@@ -175,7 +176,7 @@ const CourseDetail = memo(() => {
                   <span className={classes.value}>$6.00</span>
                 </div>
               </div>
-              {clientSecret ? (
+              {clientSecret && stripePromise ? (
                 <Elements stripe={stripePromise} options={options}>
                   <PaymentForm
                     user={user}
@@ -191,7 +192,12 @@ const CourseDetail = memo(() => {
           {modalType === "payment-successfully" && (
             <div className={classes.payment}>
               <div className="text-xl">You have registered this class</div>
-              <button className={classes.btn}>Go to My Classes</button>
+              <button
+                className={classes.btn}
+                onClick={() => dispatch(push("/my-course"))}
+              >
+                Go to My Courses
+              </button>
             </div>
           )}
         </Modal.Body>

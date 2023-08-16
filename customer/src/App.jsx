@@ -3,10 +3,11 @@ import { Switch } from "react-router-dom";
 
 import AppStatus from "components/AppStatus";
 import AuthorizedLayout from "components/Layouts/AuthorizedLayout";
+import DashboardLayout from "components/Layouts/DashboardLayout";
 import NonAuthorizedLayout from "components/Layouts/NonAuthorizedLayout";
 import ScrollToTop from "routes/ScrollToTop";
 
-import { privateRoutes, publicRoutes } from "./routes";
+import { privateRoutes, publicRoutes, tutorRoutes } from "./routes";
 import Middleware from "./routes/middleware";
 
 const App = props => {
@@ -36,6 +37,17 @@ const App = props => {
             component={route?.component}
             key={route?.key || idx}
             isAuthProtected={true}
+            exact
+          />
+        ))}
+
+        {tutorRoutes?.map((route, idx) => (
+          <Middleware
+            path={route?.path}
+            layout={DashboardLayout}
+            component={route?.component}
+            key={route?.key || idx}
+            isAuthProtected={false}
             exact
           />
         ))}

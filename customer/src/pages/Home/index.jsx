@@ -1,11 +1,9 @@
 import clsx from "clsx";
-import { memo, useEffect, useRef } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { memo } from "react";
+import { Link } from "react-router-dom";
 import { register } from "swiper/element/bundle";
 
 import {
-  ArrowBack,
-  ArrowForward,
   BookImageSrc,
   CommentImageSrc,
   HeroBackgroundSrc,
@@ -13,41 +11,16 @@ import {
   HowItWorksImageSrc,
   NotificationImageSrc,
   StarsImageSrc,
-  TestimonialAvatarMaskSrc,
-  TestimonialIcon,
 } from "assets/images";
-import MockupAvatarSrc from "assets/images/mockup-avatars/albert-dera.jpg";
 import Button from "components/Button";
 
 import Panorama from "./components/Panorama";
+import Testimonials from "./components/Testimonials";
 import classes from "./styles.module.scss";
 
 register();
 
 const HomePage = memo(() => {
-  const swiperElRef = useRef(null);
-
-  useEffect(() => {
-    const params = {
-      // array with CSS styles
-      navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
-      },
-      injectStyles: [
-        `
-        :host .swiper {
-          overflow: visible;
-        }
-        `,
-      ],
-    };
-
-    if (swiperElRef.current) Object.assign(swiperElRef.current, params);
-
-    swiperElRef.current.initialize();
-  }, [swiperElRef]);
-
   return (
     <main>
       <section
@@ -166,60 +139,7 @@ const HomePage = memo(() => {
           <h2 className={classes.heading}>Our students love us</h2>
         </header>
 
-        <div className={classes.swiper}>
-          <swiper-container slides-per-view="3" ref={swiperElRef} init="false">
-            {/* TODO: call API */}
-            {Array(20)
-              .fill(null)
-              .map((_, index) => (
-                <swiper-slide key={index}>
-                  <div className={classes.swiperSlide}>
-                    <div className={classes.info}>
-                      <div
-                        className={classes.avatar}
-                        style={{
-                          WebkitMaskImage: `url(${TestimonialAvatarMaskSrc})`,
-                          WebkitMaskRepeat: "no-repeat",
-                          maskImage: `url(${TestimonialAvatarMaskSrc})`,
-                          maskRepeat: "no-repeat",
-                          WebkitMaskPosition: "top right",
-                          maskPosition: "top right",
-                        }}
-                      >
-                        <img
-                          className={classes.img}
-                          src={MockupAvatarSrc}
-                          alt=""
-                        />
-                      </div>
-                      <div className={classes.to}>
-                        <TestimonialIcon className={classes.testimonialIcon} />
-                        <TestimonialIcon className={classes.testimonialIcon} />
-                        <span className={classes.to}>
-                          <span>- to </span>
-                          <NavLink to="/" className={classes.tutor}>
-                            Nguyen Vinh
-                          </NavLink>
-                        </span>
-                      </div>
-                    </div>
-                    <p className={classes.testimonial}>
-                      I highly recommend Nguyen as a Vietnamese tutor.
-                      Dedicated, knowledgeable, and inspiring. Cảm ơn Nguyên!
-                    </p>
-                    <div className={classes.from}>
-                      <span>-</span> from{" "}
-                      <span className={classes.student}>Alex Nguyen</span>
-                    </div>
-                  </div>
-                </swiper-slide>
-              ))}
-          </swiper-container>
-          <ArrowBack className={clsx("swiper-button-prev", classes.btnPrev)} />
-          <ArrowForward
-            className={clsx("swiper-button-next", classes.btnNext)}
-          />
-        </div>
+        <Testimonials />
       </section>
     </main>
   );
