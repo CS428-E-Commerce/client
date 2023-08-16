@@ -1,13 +1,13 @@
-import { memo } from "react";
 import PropTypes from "prop-types";
-import { Route, Redirect } from "react-router-dom";
+import { memo } from "react";
+import { Redirect, Route } from "react-router-dom";
 
 const Middleware = memo(
   ({ component: Component, layout: Layout, isAuthProtected, ...rest }) => (
     <Route
       {...rest}
       render={props => {
-        if (isAuthProtected && !localStorage.getItem("authUser")) {
+        if (isAuthProtected && !localStorage.getItem("token")) {
           return (
             <Redirect
               to={{ pathname: "/login", state: { from: props.location } }}
@@ -21,7 +21,7 @@ const Middleware = memo(
         );
       }}
     />
-  )
+  ),
 );
 
 Middleware.propTypes = {

@@ -1,0 +1,131 @@
+.container {
+  margin: 0 auto;
+  padding: 64px 0;
+  max-width: 374px;
+
+  .pageHeader {
+    .pageTitle {
+      font-weight: 700;
+      font-size: 40px;
+      line-height: 115%;
+    }
+
+    .signUpLinks {
+      margin-top: 24px;
+      font-size: 20px;
+
+      .navLink {
+        color: var(--sky-blue);
+        line-height: 160%;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .oauthLogin {
+    margin-top: 32px;
+
+    .oauthBadge {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      cursor: pointer;
+      border: 1px solid var(--black);
+      border-radius: 4px;
+      padding: 16px 24px;
+
+      .oauthIcon {
+        width: 32px;
+      }
+
+      .oauthText {
+        margin-bottom: 2px;
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 160%;
+      }
+
+      &:last-child {
+        margin-top: 16px;
+      }
+    }
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    margin-top: 16px;
+    color: var(--black);
+
+    .leftDivider,
+    .rightDivider {
+      margin-top: 4px;
+      background-color: #c5d0d8;
+      width: 100%;
+      height: 1px;
+    }
+
+    .text {
+      padding: 0 16px;
+      font-weight: 600;
+      font-size: 20px;
+    }
+  }
+
+  .form {
+    margin-top: 24px;
+
+    .formGroup {
+      width: 100%;
+
+      .formLabel {
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 160%;
+      }
+
+      .input {
+        display: block;
+        margin-top: 4px;
+        border: 2px solid #bbc8d4;
+        border-radius: 4px;
+        padding: 16px;
+        width: 100%;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 160%;
+
+        &::placeholder {
+          color: #bbc8d4;
+        }
+      }
+
+      &.formGroupMarginTop {
+        margin-top: 16px;
+      }
+    }
+
+    .forgotPassword {
+      margin-top: 4px;
+      color: var(--sky-blue);
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 160%;
+      text-decoration: underline;
+    }
+
+    .rememberMe {
+      margin-top: 16px;
+      font-size: 16px;
+      line-height: 160%;
+    }
+
+    .submitButton {
+      margin-top: 32px;
+    }
+  }
+}
+
+.error {
+  color: var(--danger);
+}

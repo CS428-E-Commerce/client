@@ -1,45 +1,44 @@
-import { Fragment } from "react";
-import { Switch } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
-import { privateRoutes, publicRoutes } from "./routes";
-import Middleware from "./routes/middleware";
+import { Switch } from "react-router-dom";
+
+import AppStatus from "components/AppStatus";
 import AuthorizedLayout from "components/Layouts/AuthorizedLayout";
 import NonAuthorizedLayout from "components/Layouts/NonAuthorizedLayout";
-import AppStatus from "components/AppStatus";
+
+import { privateRoutes, publicRoutes } from "./routes";
+import Middleware from "./routes/middleware";
 
 const App = props => {
   const { history } = props;
 
   return (
-    <Fragment>
-      <ConnectedRouter history={history}>
-        <AppStatus />
+    <ConnectedRouter history={history}>
+      <AppStatus />
 
-        <Switch>
-          {publicRoutes?.map((route, idx) => (
-            <Middleware
-              path={route?.path}
-              layout={NonAuthorizedLayout}
-              component={route?.component}
-              key={route?.key || idx}
-              isAuthProtected={false}
-              exact
-            />
-          ))}
+      <Switch>
+        {publicRoutes?.map((route, idx) => (
+          <Middleware
+            path={route?.path}
+            layout={NonAuthorizedLayout}
+            component={route?.component}
+            key={route?.key || idx}
+            isAuthProtected={false}
+            exact
+          />
+        ))}
 
-          {privateRoutes?.map((route, idx) => (
-            <Middleware
-              path={route?.path}
-              layout={AuthorizedLayout}
-              component={route?.component}
-              key={route?.key || idx}
-              isAuthProtected={true}
-              exact
-            />
-          ))}
-        </Switch>
-      </ConnectedRouter>
-    </Fragment>
+        {privateRoutes?.map((route, idx) => (
+          <Middleware
+            path={route?.path}
+            layout={AuthorizedLayout}
+            component={route?.component}
+            key={route?.key || idx}
+            isAuthProtected={true}
+            exact
+          />
+        ))}
+      </Switch>
+    </ConnectedRouter>
   );
 };
 
