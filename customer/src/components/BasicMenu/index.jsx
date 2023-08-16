@@ -8,16 +8,34 @@ import {
   Popper,
 } from "@mui/material";
 import { push } from "connected-react-router";
-import { memo, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
+
+import ApiService from "services/api_service";
+import { ToastService } from "services/toast_service";
 
 const UserMenu = memo(({ title }) => {
   const dispatch = useDispatch();
-
   const [openMenu, setOpenMenu] = useState(false);
   const anchorRef = useRef(null);
+  const [info, setInfo] = useState(null);
+  const isCoach = info?.coachInfo;
 
-  const toggleOpenMenu = () => setOpenMenu(prev => !prev);
+  useEffect(() => {
+    ApiService.GET("/api/user")
+      .then(response => {
+        setInfo(response?.data);
+      })
+      .catch(error => {
+        console.error(error);
+        ToastService.error("Sorry, an error occurred.");
+      });
+  }, []);
+
+  const toggleOpenMenu = () => {
+    setOpenMenu(prev => !prev);
+  };
+
   const handleCloseMenu = event => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
@@ -26,12 +44,17 @@ const UserMenu = memo(({ title }) => {
     setOpenMenu(false);
   };
 
+  const navigateDashboard = () => {
+    dispatch(push("/dashboard/courses"));
+  };
+
   const navigateProfile = () => {
     dispatch(push("/my-profile"));
   };
+
   const logout = () => {
     localStorage.clear();
-    dispatch(push(`/`));
+    window.location.href = "/";
   };
 
   return (
@@ -72,11 +95,10 @@ const UserMenu = memo(({ title }) => {
           >
             <Paper>
               <ClickAwayListener onClickAway={handleCloseMenu}>
-                <MenuList
-                  autoFocusItem={openMenu}
-                  id="user-menu"
-                  aria-labelledby="avatar"
-                >
+                <MenuList id="user-menu" aria-labelledby="avatar">
+                  {isCoach && (
+                    <MenuItem onClick={navigateDashboard}>Dashboard</MenuItem>
+                  )}
                   <MenuItem onClick={navigateProfile}>Profile</MenuItem>
                   <MenuItem onClick={logout}>Logout</MenuItem>
                 </MenuList>

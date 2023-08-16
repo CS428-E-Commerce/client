@@ -152,12 +152,12 @@ const LoginPage = memo(() => {
         >
           Forgot your password?
         </div>
-        <FormControlLabel
+        {/* <FormControlLabel
           classes={{ root: classes.rememberMe }}
           control={<Checkbox {...register("rememberMe")} />}
           label="Remember me"
         />
-        <br />
+        <br /> */}
         <Button width="100%">Log in</Button>
       </form>
     </div>

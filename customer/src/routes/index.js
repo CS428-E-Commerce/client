@@ -1,9 +1,13 @@
 import AllCoursesPage from "pages/AllCourses";
 import CourseDetail from "pages/CourseDetail";
+import CourseSchedule from "pages/CourseSchedule";
+import CreateCourse from "pages/CreateCourse";
 import FindTutorsPage from "pages/FindTutors";
 import HomePage from "pages/Home";
 import LoginPage from "pages/Login";
+import MyCourse from "pages/MyCourse";
 import MyProfilePage from "pages/MyProfile";
+import MyTutorCourses from "pages/MyTutorCourses";
 import ProfilePage from "pages/Profile";
 import StudentRegisterPage from "pages/StudentRegister";
 import TutorRegisterPage from "pages/TutorRegister";
@@ -22,6 +26,13 @@ const publicRoutes = [
   { path: "/profile/:id", component: ProfilePage },
   { path: "/courses", component: AllCoursesPage },
   { path: "/courses/:courseId", component: CourseDetail },
+  { path: "/my-course", component: MyCourse },
 ];
 
-export { privateRoutes, publicRoutes };
+const tutorRoutes = [
+  { path: "/dashboard/courses", component: MyTutorCourses },
+  { path: "/dashboard/courses/create", component: CreateCourse },
+  { path: "/dashboard/schedules", component: CourseSchedule },
+];
+
+export { privateRoutes, publicRoutes, tutorRoutes };

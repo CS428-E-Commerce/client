@@ -1,6 +1,6 @@
 import { memo } from "react";
 
-import { StarsIcon } from "assets/images";
+import { AvatarPlaceholderSrc, StarsIcon } from "assets/images";
 
 import classes from "./styles.module.scss";
 
@@ -17,7 +17,7 @@ const Testimonial = memo(({ discussions }) => {
                 <div className={classes.testimonialAvatarContainer}>
                   <img
                     className={classes.testimonialAvatar}
-                    src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1180&q=80"
+                    src={discussion.avatar ?? AvatarPlaceholderSrc}
                     alt=""
                   />
                 </div>
