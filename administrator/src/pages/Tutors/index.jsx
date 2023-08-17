@@ -96,6 +96,7 @@ const TutorPages = memo(() => {
         ToastService.error("Sorry, an error occurred.");
       })
       .finally(() => {
+        handleClose();
         dispatch(setLoading(false));
       });
   }
