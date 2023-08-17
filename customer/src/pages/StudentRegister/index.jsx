@@ -2,11 +2,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import clsx from "clsx";
+import CryptoJS from "crypto-js";
 import { memo } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory } from "react-router-dom";
 
 import { FacebookImageSrc, GoogleImageSrc } from "assets/images";
 import Button from "components/Button";
@@ -39,7 +40,10 @@ const StudentRegisterPage = memo(() => {
   const onSubmit = async data => {
     const account = {
       email: data.email,
-      password: data.password,
+      password: CryptoJS.AES.encrypt(
+        data.password,
+        "VinglishVjpPro",
+      ).toString(),
       role: "STUDENT",
     };
 
