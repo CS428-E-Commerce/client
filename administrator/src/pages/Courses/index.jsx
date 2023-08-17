@@ -171,9 +171,9 @@ const CoursesPage = memo(() => {
                 label="Status"
                 onChange={handleChange}
               >
-                <MenuItem value={"Await"}>Await</MenuItem>
-                <MenuItem value={"Active"}>Active</MenuItem>
-                <MenuItem value={"Declined"}>Declined</MenuItem>
+                <MenuItem value={"AWAIT"}>Await</MenuItem>
+                <MenuItem value={"ACTIVE"}>Active</MenuItem>
+                <MenuItem value={"DECLINED"}>Declined</MenuItem>
               </Select>
             </FormControl>
           </Box>
