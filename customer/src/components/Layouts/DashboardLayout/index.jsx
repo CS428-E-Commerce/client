@@ -15,7 +15,7 @@ import {
 import { push } from "connected-react-router";
 import { memo, useLayoutEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 const DashboardLayout = memo(props => {
   const { children } = props;
@@ -29,18 +29,10 @@ const DashboardLayout = memo(props => {
 
   const list = () => (
     <Box sx={{ width: 250 }} role="presentation">
+      <Link className="px-4 py-2 d-block text-[32px] font-bold" to="/">
+        Vinglish
+      </Link>
       <List>
-        {/* 
-        {["Courses"].map(text => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <ArticleIcon />
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))} */}
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>

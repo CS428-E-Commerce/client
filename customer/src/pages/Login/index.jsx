@@ -3,6 +3,7 @@ import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import clsx from "clsx";
 import { push } from "connected-react-router";
+import CryptoJS from "crypto-js";
 import { memo, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
@@ -45,7 +46,10 @@ const LoginPage = memo(() => {
   const onSubmit = async data => {
     const account = {
       email: data.email,
-      password: data.password,
+      password: CryptoJS.AES.encrypt(
+        data.password,
+        "VinglishVjpPro",
+      ).toString(),
     };
 
     dispatch(setLoading(true));
