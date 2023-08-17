@@ -141,9 +141,9 @@ const TutorPages = memo(() => {
                 <TableCell sx={{ fontWeight: 700 }}>Email</TableCell>
                 <TableCell sx={{ fontWeight: 700 }}>Name</TableCell>
                 <TableCell sx={{ fontWeight: 700 }}>Description</TableCell>
-                <TableCell sx={{ fontWeight: 700 }}>Year(s) of experience</TableCell>
                 <TableCell sx={{ fontWeight: 700 }}>Total classes</TableCell>
                 <TableCell sx={{ fontWeight: 700 }}>Rate</TableCell>
+                <TableCell sx={{ fontWeight: 700 }}>Year(s) of experience</TableCell>
                 <TableCell />
               </TableRow>
             </TableHead>
@@ -161,11 +161,11 @@ const TutorPages = memo(() => {
                   <TableCell>{row?.coachInfo?.email ?? "N/A"}</TableCell>
                   <TableCell>{row?.coachInfo?.username ?? "N/A"}</TableCell>
                   <TableCell>{row?.coachInfo?.description ?? "N/A"}</TableCell>
-                  <TableCell>{row?.yearExperience ?? 0}</TableCell>
                   <TableCell>{row?.totalCourse ? (
                     <span>{formatNumber(row?.totalCourse)} classes</span>
                   ) : "N/A"}</TableCell>
                   <TableCell>{row?.totalRate ?? "N/A"}</TableCell>
+                  <TableCell>{row?.yearExperience ?? 0}</TableCell>
                   <TableCell>
                     <Button variant="outlined" onClick={(e) => { handleOpenEdit(e, row) }}>Edit</Button>
                   </TableCell>
