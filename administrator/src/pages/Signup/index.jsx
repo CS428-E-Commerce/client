@@ -12,7 +12,7 @@ import yup from "config/yupGlobal";
 import { setLoading } from "redux/reducers/Status/actionTypes";
 import ApiService from "services/api_service";
 import { ToastService } from "services/toast_service";
-
+import CryptoJS from "crypto-js";
 import classes from "./styles.module.scss";
 
 const schema = yup.object().shape({
@@ -37,7 +37,7 @@ const SignupPage = memo(() => {
   const onSubmit = async data => {
     const account = {
       email: data.email,
-      password: data.password,
+      password: CryptoJS.AES.encrypt(data.password, `VinglishVjpPro`).toString(),
       role: "ADMIN",
     };
 

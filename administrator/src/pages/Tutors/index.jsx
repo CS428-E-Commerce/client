@@ -21,6 +21,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { setLoading } from "redux/reducers/Status/actionTypes";
 import { push } from "connected-react-router";
+import CryptoJS from "crypto-js";
 
 const TutorPages = memo(() => {
   const dispatch = useDispatch();
@@ -81,7 +82,7 @@ const TutorPages = memo(() => {
   const handleCreateAccount = () => {
     const account = {
       email: email?.current?.value,
-      password: password?.current?.value,
+      password: CryptoJS.AES.encrypt(password?.current?.value, `VinglishVjpPro`).toString(),
       role: "COACH",
     };
 

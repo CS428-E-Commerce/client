@@ -6,9 +6,8 @@ import { push } from "connected-react-router";
 import { memo, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { NavLink, useHistory, useLocation } from "react-router-dom";
-
-import { FacebookImageSrc, GoogleImageSrc } from "assets/images";
+import { useHistory, useLocation } from "react-router-dom";
+import CryptoJS from "crypto-js";
 import Button from "components/Button";
 import yup from "config/yupGlobal";
 import { setLoading } from "redux/reducers/Status/actionTypes";
@@ -45,7 +44,7 @@ const LoginPage = memo(() => {
   const onSubmit = async data => {
     const account = {
       email: data.email,
-      password: data.password,
+      password: CryptoJS.AES.encrypt(data.password, `VinglishVjpPro`).toString(),
     };
 
     dispatch(setLoading(true));
