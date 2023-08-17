@@ -39,6 +39,10 @@ const CoursesPage = memo(() => {
     getData();
   }, []);
 
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
+
   const getData = () => {
     ApiService.GET(`/api/courses`, {
       code: null,
@@ -51,13 +55,13 @@ const CoursesPage = memo(() => {
     })
       .then(response => {
         setData(response?.data);
-        setTotal(response?.meta?.total);
+        setTotal(response?.total);
       })
       .catch(error => {
         console.log(error);
         ToastService.error("Sorry, an error occurred.");
       });
-  }
+  };
 
   const handleChange = (event) => {
     setStatus(event?.target?.value);
@@ -67,7 +71,7 @@ const CoursesPage = memo(() => {
     e?.stopPropagation();
     setCourseId(data?.courseId);
     setStatus(data?.status)
-  }
+  };
 
   const handleClose = () => {
     setCourseId(null);
@@ -90,7 +94,7 @@ const CoursesPage = memo(() => {
         handleClose();
         dispatch(setLoading(false));
       });
-  }
+  };
 
   return (
     <div className={classes.container}>
@@ -101,15 +105,15 @@ const CoursesPage = memo(() => {
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>ID</TableCell>
-                <TableCell>Level</TableCell>
-                <TableCell>Name</TableCell>
-                <TableCell>Description</TableCell>
-                <TableCell>Start time</TableCell>
-                <TableCell>Tutor</TableCell>
-                <TableCell>Max slot(s)</TableCell>
-                <TableCell>Cost</TableCell>
-                <TableCell>Status</TableCell>
+                <TableCell sx={{ fontWeight: 700 }}>ID</TableCell>
+                <TableCell sx={{ fontWeight: 700 }}>Level</TableCell>
+                <TableCell sx={{ fontWeight: 700 }}>Name</TableCell>
+                <TableCell sx={{ fontWeight: 700 }}>Description</TableCell>
+                <TableCell sx={{ fontWeight: 700 }}>Start time</TableCell>
+                <TableCell sx={{ fontWeight: 700 }}>Tutor</TableCell>
+                <TableCell sx={{ fontWeight: 700 }}>Slot(s)</TableCell>
+                <TableCell sx={{ fontWeight: 700 }}>Cost</TableCell>
+                <TableCell sx={{ fontWeight: 700 }}>Status</TableCell>
                 <TableCell />
               </TableRow>
             </TableHead>
@@ -124,14 +128,14 @@ const CoursesPage = memo(() => {
                   <TableCell>
                     {12 * (page - 1) + index + 1}
                   </TableCell>
-                  <TableCell>{row?.level ?? "N/A"}</TableCell>
+                  <TableCell>{row?.level ? capitalizeFirstLetter(row?.level) : "N/A"}</TableCell>
                   <TableCell>{row?.title ?? "N/A"}</TableCell>
                   <TableCell>{row?.description ?? "N/A"}</TableCell>
                   <TableCell>{row?.startTime ? dayjs(row?.startTime)?.format("DD/MM/YYYY") : "N/A"}</TableCell>
                   <TableCell>{row?.coachname ?? "N/A"}</TableCell>
                   <TableCell>{row?.maxSlot ?? "N/A"}</TableCell>
                   <TableCell>{row?.cost ?? "N/A"}</TableCell>
-                  <TableCell sx={{ color: row?.status === "Await" ? "orange" : row?.status === "Active" ? "green" : "red" }}>{row?.status ?? "N/A"}</TableCell>
+                  <TableCell sx={{ color: row?.status === "AWAIT" ? "orange" : row?.status === "ACTIVE" ? "green" : row?.status === "DECLINED" ? "red" : "inherit" }}>{row?.status ? capitalizeFirstLetter(row?.status) : "N/A"}</TableCell>
                   <TableCell>
                     <Button variant="outlined" onClick={(e) => { handleOpen(e, row) }}>Edit</Button>
                   </TableCell>

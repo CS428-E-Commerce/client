@@ -135,13 +135,13 @@ const TutorPages = memo(() => {
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>ID</TableCell>
-                <TableCell>Email</TableCell>
-                <TableCell>Name</TableCell>
-                <TableCell>Description</TableCell>
-                <TableCell>Year(s) of experience</TableCell>
-                <TableCell>Total classes</TableCell>
-                <TableCell>Rate</TableCell>
+                <TableCell sx={{ fontWeight: 700 }}>ID</TableCell>
+                <TableCell sx={{ fontWeight: 700 }}>Email</TableCell>
+                <TableCell sx={{ fontWeight: 700 }}>Name</TableCell>
+                <TableCell sx={{ fontWeight: 700 }}>Description</TableCell>
+                <TableCell sx={{ fontWeight: 700 }}>Year(s) of experience</TableCell>
+                <TableCell sx={{ fontWeight: 700 }}>Total classes</TableCell>
+                <TableCell sx={{ fontWeight: 700 }}>Rate</TableCell>
                 <TableCell />
               </TableRow>
             </TableHead>
