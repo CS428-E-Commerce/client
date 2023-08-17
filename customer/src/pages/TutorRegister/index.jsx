@@ -1,15 +1,9 @@
-import { yupResolver } from "@hookform/resolvers/yup";
-import Checkbox from "@mui/material/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import clsx from "clsx";
+import CryptoJS from "crypto-js";
 import { memo, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { NavLink, useHistory } from "react-router-dom";
 
 import { FacebookImageSrc, GoogleImageSrc } from "assets/images";
-import Button from "components/Button";
-import yup from "config/yupGlobal";
 import { setLoading } from "redux/reducers/Status/actionTypes";
 import ApiService from "services/api_service";
 import { ToastService } from "services/toast_service";
@@ -17,13 +11,6 @@ import { ToastService } from "services/toast_service";
 import RegisterFormFinalStep from "./components/RegisterFormFinalStep";
 import RegisterFormStep1 from "./components/RegisterFormStep1";
 import classes from "./styles.module.scss";
-
-const schema = yup.object().shape({
-  name: yup.string().required("Name is required"),
-  email: yup.string().email("Invalid email").required("Email is required"),
-  password: yup.string().password().required("Password is required"),
-  rememberMe: yup.boolean(),
-});
 
 const STEPS = {
   ONE: "1",
@@ -53,7 +40,10 @@ const TutorRegisterPage = memo(() => {
   const onFormStep1Submit = async data => {
     const account = {
       email: data.email,
-      password: data.password,
+      password: CryptoJS.AES.encrypt(
+        data.password,
+        "VinglishVjpPro",
+      ).toString(),
       role: "COACH",
     };
 
