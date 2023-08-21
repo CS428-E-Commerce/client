@@ -87,7 +87,7 @@ const LoginPage = memo(() => {
         </p>
       </div>
 
-      <div className={classes.oauthLogin}>
+      {/* <div className={classes.oauthLogin}>
         <div
           className={classes.oauthBadge}
           onClick={() => {
@@ -120,7 +120,7 @@ const LoginPage = memo(() => {
         <span className={classes.leftDivider} />
         <span className={classes.text}>or</span>
         <span className={classes.rightDivider} />
-      </div>
+      </div> */}
 
       <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
         <div className={classes.formGroup}>

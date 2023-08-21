@@ -1,12 +1,17 @@
+import { Rating } from "@mui/material";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { push } from "connected-react-router";
-import { memo, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import { AvatarPlaceholderSrc, CloseRoundedIcon } from "assets/images";
+import {
+  AvatarPlaceholderSrc,
+  CloseRoundedIcon,
+  SendIconSrc,
+} from "assets/images";
 import useQuery from "hooks/useQuery";
 import { setLoading } from "redux/reducers/Status/actionTypes";
 import ApiService from "services/api_service";
@@ -35,6 +40,11 @@ const CourseDetail = memo(() => {
   const [openModal, setOpenModal] = useState(false);
   const [modalType, setModalType] = useState("prepayment");
   const [clientSecret, setClientSecret] = useState("");
+  const [comment, setComment] = useState("");
+  const [rate, setRate] = useState(-1);
+
+  const [event, updateState] = useState();
+  const forceUpdate = useCallback(() => updateState({}), []);
 
   useEffect(() => {
     const init = async () => {
@@ -60,7 +70,7 @@ const CourseDetail = memo(() => {
     };
 
     init();
-  }, []);
+  }, [event]);
 
   useEffect(() => {
     const initPayment = async () => {
@@ -97,6 +107,27 @@ const CourseDetail = memo(() => {
     initPayment();
   }, [data]);
 
+  const onCommentChange = e => {
+    setComment(e.target.value);
+  };
+
+  const handleComment = async e => {
+    e.preventDefault();
+    if (!user?.data?.id || !data?.course?.id || rate < 0) return;
+    try {
+      await ApiService.POST("/api/discussion", {
+        userId: user.data.id,
+        courseId: data?.course?.id,
+        rate,
+        comment,
+      });
+      forceUpdate();
+    } catch (error) {
+      console.error(error);
+      ToastService.error("Sorry, an error occurred.");
+    }
+  };
+
   const slotRemains =
     data?.course?.maxSlot ?? 0 - data?.course?.attendeeNumber ?? 0;
 
@@ -128,7 +159,36 @@ const CourseDetail = memo(() => {
           coachYearExperience={data?.coach?.yearExperience}
           coachRateTurn={data?.coach?.rateTurn}
           coachTotalCourse={data?.coach?.totalCourse}
+          coachEmail={data?.coach_detail?.username}
+          totalRate={data?.coach?.totalRate}
         />
+
+        <form className={classes.commentForm} onSubmit={handleComment}>
+          <Rating
+            value={rate < 0 ? 0 : rate}
+            onChange={(event, value) => {
+              setRate(value);
+            }}
+          />
+          <div className={classes.commentBox}>
+            <div className={classes.tutorAvatarContainer}>
+              <img
+                className={classes.tutorAvatar}
+                src={data?.coach_detail?.avatar ?? AvatarPlaceholderSrc}
+                alt=""
+              />
+            </div>
+            <input
+              value={comment}
+              onChange={onCommentChange}
+              className={classes.commentInput}
+              placeholder="Add comment..."
+            />
+            <button className={classes.sendBtn}>
+              <img className={classes.btnimg} src={SendIconSrc} alt="" />
+            </button>
+          </div>
+        </form>
 
         <Testimonial discussions={discussions} />
       </div>

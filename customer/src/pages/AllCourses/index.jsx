@@ -21,6 +21,8 @@ import classes from "./styles.module.scss";
 const AllCourses = memo(() => {
   const dispatch = useDispatch();
 
+  const [totalPage, setTotalPage] = useState(1);
+  const [level, setLevel] = useState(undefined);
   const [page, setPage] = useState(1);
   const [courses, setCourses] = useState([]);
 
@@ -33,12 +35,13 @@ const AllCourses = memo(() => {
           coachId: null,
           userId: null,
           status: null,
-          level: null,
+          level,
           // TODO: integrate pagination
-          offset: 0,
+          offset: 5 * (page - 1),
           limit: 5,
         });
         setCourses(response?.data ?? []);
+        setTotalPage(response?.lastPage ?? 1);
       } catch (error) {
         console.error(error);
         ToastService.error("Sorry, an error occurred.");
@@ -48,7 +51,7 @@ const AllCourses = memo(() => {
     };
 
     init();
-  }, []);
+  }, [level, page]);
 
   return (
     <div className={classes.container}>
@@ -61,12 +64,18 @@ const AllCourses = memo(() => {
               icon={<LevelIcon />}
               minWidth={186}
               placeholder="Vietnamese Level"
+              onChange={data => setLevel(data.value)}
+              options={[
+                { value: "beginner", label: "Beginner" },
+                { value: "intermediate", label: "Intermediate" },
+                { value: "advance", label: "Advance" },
+              ]}
             />
-            <Select icon={<TopicIcon />} minWidth={85} placeholder="Topic" />
-            <Select icon={<DayIcon />} minWidth={78} placeholder="Day" />
-            <Select icon={<TimeIcon />} minWidth={88} placeholder="Time" />
-            <Select icon={<PriceIcon />} minWidth={88} placeholder="Price" />
-            <Select icon={<SortIcon />} minWidth={80} placeholder="Sort" />
+            {/* <Select icon={<TopicIcon />} minWidth={85} placeholder="Topic" /> */}
+            {/* <Select icon={<DayIcon />} minWidth={78} placeholder="Day" /> */}
+            {/* <Select icon={<TimeIcon />} minWidth={88} placeholder="Time" /> */}
+            {/* <Select icon={<PriceIcon />} minWidth={88} placeholder="Price" /> */}
+            {/* <Select icon={<SortIcon />} minWidth={120} placeholder="Sort By" /> */}
           </div>
         </header>
 
@@ -77,7 +86,7 @@ const AllCourses = memo(() => {
         </section>
 
         <Pagination
-          count={1}
+          count={totalPage}
           page={page}
           onChange={(_, value) => {
             setPage(value);

@@ -35,3 +35,4 @@ export { default as FacebookImageSrc } from "./icons/facebook.png";
 export { default as CommentImageSrc } from "./icons/comment.png";
 export { default as NotificationImageSrc } from "./icons/notification.png";
 export { default as StarsImageSrc } from "./icons/stars.png";
+export { default as SendIconSrc } from "./icons/send-icon.png";

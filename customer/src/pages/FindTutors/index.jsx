@@ -15,6 +15,7 @@ import {
 } from "assets/images";
 import Loading from "components/Loading";
 import Select from "components/Select";
+import useDebounce from "hooks/useDebounce";
 import ApiService from "services/api_service";
 import { formatCent, formatNumber } from "services/common_service";
 import { ToastService } from "services/toast_service";
@@ -40,12 +41,25 @@ const FindTutorsPage = memo(() => {
   const [page, setPage] = useState(1);
   const [data, setData] = useState(null);
   const [total, setTotal] = useState(null);
+  const [name, setName] = useState(undefined);
+  const [sortBy, setSortBy] = useState(undefined);
+  const [direction, setDirection] = useState("ASC");
+
+  const filterTutorName = useDebounce(e => {
+    setName(e.target.value);
+  }, 500);
+
+  const handleSortBy = option => {
+    setSortBy(option.value);
+  };
 
   useEffect(() => {
     ApiService.GET(`/api/coach`, {
       offset: page - 1,
       limit: 12,
-      name: "",
+      name,
+      sortBy,
+      direction,
     })
       .then(response => {
         setData(response?.data);
@@ -55,24 +69,36 @@ const FindTutorsPage = memo(() => {
         console.log(error);
         ToastService.error("Sorry, an error occurred.");
       });
-  }, []);
+  }, [name, sortBy]);
 
   return (
     <div className={classes.container}>
       <div className={classes.main}>
-        <p className={classes.title}>All Vietnamese tutors</p>
+        <div className={classes.heading}>
+          <p className={classes.title}>All Vietnamese tutors</p>
+          <input
+            className={classes.input}
+            placeholder="Tutor name"
+            onChange={filterTutorName}
+          />
+        </div>
 
         <div className={classes.filterContainer}>
           <Select
-            icon={<LevelIcon />}
-            minWidth={186}
-            placeholder="Vietnamese Level"
+            icon={<SortIcon />}
+            minWidth={120}
+            placeholder="Sort By"
+            onChange={handleSortBy}
+            options={[
+              { value: "totalRate", label: "Total Rate" },
+              // { value: "rateTurn", label: "Rate Turn" },
+              // { value: "totalStudent", label: "Total Student" },
+              // { value: "totalCourse", label: "Total Course" },
+              // { value: "totalComment", label: "Total Comment" },
+              // { value: "yearExperience", label: "Year Experience" },
+              // { value: "averageCost", label: "Average Cost" },
+            ]}
           />
-          <Select icon={<TopicIcon />} minWidth={85} placeholder="Topic" />
-          <Select icon={<DayIcon />} minWidth={78} placeholder="Day" />
-          <Select icon={<TimeIcon />} minWidth={88} placeholder="Time" />
-          <Select icon={<PriceIcon />} minWidth={88} placeholder="Price" />
-          <Select icon={<SortIcon />} minWidth={80} placeholder="Sort" />
         </div>
 
         <div className={classes.tutorList}>

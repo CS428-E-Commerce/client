@@ -18,6 +18,8 @@ const CourseTutor = memo(
     coachYearExperience,
     coachRateTurn,
     coachTotalCourses,
+    coachEmail,
+    totalRate,
   }) => {
     return (
       <section className={classes.courseTutor}>
@@ -40,7 +42,9 @@ const CourseTutor = memo(
               </span>
             </div>
           </div>
-          <button className={classes.contactBtn}>Contact tutor</button>
+          <a href={`mailto:${coachEmail}`} className={classes.contactBtn}>
+            Contact tutor
+          </a>
         </div>
         <div className={classes.stats}>
           <div className={classes.verified}>
@@ -49,7 +53,9 @@ const CourseTutor = memo(
           </div>
           <div className={classes.reviews}>
             <StarIcon className={classes.starIcon} />
-            <span>5 &#40;{formatNumber(coachRateTurn)} reviews&#41;</span>
+            <span>
+              {totalRate} &#40;{formatNumber(coachRateTurn)} reviews&#41;
+            </span>
           </div>
           <div className={classes.lessonsTaught}>
             <GraduateHatIcon className={classes.graduateHatIcon} />
