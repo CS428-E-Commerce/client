@@ -8,6 +8,38 @@
     flex-shrink: 0;
     width: 677px;
   }
+
+  .commentForm {
+    margin-top: 16px;
+  }
+  .commentBox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 4px;
+    background: var(--white);
+    padding: 0px 16px;
+
+    .tutorAvatarContainer {
+      border-radius: 9999px;
+      width: 24px;
+      height: 24px;
+      overflow: hidden;
+    }
+
+    .commentInput {
+      display: block;
+      outline: none;
+      background: var(--white);
+      padding: 8px;
+      width: 100%;
+    }
+
+    .sendBtn,
+    .btnimg {
+      height: 24px;
+    }
+  }
 }
 
 .modalHeading {

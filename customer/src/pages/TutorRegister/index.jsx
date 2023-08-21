@@ -96,7 +96,7 @@ const TutorRegisterPage = memo(() => {
         </p>
       </div>
 
-      <div className={classes.oauthLogin}>
+      {/* <div className={classes.oauthLogin}>
         <div
           className={classes.oauthBadge}
           onClick={() => {
@@ -129,7 +129,7 @@ const TutorRegisterPage = memo(() => {
         <span className={classes.leftDivider} />
         <span className={classes.text}>or</span>
         <span className={classes.rightDivider} />
-      </div>
+      </div> */}
 
       {step === STEPS.ONE && <RegisterFormStep1 next={onFormStep1Submit} />}
       {step === STEPS.FINAL && (

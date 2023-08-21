@@ -10,6 +10,19 @@
   padding: clamp(16px, 6vw, 88px) 0;
 }
 
+.heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.input {
+  display: block;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 8px 16px;
+}
+
 .title {
   margin-bottom: 12px;
   font-weight: 700;

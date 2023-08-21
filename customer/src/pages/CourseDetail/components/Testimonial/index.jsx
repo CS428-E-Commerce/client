@@ -1,3 +1,4 @@
+import { Rating } from "@mui/material";
 import { memo } from "react";
 
 import { AvatarPlaceholderSrc, StarsIcon } from "assets/images";
@@ -33,7 +34,11 @@ const Testimonial = memo(({ discussions }) => {
               <div className={classes.date}>Jun 28, 2023</div>
             </div>
             <div className={classes.testimonialContent}>
-              <StarsIcon className={classes.starsIcon} />
+              <Rating
+                name="read-only"
+                value={parseInt(discussion.rate)}
+                readOnly
+              />
               <p className={classes.content}>{discussion?.comment}</p>
             </div>
           </div>
