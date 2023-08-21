@@ -104,7 +104,7 @@ const TutorProfilePage = memo(() => {
                 <h2 className={classes.coursesHeading}>My Courses</h2>
                 <div className={classes.courses}>
                   {data?.courses
-                    ?.filter(course => course.status === "VERIFIED")
+                    ?.filter(course => course.status.toUpperCase() === "ACTIVE")
                     .map(course => {
                       return (
                         <div

@@ -54,11 +54,6 @@ const TutorRegisterPage = memo(() => {
         localStorage.setItem("email", response?.data?.email);
         setStep(STEPS.FINAL);
         setIsRegistered(true);
-
-        // if (location?.state?.prevLocation) {
-        //   return history?.replace(location?.state?.prevLocation);
-        // }
-        // history?.replace("/");
       })
       .catch(error => {
         console.log(error);

@@ -72,9 +72,11 @@ const CourseDetail = memo(() => {
         const user = await ApiService.GET("/api/user");
         setUser(user);
 
-        const attendees = await ApiService.GET(
-          `/api/attendees/${data.course.id}`,
-        );
+        const attendees = await ApiService.GET(`/api/attendees`, {
+          courseId: data.course.id,
+          offset: 0,
+          limit: 10,
+        });
         const isUserAttending = attendees.data?.find(
           attendee =>
             attendee.userId === (user.data?.id ?? user.data?.coachInfo?.id),

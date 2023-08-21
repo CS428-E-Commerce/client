@@ -49,8 +49,6 @@ const MyTutorCourses = memo(() => {
 
   const selectedClassData = classData.find(c => c.id === selectedClass);
 
-  console.log({ selectedClassData });
-
   return (
     <div className={classes.container}>
       <h1 className={classes.title}>My Classes</h1>
