@@ -163,32 +163,34 @@ const CourseDetail = memo(() => {
           totalRate={data?.coach?.totalRate}
         />
 
-        <form className={classes.commentForm} onSubmit={handleComment}>
-          <Rating
-            value={rate < 0 ? 0 : rate}
-            onChange={(event, value) => {
-              setRate(value);
-            }}
-          />
-          <div className={classes.commentBox}>
-            <div className={classes.tutorAvatarContainer}>
-              <img
-                className={classes.tutorAvatar}
-                src={data?.coach_detail?.avatar ?? AvatarPlaceholderSrc}
-                alt=""
-              />
-            </div>
-            <input
-              value={comment}
-              onChange={onCommentChange}
-              className={classes.commentInput}
-              placeholder="Add comment..."
+        {user && (
+          <form className={classes.commentForm} onSubmit={handleComment}>
+            <Rating
+              value={rate < 0 ? 0 : rate}
+              onChange={(event, value) => {
+                setRate(value);
+              }}
             />
-            <button className={classes.sendBtn}>
-              <img className={classes.btnimg} src={SendIconSrc} alt="" />
-            </button>
-          </div>
-        </form>
+            <div className={classes.commentBox}>
+              <div className={classes.tutorAvatarContainer}>
+                <img
+                  className={classes.tutorAvatar}
+                  src={data?.coach_detail?.avatar ?? AvatarPlaceholderSrc}
+                  alt=""
+                />
+              </div>
+              <input
+                value={comment}
+                onChange={onCommentChange}
+                className={classes.commentInput}
+                placeholder="Add comment..."
+              />
+              <button className={classes.sendBtn}>
+                <img className={classes.btnimg} src={SendIconSrc} alt="" />
+              </button>
+            </div>
+          </form>
+        )}
 
         <Testimonial discussions={discussions} />
       </div>
