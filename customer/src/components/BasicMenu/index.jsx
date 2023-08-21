@@ -52,6 +52,10 @@ const UserMenu = memo(({ title }) => {
     dispatch(push("/my-profile"));
   };
 
+  const navigateChangePassword = () => {
+    dispatch(push("/change-password"));
+  };
+
   const logout = () => {
     localStorage.clear();
     window.location.href = "/";
@@ -100,6 +104,9 @@ const UserMenu = memo(({ title }) => {
                     <MenuItem onClick={navigateDashboard}>Dashboard</MenuItem>
                   )}
                   <MenuItem onClick={navigateProfile}>Profile</MenuItem>
+                  <MenuItem onClick={navigateChangePassword}>
+                    Change Password
+                  </MenuItem>
                   <MenuItem onClick={logout}>Logout</MenuItem>
                 </MenuList>
               </ClickAwayListener>
