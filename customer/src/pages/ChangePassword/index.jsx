@@ -19,12 +19,14 @@ import { ToastService } from "services/toast_service";
 import classes from "./styles.module.scss";
 
 const schema = yup.object().shape({
-  email: yup.string().email("Invalid email").required("Email is required"),
-  password: yup.string().password().required("Password is required"),
-  rememberMe: yup.boolean(),
+  oldPassword: yup.string().required("Old password is required"),
+  newPassword: yup.string().required("New password is required").password(),
+  confirmNewPassword: yup
+    .string()
+    .oneOf([yup.ref("newPassword"), null], "Passwords must match"),
 });
 
-const LoginPage = memo(() => {
+const ChangePasswordPage = memo(() => {
   const history = useHistory();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -37,30 +39,23 @@ const LoginPage = memo(() => {
     resolver: yupResolver(schema),
   });
 
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      dispatch(push(`/`));
-    }
-  }, []);
-
   const onSubmit = async data => {
-    const account = {
-      email: data.email,
+    console.log(data);
+
+    const bodyObject = {
       password: CryptoJS.AES.encrypt(
-        data.password,
+        data.oldPassword,
+        "VinglishVjpPro",
+      ).toString(),
+      newPassword: CryptoJS.AES.encrypt(
+        data.newPassword,
         "VinglishVjpPro",
       ).toString(),
     };
 
     dispatch(setLoading(true));
-    ApiService.POST("/api/auth/login", account)
-      .then(response => {
-        localStorage.setItem("token", response?.data?.accessToken);
-        localStorage.setItem("email", response?.data?.email);
-
-        if (location?.state?.prevLocation) {
-          return history?.replace(location?.state?.prevLocation);
-        }
+    ApiService.POST("/api/auth/change-password", bodyObject)
+      .then(() => {
         history?.replace("/");
       })
       .catch(error => {
@@ -75,16 +70,7 @@ const LoginPage = memo(() => {
   return (
     <div className={classes.container}>
       <div className={classes.pageHeader}>
-        <h1 className={classes.pageTitle}>Log in</h1>
-        <p className={classes.signUpLinks}>
-          <NavLink to="/student-signup" className={classes.navLink}>
-            Sign up as a student
-          </NavLink>{" "}
-          <span>or</span>{" "}
-          <NavLink to="/tutor-signup" className={classes.navLink}>
-            Sign up as a tutor
-          </NavLink>
-        </p>
+        <h1 className={classes.pageTitle}>Change Password</h1>
       </div>
 
       {/* <div className={classes.oauthLogin}>
@@ -124,27 +110,41 @@ const LoginPage = memo(() => {
 
       <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
         <div className={classes.formGroup}>
-          <label className={classes.formLabel}>Email</label>
+          <label className={classes.formLabel}>Old password</label>
           <input
-            {...register("email")}
+            {...register("oldPassword")}
             className={classes.input}
-            placeholder="Your Email"
+            placeholder="Your Old Password"
+            type="password"
           />
-          {errors.email?.message && (
-            <p className={classes.error}>{errors.email.message}</p>
+          {errors.oldPassword?.message && (
+            <p className={classes.error}>{errors.oldPassword.message}</p>
           )}
         </div>
 
         <div className={clsx(classes.formGroup, classes.formGroupMarginTop)}>
-          <label className={classes.formLabel}>Password</label>
+          <label className={classes.formLabel}>New password</label>
           <input
-            {...register("password")}
+            {...register("newPassword")}
             className={classes.input}
-            placeholder="Your Password"
+            placeholder="Your New Password"
             type="password"
           />
-          {errors.password?.message && (
-            <p className={classes.error}>{errors.password.message}</p>
+          {errors.newPassword?.message && (
+            <p className={classes.error}>{errors.newPassword.message}</p>
+          )}
+        </div>
+
+        <div className={clsx(classes.formGroup, classes.formGroupMarginTop)}>
+          <label className={classes.formLabel}>Confirm new password</label>
+          <input
+            {...register("confirmNewPassword")}
+            className={classes.input}
+            placeholder="Your New Password"
+            type="password"
+          />
+          {errors.confirmNewPassword?.message && (
+            <p className={classes.error}>{errors.confirmNewPassword.message}</p>
           )}
         </div>
 
@@ -162,10 +162,10 @@ const LoginPage = memo(() => {
           label="Remember me"
         />
         <br /> */}
-        <Button width="100%">Log in</Button>
+        <Button width="100%">Change password</Button>
       </form>
     </div>
   );
 });
 
-export default LoginPage;
+export default ChangePasswordPage;

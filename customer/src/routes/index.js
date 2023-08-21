@@ -1,4 +1,5 @@
 import AllCoursesPage from "pages/AllCourses";
+import ChangePasswordPage from "pages/ChangePassword";
 import CourseDetail from "pages/CourseDetail";
 import CourseSchedule from "pages/CourseSchedule";
 import CreateCourse from "pages/CreateCourse";
@@ -27,6 +28,7 @@ const publicRoutes = [
   { path: "/courses", component: AllCoursesPage },
   { path: "/courses/:courseId", component: CourseDetail },
   { path: "/my-course", component: MyCourse },
+  { path: "/change-password", component: ChangePasswordPage },
 ];
 
 const tutorRoutes = [
