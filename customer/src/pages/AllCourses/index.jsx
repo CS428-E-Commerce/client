@@ -11,6 +11,7 @@ import {
   TopicIcon,
 } from "assets/images";
 import Select from "components/Select";
+import useDebounce from "hooks/useDebounce";
 import { setLoading } from "redux/reducers/Status/actionTypes";
 import ApiService from "services/api_service";
 import { ToastService } from "services/toast_service";
@@ -25,6 +26,11 @@ const AllCourses = memo(() => {
   const [level, setLevel] = useState(undefined);
   const [page, setPage] = useState(1);
   const [courses, setCourses] = useState([]);
+  const [courseTitle, setCourseTitle] = useState("");
+
+  const filterCourseTitle = useDebounce(e => {
+    setCourseTitle(e.target.value);
+  }, 500);
 
   useEffect(() => {
     const init = async () => {
@@ -39,6 +45,7 @@ const AllCourses = memo(() => {
           // TODO: integrate pagination
           offset: 5 * (page - 1),
           limit: 5,
+          title: courseTitle,
         });
         setCourses(response?.data ?? []);
         setTotalPage(response?.lastPage ?? 1);
@@ -51,13 +58,20 @@ const AllCourses = memo(() => {
     };
 
     init();
-  }, [level, page]);
+  }, [courseTitle, level, page]);
 
   return (
     <div className={classes.container}>
       <div className={classes.main}>
         <header>
-          <h1 className={classes.title}>All Vietnamese Courses</h1>
+          <div className={classes.heading}>
+            <h1 className={classes.title}>All Vietnamese Courses</h1>
+            <input
+              className={classes.input}
+              placeholder="Course Title"
+              onChange={filterCourseTitle}
+            />
+          </div>
 
           <div className={classes.filterContainer}>
             <Select
