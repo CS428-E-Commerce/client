@@ -168,3 +168,22 @@
     }
   }
 }
+
+.modalHeading {
+  font-weight: 700;
+  font-size: 24px;
+}
+
+.modalBody {
+  .formGroup {
+    margin-bottom: 16px;
+
+    .input {
+      display: block;
+      border: 1px solid #cdcdcd;
+      border-radius: 4px;
+      padding: 8px 16px;
+      width: 100%;
+    }
+  }
+}

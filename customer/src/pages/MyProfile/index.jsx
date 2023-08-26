@@ -3,25 +3,35 @@ import dayjs from "dayjs";
 import { memo, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { AvatarPlaceholderSrc, CheckIcon, StarsIcon } from "assets/images";
+import {
+  AvatarPlaceholderSrc,
+  CheckIcon,
+  CloseRoundedIcon,
+} from "assets/images";
 import CalendarImg from "assets/images/icons/calendar.png";
 import Loading from "components/Loading";
 import ApiService from "services/api_service";
-import { formatCent } from "services/common_service";
+import { formatCent, formatRate } from "services/common_service";
 import { ToastService } from "services/toast_service";
 
 import classes from "./styles.module.scss";
+import { Rating } from "@mui/material";
+import Button from "components/Button";
+import { Modal } from "react-bootstrap";
 
 const MyProfilePage = memo(() => {
   const dispatch = useDispatch();
-  const [user, setUser] = useState(null);
+  const [data, setData] = useState({});
   const [courses, setCourses] = useState([]);
+  const [user, setUser] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     const init = async () => {
       try {
         const response = await ApiService.GET("/api/user");
         setUser(response?.data);
+        setData(response?.data);
 
         const coursesResponse = await ApiService.GET("/api/courses", {
           userId: response?.data?.id,
@@ -56,9 +66,23 @@ const MyProfilePage = memo(() => {
     dispatch(push(`/courses/${courseId}`));
   };
 
+  const handleSubmit = async e => {
+    e.preventDefault();
+    await ApiService.PUT(`/api/user`, data);
+    ToastService.success("Successfully update profile info");
+  };
+
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setData(data => ({ ...data, [name]: value }));
+  };
+
   return (
     <div className={classes.container}>
       <main className={classes.main}>
+        <Button className="mb-4" onClick={() => setModalOpen(true)}>
+          Edit Profile
+        </Button>
         {user ? (
           <div className={classes.twoColumnLayout}>
             <div className={classes.leftColumn}>
@@ -108,11 +132,12 @@ const MyProfilePage = memo(() => {
                             <CheckIcon />
                           </div>
                           <div className={classes.courseReview}>
-                            <span>{course.rate ?? "N/A"}</span>
-                            {/* TODO: create stars component for this */}
-                            <StarsIcon />
+                            <span>{formatRate(course.rate) ?? "N/A"}</span>
+                            <Rating value={course.rate} readOnly />
                           </div>
-                          <div>({user?.totalCourse} classes taught)</div>
+                          <div>
+                            ({user?.coachInfo?.totalCourse} classes taught)
+                          </div>
                           <div className={classes.courseDate}>
                             <img
                               className={classes.calendarIcon}
@@ -163,6 +188,65 @@ const MyProfilePage = memo(() => {
           <Loading />
         )}
       </main>
+
+      <Modal show={modalOpen}>
+        <Modal.Header>
+          <CloseRoundedIcon style={{ visibility: "hidden" }} />
+          <span className={classes.modalHeading}>Edit Profile</span>
+          <CloseRoundedIcon onClick={() => setModalOpen(false)} />
+        </Modal.Header>
+        <Modal.Body className={classes.modalBody}>
+          <form onSubmit={handleSubmit}>
+            <div className={classes.formGroup}>
+              <label className={classes.inputLabel}>Username</label>
+              <input
+                className={classes.input}
+                name="username"
+                value={data.username || ""}
+                onChange={handleChange}
+              />
+            </div>
+            <div className={classes.formGroup}>
+              <label className={classes.inputLabel}>Description</label>
+              <textarea
+                className={classes.input}
+                name="description"
+                value={data.description || ""}
+                onChange={handleChange}
+              />
+            </div>
+            <div className={classes.formGroup}>
+              <label className={classes.inputLabel}>Avatar</label>
+              <input
+                className={classes.input}
+                name="avatar"
+                value={data.avatar || ""}
+                onChange={handleChange}
+              />
+            </div>
+            <div className={classes.formGroup}>
+              <label className={classes.inputLabel}>Address</label>
+              <input
+                className={classes.input}
+                name="address"
+                value={data.address || ""}
+                onChange={handleChange}
+              />
+            </div>
+            <div className={classes.formGroup}>
+              <label className={classes.inputLabel}>Phone</label>
+              <input
+                className={classes.input}
+                name="phone"
+                value={data.phone || ""}
+                onChange={handleChange}
+              />
+            </div>
+
+            <Button width="100%">Save</Button>
+          </form>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 });
