@@ -6,9 +6,11 @@ const Button = styled.button`
   transition: all 0.2s ease;
   margin-top: 32px;
   border-radius: 4px;
-  background-color: var(--deep-blue);
+  background-color: ${({ outline }) =>
+    outline ? "transparent" : "var(--deep-blue)"};
   padding: 16px 40px;
-  color: var(--white);
+  color: ${({ outline }) => (outline ? "var(--deep-blue)" : "var(--white)")};
+  border: ${({ outline }) => outline && "1px solid var(--deep-blue)"};
   font-weight: 700;
   font-size: 18px;
   line-height: 24px;

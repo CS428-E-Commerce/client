@@ -99,8 +99,6 @@ const MyCourse = memo(() => {
     upcomingSessions: ["Session 1", "Session 2", "Session 3"],
   }));
 
-  console.log({ selectedClass });
-
   return (
     <div className={classes.container}>
       <h1 className={classes.title}>My Classes</h1>

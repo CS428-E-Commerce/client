@@ -18,10 +18,13 @@ import ApiService from "services/api_service";
 import { ToastService } from "services/toast_service";
 
 import classes from "./styles.module.scss";
+import { useParams } from "react-router-dom";
+import { push } from "connected-react-router";
 
 const levels = ["Beginner", "Intermediate", "Advance"];
 
-const CreateCourse = memo(() => {
+const EditCourse = memo(() => {
+  const { id } = useParams();
   const dispatch = useDispatch();
   const [data, setData] = useState({
     level: "Beginner",
@@ -35,6 +38,13 @@ const CreateCourse = memo(() => {
         const response = await ApiService.GET("/api/user");
         const coachId = response?.data?.coachInfo?.id;
         setCoachId(coachId);
+
+        const courseDetailResponse = await ApiService.GET(
+          `/api/courses/detail/${id}/${response?.data?.id}`,
+        );
+        if (courseDetailResponse?.course?.cost)
+          courseDetailResponse.course.cost /= 100;
+        setData(courseDetailResponse?.course ?? data);
       } catch (error) {
         console.error(error);
         ToastService.error("Sorry, an error occurred");
@@ -48,6 +58,7 @@ const CreateCourse = memo(() => {
 
   const handleChange = e => {
     const { name, value } = e.target;
+    console.log(name, value);
     setData(state => ({ ...state, [name]: value }));
   };
 
@@ -64,12 +75,17 @@ const CreateCourse = memo(() => {
       });
   };
 
+  const handleDelete = async () => {
+    await ApiService.POST("/api/courses/delete", { id });
+    dispatch(push("/dashboard/courses"));
+  };
+
   return (
     <div className={classes.container}>
       <Paper elevation={3} sx={{ marginRight: "15%", marginLeft: "15%" }}>
         <Box sx={{ padding: 5 }}>
           <Typography variant="h6" gutterBottom sx={{ paddingBottom: 5 }}>
-            Create a course
+            Edit course
           </Typography>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={2} alignItems="center" display="flex">
@@ -91,6 +107,7 @@ const CreateCourse = memo(() => {
                 size="small"
                 autoComplete="off"
                 variant="outlined"
+                value={data.title || ""}
                 onChange={handleChange}
               />
             </Grid>
@@ -111,6 +128,7 @@ const CreateCourse = memo(() => {
                 id="code"
                 name="code"
                 label="Code"
+                value={data.code || ""}
                 size="small"
                 autoComplete="off"
                 variant="outlined"
@@ -134,6 +152,7 @@ const CreateCourse = memo(() => {
                 id="banner"
                 name="banner"
                 label="Banner"
+                value={data.banner || ""}
                 size="small"
                 autoComplete="off"
                 variant="outlined"
@@ -146,10 +165,6 @@ const CreateCourse = memo(() => {
                 sx={{
                   fontWeight: 700,
                 }}
-                id="banner"
-                name="banner"
-                autoComplete="off"
-                onChange={handleChange}
               >
                 Description
               </InputLabel>
@@ -161,6 +176,7 @@ const CreateCourse = memo(() => {
                 id="outlined-multiline-static"
                 name="description"
                 label="Description"
+                value={data.description || ""}
                 multiline
                 rows={4}
               />
@@ -211,6 +227,7 @@ const CreateCourse = memo(() => {
                 id="maxSlot"
                 name="maxSlot"
                 label="Max Slot"
+                value={data.maxSlot || ""}
                 size="small"
                 autoComplete="off"
                 variant="outlined"
@@ -234,6 +251,7 @@ const CreateCourse = memo(() => {
                 id="cost"
                 name="cost"
                 label="Cost"
+                value={data.cost || ""}
                 size="small"
                 autoComplete="off"
                 variant="outlined"
@@ -257,14 +275,22 @@ const CreateCourse = memo(() => {
                 id="zoomLink"
                 name="zoomLink"
                 label="Zoom Link"
+                value={data.zoomLink || ""}
                 size="small"
                 autoComplete="off"
                 variant="outlined"
                 onChange={handleChange}
               />
             </Grid>
+          </Grid>
 
-            <Grid item marginLeft="auto" sm={10}>
+          <Grid container marginLeft="auto" xs={10} columnSpacing="12px">
+            <Grid item xs={6}>
+              <Button outline width="100%" onClick={handleDelete}>
+                Delete
+              </Button>
+            </Grid>
+            <Grid item xs={6}>
               <Button width="100%" onClick={handleSubmit}>
                 Save
               </Button>
@@ -276,4 +302,4 @@ const CreateCourse = memo(() => {
   );
 });
 
-export default CreateCourse;
+export default EditCourse;

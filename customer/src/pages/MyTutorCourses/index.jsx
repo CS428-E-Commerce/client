@@ -3,13 +3,35 @@ import React, { memo, useEffect, useState } from "react";
 import ApiService from "services/api_service";
 
 import classes from "./styles.module.scss";
+import clsx from "clsx";
+import {
+  AvatarPlaceholderSrc,
+  CheckIcon,
+  GraduateHatIcon,
+  SettingsIcon,
+  SimpleCheckIcon,
+  StarIcon,
+  StarsImageSrc,
+} from "assets/images";
+import dayjs from "dayjs";
+import { formatRate } from "services/common_service";
+import { useDispatch } from "react-redux";
+import { push } from "connected-react-router";
 
 const MyTutorCourses = memo(() => {
+  const dispatch = useDispatch();
+  const [user, setUser] = useState(null);
   const [courses, setCourses] = useState([]);
+  const [attendees, setAttendees] = useState([]);
+  const [coach, setCoach] = useState(null);
+  const [courseSchedules, setCourseSchedules] = useState([]);
+  const [zoomLink, setZoomLink] = useState("");
+  const [selectedClass, setSelectedClass] = useState(null);
 
   useEffect(() => {
     const init = async () => {
       const response = await ApiService.GET("/api/user");
+      setUser(response.data);
       const myCourses = await ApiService.GET("/api/courses", {
         coachId: response?.data?.coachInfo?.id,
       });
@@ -19,15 +41,55 @@ const MyTutorCourses = memo(() => {
     init();
   }, []);
 
+  useEffect(() => {
+    const fetchAttendees = async () => {
+      if (!selectedClass) return;
+
+      const attendeesResponse = await ApiService.GET(`/api/attendees`, {
+        courseId: selectedClass?.id,
+        offset: 0,
+      });
+
+      setAttendees(attendeesResponse.data);
+
+      const coachResponse = await ApiService.GET(
+        `/api/coach/${selectedClass.coachId}`,
+        {
+          courseId: selectedClass?.id,
+          offset: 0,
+        },
+      );
+      setCoach(coachResponse?.data);
+
+      const courseSchedulesResponse = await ApiService.GET(
+        `/api/courses/schedule`,
+        {
+          courseId: selectedClass.id,
+        },
+      );
+      setCourseSchedules(courseSchedulesResponse?.data);
+
+      const courseDetailResponse = await ApiService.GET(
+        `/api/courses/detail/${selectedClass.id}/${user.id}`,
+      );
+      setZoomLink(courseDetailResponse?.course?.zoomLink);
+    };
+    fetchAttendees();
+  }, [selectedClass]);
+
+  const handleClassClick = classItem => {
+    setSelectedClass(classItem);
+  };
+
   const classData = courses.map(course => ({
     id: course.courseId,
     title: course.title,
     detail: course.description,
-    attendees: [
-      { name: "Alice", avatarUrl: "https://placehold.co/50" },
-      { name: "Bob", avatarUrl: "https://placehold.co/50" },
-      { name: "Charlie", avatarUrl: "https://placehold.co/50" },
-    ],
+    coachId: course.coachId,
+    attendees: attendees.map(({ user_username, user_avatar }) => ({
+      name: user_username,
+      avatarUrl: user_avatar,
+    })),
     tutor: {
       name: course.coachname,
       rating: Number(course.coachRate),
@@ -41,39 +103,42 @@ const MyTutorCourses = memo(() => {
     upcomingSessions: ["Session 1", "Session 2", "Session 3"],
   }));
 
-  const [selectedClass, setSelectedClass] = useState(null);
-
-  const handleClassClick = classId => {
-    setSelectedClass(classId);
-  };
-
-  const selectedClassData = classData.find(c => c.id === selectedClass);
-
   return (
     <div className={classes.container}>
       <h1 className={classes.title}>My Classes</h1>
 
       <div className={classes.classList}>
-        {classData.map((classItem, index) => (
-          <React.Fragment key={classItem.id}>
-            <div
-              className={`${classes.card} ${
-                selectedClass === classItem.id ? classes.selected : ""
-              }`}
-              onClick={() => handleClassClick(classItem.id)}
-            >
-              <img src={classItem.imageUrl} alt={`Class ${classItem.id}`} />
-              <div className={classes["card-content"]}>
-                <h2>{classItem.title}</h2>
+        {classData.map(classItem => (
+          <div
+            className={clsx(classes.card, {
+              [classes.selected]: selectedClass?.id === classItem.id,
+            })}
+            key={classItem.id}
+            onClick={() => handleClassClick(classItem)}
+          >
+            <img
+              className={classes.cardImg}
+              src={classItem.imageUrl}
+              alt={`Class ${classItem.title}`}
+            />
+            <div className={classes.cardContent}>
+              <h2 className={classes.cardContentTitle}>{classItem.title}</h2>
+              <div className={classes.nextClass}>
+                <span>Next class: Thu, Jun 30</span>
+                <span>&middot;</span>
+                <span>10:00 - 10:55 (GMT+7)</span>
               </div>
-              {selectedClass === classItem.id && (
-                <span className={classes["check-mark"]}>✓</span>
-              )}
             </div>
-            {index !== classData.length - 1 && (
-              <div className={classes.divider} />
-            )}
-          </React.Fragment>
+            <div className={classes.actions}>
+              {selectedClass?.id === classItem.id && <SimpleCheckIcon />}
+              <SettingsIcon
+                className={classes.checkMark}
+                onClick={() =>
+                  dispatch(push(`/dashboard/courses/${classItem.id}/edit`))
+                }
+              />
+            </div>
+          </div>
         ))}
       </div>
 
@@ -81,87 +146,101 @@ const MyTutorCourses = memo(() => {
         <div className={classes.detailsSection}>
           <div className={classes.detailColumn}>
             <div className={classes.attendeesSection}>
-              <h4 className="class-title">Students attending:</h4>
+              <h4 className={classes.attendeesSectionHeading}>
+                Students attending:
+              </h4>
 
               <div className={classes.attendeesList}>
-                {selectedClassData?.attendees.map((attendee, index) => (
-                  <div className={classes.attendee} key={index}>
+                {attendees.map(attendee => (
+                  <div
+                    className={classes.attendee}
+                    key={attendee.course_attendee_id}
+                  >
                     <img
-                      src={attendee.avatarUrl}
-                      alt={`Avatar ${attendee.name}`}
+                      src={attendee.user_avatar}
+                      alt={`Avatar ${attendee.user_username}`}
                     />
-                    <p>{attendee.name}</p>
+                    <p className={classes.attendeeName}>
+                      {attendee.user_username}
+                    </p>
                   </div>
                 ))}
               </div>
             </div>
+
             <div className={classes.tutorInfoSection}>
               <div className={classes.tutorInfoRow}>
                 <img
-                  src={selectedClassData?.tutor.avatarUrl}
-                  alt={`Avatar ${selectedClassData?.tutor.name}`}
+                  className={classes.tutorInfoRowImg}
+                  src={coach?.coachInfo?.avatar ?? AvatarPlaceholderSrc}
+                  alt={`${coach?.coachInfo?.username} Avatar`}
                 />
-                <div>
-                  <p>Taught by {selectedClassData?.tutor.name}</p>
-                </div>
-                <div className={classes.subTitle}>
-                  <p>On Vinglish since {selectedClassData?.tutor.since}</p>
+                <div className={classes.tutorInfo}>
+                  <p className={classes.tutorName}>
+                    Taught by {coach?.coachInfo?.username}
+                  </p>
+                  <p className={classes.since}>
+                    On Vinglish since{" "}
+                    {dayjs()
+                      .subtract(coach?.yearExperience ?? 0, "year")
+                      .year()}
+                  </p>
                 </div>
               </div>
 
               <button className={classes.contactButton}>
                 Contact the Tutor
               </button>
-              {selectedClassData?.tutor.verified && (
-                <div className={classes.verifiedRow}>
-                  <img
-                    src={
-                      "https://static.vecteezy.com/system/resources/previews/013/743/787/original/check-mark-shield-icon-png.png"
-                    }
-                    alt="Verified Icon"
-                  />
-                  <p>Verified Tutor</p>
-                </div>
-              )}
+
+              <div className={classes.verifiedRow}>
+                <CheckIcon className={classes.checkIcon} />
+                <p className={classes.verifiedText}>Verified Tutor</p>
+              </div>
               <div className={classes.reviewRow}>
-                <img
-                  src={"https://cdn-icons-png.flaticon.com/512/541/541415.png"}
-                  alt="Star Icon"
-                />
-                <p>{selectedClassData?.tutor.rating} stars</p>
-                <p>({selectedClassData?.tutor.reviewCount} reviews)</p>
+                <StarIcon className={classes.starIcon} />
+                <p className={classes.text}>
+                  <span>{formatRate(coach?.totalRate)} stars</span>{" "}
+                  <span>({coach?.rateTurn} reviews)</span>
+                </p>
               </div>
               <div className={classes.lessonsRow}>
-                <img
-                  src={
-                    "https://cdn-icons-png.flaticon.com/512/4344/4344806.png"
-                  }
-                  alt="Graduating Cap Icon"
-                />
-                <p>{selectedClassData?.tutor.lessonsTaught} lessons taught</p>
+                <GraduateHatIcon className={classes.hatIcon} />
+                <p className={classes.text}>
+                  {coach?.totalCourse} lessons taught
+                </p>
               </div>
             </div>
           </div>
           <div className={classes.upcomingSessionsSection}>
-            <>Your Upcoming Class:</>
-            {selectedClassData?.upcomingSessions.map((session, index) => (
-              <div key={index} className={classes.upcomingCard}>
+            <h4 className={classes.upcomingSessionsSectionHeading}>
+              Your Upcoming Class:
+            </h4>
+            {courseSchedules.map((session, index) => (
+              <div key={session.id} className={classes.upcomingCard}>
                 <div className={classes.upcomingCardContent}>
                   <div className={classes.imageContainer}>
                     <img
-                      src={selectedClassData?.imageUrl}
-                      alt={`Class ${selectedClassData?.title}`}
+                      className={classes.upcomingCardImg}
+                      src={selectedClass?.imageUrl}
+                      alt={`Class ${selectedClass?.title}`}
                     />
                   </div>
-                  <div className={classes.textContainer}>
-                    <h2>{session}</h2>
-                    <p className={classes["class-detail"]}>
-                      {selectedClassData?.detail}
-                    </p>
+                  <div>
+                    <div className={classes.textContainer}>
+                      <h2 className={classes.upcomingCardHeading}>
+                        Session {index + 1}
+                      </h2>
+                      <p className={classes.classDetail}>
+                        {selectedClass?.detail}
+                      </p>
+                    </div>
+                    <a className={classes.joinButton} href={zoomLink}>
+                      Join on Zoom
+                    </a>
                   </div>
                 </div>
-                <button className={classes.joinButton}>Join on Zoom</button>
-                <div className={classes["calendar-row"]}>
+
+                <div className={classes.calendarRow}>
                   <div className={classes.calendarButton}>
                     <img
                       src={

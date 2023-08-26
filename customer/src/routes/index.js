@@ -12,6 +12,7 @@ import MyTutorCourses from "pages/MyTutorCourses";
 import ProfilePage from "pages/Profile";
 import StudentRegisterPage from "pages/StudentRegister";
 import TutorRegisterPage from "pages/TutorRegister";
+import EditCourse from "pages/EditCourse";
 
 const privateRoutes = [
   // { path: "/", component: HomePage }
@@ -34,6 +35,7 @@ const publicRoutes = [
 const tutorRoutes = [
   { path: "/dashboard/courses", component: MyTutorCourses },
   { path: "/dashboard/courses/create", component: CreateCourse },
+  { path: "/dashboard/courses/:id/edit", component: EditCourse },
   { path: "/dashboard/schedules", component: CourseSchedule },
 ];
 

@@ -88,14 +88,14 @@ const DashboardLayout = memo(props => {
             </ListItemButton>
           </ListItem>
         ))} */}
-        <ListItem disablePadding>
+        {/* <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
               <AssessmentIcon />
             </ListItemIcon>
             <ListItemText primary="View Booking" />
           </ListItemButton>
-        </ListItem>
+        </ListItem> */}
       </List>
     </Box>
   );
