@@ -85,6 +85,7 @@ const CoursesPage = memo(() => {
     })
       .then(() => {
         getData();
+        ToastService.success("Successfully updated.");
       })
       .catch(error => {
         console.log(error);

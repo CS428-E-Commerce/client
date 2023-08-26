@@ -1,4 +1,4 @@
-import { Button, Pagination } from "@mui/material";
+import { Button, Input, InputLabel, Pagination } from "@mui/material";
 import { memo, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import Table from '@mui/material/Table';
@@ -28,6 +28,7 @@ const TutorPages = memo(() => {
 
   const email = useRef();
   const password = useRef();
+  const avatar = useRef();
   const username = useRef();
   const description = useRef();
   const address = useRef();
@@ -90,6 +91,7 @@ const TutorPages = memo(() => {
     ApiService.POST("/api/auth/signup", account)
       .then(() => {
         getData();
+        ToastService.success("Successfully created.");
       })
       .catch(error => {
         console.log(error);
@@ -104,6 +106,7 @@ const TutorPages = memo(() => {
   const handleEditProfile = () => {
     dispatch(setLoading(true));
     ApiService.PUT(`/api/coach/${edit?.data?.id}`, {
+      avatar: avatar?.current ?? undefined,
       username: username?.current?.value ?? "N/A",
       description: description?.current?.value ?? "",
       address: address?.current?.value ?? "",
@@ -114,6 +117,7 @@ const TutorPages = memo(() => {
     })
       .then(() => {
         getData();
+        ToastService.success("Successfully updated.");
       })
       .catch(error => {
         console.log(error);
@@ -124,6 +128,22 @@ const TutorPages = memo(() => {
         dispatch(setLoading(false));
       });
   }
+
+  const encodeImageToBase64 = (file, callback) => {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const encodedImage = "data:" + file.type + ";base64," + event.target.result.split(",")[1];
+      callback(encodedImage);
+  };
+    reader.readAsDataURL(file);
+  };
+
+  const onChangeImage = (event) => {
+    const selectedFile = event.target.files[0];
+    encodeImageToBase64(selectedFile, (encodedImageString) => {
+      avatar.current = encodedImageString;
+    });
+  };
 
   return (
     <div className={classes.container}>
@@ -226,6 +246,8 @@ const TutorPages = memo(() => {
             Please enter new information.
           </DialogContentText> */}
           <form>
+            <InputLabel style={{ fontSize: 12, marginBottom: 6 }}>Avatar</InputLabel>
+            <input type="file" accept="image/*" onChange={onChangeImage} />
             <TextField
               inputRef={username}
               defaultValue={edit?.data?.coachInfo?.username ?? "N/A"}
