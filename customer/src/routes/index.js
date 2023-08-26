@@ -1,4 +1,4 @@
-import AllCoursesPage from "pages/AllCourses";
+import AllCoursesPage from "pages/FindCourses";
 import ChangePasswordPage from "pages/ChangePassword";
 import CourseDetail from "pages/CourseDetail";
 import CourseSchedule from "pages/CourseSchedule";

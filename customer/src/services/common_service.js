@@ -9,6 +9,10 @@ export const exportCSV = (data, filename) => {
   document.body.removeChild(link);
 };
 
+export const formatRate = rate => {
+  return Math.floor(rate * 10) / 10;
+};
+
 export const formatNumber = number => {
   return number ? Number(number)?.toLocaleString("en-US") : "N/A";
 };

@@ -2,7 +2,7 @@ import { memo, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import ApiService from "services/api_service";
-import { formatCent } from "services/common_service";
+import { formatCent, formatRate } from "services/common_service";
 import { ToastService } from "services/toast_service";
 
 import classes from "./styles.module.scss";
@@ -53,7 +53,7 @@ const Course = memo(({ course }) => {
           courseStartDate={startDate}
           tutorAvatar={course.coachAvatar}
           tutorName={course.coachname}
-          tutorRating={course.coachRate}
+          tutorRating={formatRate(course.coachRate)}
           tutorClassesTaught={course.coachTotalCourse}
           slotRemain={course.maxSlot}
         />

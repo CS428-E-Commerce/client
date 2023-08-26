@@ -43,9 +43,11 @@ const Navbar = memo(({ theme }) => {
             </NavLink>
           </li>
           <li className={classes.navItem}>
-            <NavLink to="/tutor-signup" className={classes.navLink}>
-              Become a tutor
-            </NavLink>
+            {!email && (
+              <NavLink to="/tutor-signup" className={classes.navLink}>
+                Become a tutor
+              </NavLink>
+            )}
           </li>
           <li className={classes.navItem}>
             <NavLink to="/courses" className={classes.navLink}>

@@ -19,7 +19,7 @@ import { ToastService } from "services/toast_service";
 import Course from "./components/Course";
 import classes from "./styles.module.scss";
 
-const AllCourses = memo(() => {
+const FindCourses = memo(() => {
   const dispatch = useDispatch();
 
   const [totalPage, setTotalPage] = useState(1);
@@ -112,4 +112,4 @@ const AllCourses = memo(() => {
   );
 });
 
-export default AllCourses;
+export default FindCourses;

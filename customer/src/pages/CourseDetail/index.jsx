@@ -125,6 +125,8 @@ const CourseDetail = memo(() => {
     } catch (error) {
       console.error(error);
       ToastService.error("Sorry, an error occurred.");
+    } finally {
+      setComment("");
     }
   };
 
@@ -158,7 +160,7 @@ const CourseDetail = memo(() => {
           coachName={data?.coach_detail?.username}
           coachYearExperience={data?.coach?.yearExperience}
           coachRateTurn={data?.coach?.rateTurn}
-          coachTotalCourse={data?.coach?.totalCourse}
+          coachTotalCourses={data?.coach?.totalCourse}
           coachEmail={data?.coach_detail?.username}
           totalRate={data?.coach?.totalRate}
         />
@@ -175,7 +177,7 @@ const CourseDetail = memo(() => {
               <div className={classes.tutorAvatarContainer}>
                 <img
                   className={classes.tutorAvatar}
-                  src={data?.coach_detail?.avatar ?? AvatarPlaceholderSrc}
+                  src={user?.data?.avatar ?? AvatarPlaceholderSrc}
                   alt=""
                 />
               </div>

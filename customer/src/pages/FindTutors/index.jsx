@@ -16,7 +16,7 @@ import Loading from "components/Loading";
 import Select from "components/Select";
 import useDebounce from "hooks/useDebounce";
 import ApiService from "services/api_service";
-import { formatCent, formatNumber } from "services/common_service";
+import { formatCent, formatNumber, formatRate } from "services/common_service";
 import { ToastService } from "services/toast_service";
 import classes from "./styles.module.scss";
 
@@ -76,7 +76,7 @@ const FindTutorsPage = memo(() => {
       .finally(() => {
         setLoading(false);
       });
-  }
+  };
 
   return (
     <div className={classes.container}>
@@ -91,7 +91,7 @@ const FindTutorsPage = memo(() => {
         </div>
 
         <div className={classes.filterContainer}>
-        <Select
+          <Select
             icon={<LevelIcon />}
             minWidth={186}
             placeholder="Vietnamese Level"
@@ -103,39 +103,63 @@ const FindTutorsPage = memo(() => {
             ]}
             onChange={getData}
           />
-          <Select icon={<TopicIcon />} minWidth={85} placeholder="Topic" options={[
-            { value: "Vocabulary", label: "Vocabulary" },
-            { value: "Grammar", label: "Grammar" },
-            { value: "Listening", label: "Listening" },
-            { value: "Speaking", label: "Speaking" },
-            { value: "Reading", label: "Reading" },
-            { value: "Writing", label: "Writing" },
-            { value: "Culture", label: "Culture" },
-            { value: "History", label: "History" },
-            { value: "Phonetics", label: "Phonetics" },
-            { value: "Conversations", label: "Conversations" }
-          ]} onChange={getData} />
-          <Select icon={<DayIcon />} minWidth={78} placeholder="Day" options={[
-            { value: "Monday", label: "Monday" },
-            { value: "Tuesday", label: "Tuesday" },
-            { value: "Wednesday", label: "Wednesday" },
-            { value: "Thursday", label: "Thursday" },
-            { value: "Friday", label: "Friday" },
-            { value: "Saturday", label: "Saturday" },
-            { value: "Sunday", label: "Sunday" },
-          ]} onChange={getData} />
-          <Select icon={<TimeIcon />} minWidth={88} placeholder="Time" options={[
-            { value: "Morning", label: "Morning" },
-            { value: "Afternoon", label: "Afternoon" },
-            { value: "Evening", label: "Evening" },
-            { value: "Night", label: "Night" },
-          ]} onChange={getData} />
-          <Select icon={<PriceIcon />} minWidth={88} placeholder="Price" options={[
-            { value: "Free", label: "Free" },
-            { value: "Low", label: "Low" },
-            { value: "Moderate", label: "Moderate" },
-            { value: "High", label: "High" },
-          ]} onChange={getData} />
+          <Select
+            icon={<TopicIcon />}
+            minWidth={85}
+            placeholder="Topic"
+            options={[
+              { value: "Vocabulary", label: "Vocabulary" },
+              { value: "Grammar", label: "Grammar" },
+              { value: "Listening", label: "Listening" },
+              { value: "Speaking", label: "Speaking" },
+              { value: "Reading", label: "Reading" },
+              { value: "Writing", label: "Writing" },
+              { value: "Culture", label: "Culture" },
+              { value: "History", label: "History" },
+              { value: "Phonetics", label: "Phonetics" },
+              { value: "Conversations", label: "Conversations" },
+            ]}
+            onChange={getData}
+          />
+          <Select
+            icon={<DayIcon />}
+            minWidth={78}
+            placeholder="Day"
+            options={[
+              { value: "Monday", label: "Monday" },
+              { value: "Tuesday", label: "Tuesday" },
+              { value: "Wednesday", label: "Wednesday" },
+              { value: "Thursday", label: "Thursday" },
+              { value: "Friday", label: "Friday" },
+              { value: "Saturday", label: "Saturday" },
+              { value: "Sunday", label: "Sunday" },
+            ]}
+            onChange={getData}
+          />
+          <Select
+            icon={<TimeIcon />}
+            minWidth={88}
+            placeholder="Time"
+            options={[
+              { value: "Morning", label: "Morning" },
+              { value: "Afternoon", label: "Afternoon" },
+              { value: "Evening", label: "Evening" },
+              { value: "Night", label: "Night" },
+            ]}
+            onChange={getData}
+          />
+          <Select
+            icon={<PriceIcon />}
+            minWidth={88}
+            placeholder="Price"
+            options={[
+              { value: "Free", label: "Free" },
+              { value: "Low", label: "Low" },
+              { value: "Moderate", label: "Moderate" },
+              { value: "High", label: "High" },
+            ]}
+            onChange={getData}
+          />
           <Select
             icon={<SortIcon />}
             minWidth={85}
@@ -185,7 +209,7 @@ const FindTutorsPage = memo(() => {
 
                   <div className={classes.info}>
                     <StarIcon />
-                    <span>{item?.totalRate ?? "N/A"}</span>
+                    <span>{item ? formatRate(item.totalRate) : "N/A"}</span>
                     {item?.totalCourse ? (
                       <span>({formatNumber(item?.totalCourse)} classes)</span>
                     ) : null}

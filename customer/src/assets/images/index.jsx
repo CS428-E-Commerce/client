@@ -21,6 +21,7 @@ export { ReactComponent as LockIcon } from "./icons/lock.svg";
 export { ReactComponent as TestimonialIcon } from "./icons/testimonial-icon.svg";
 export { ReactComponent as ArrowBack } from "./icons/arrow-back.svg";
 export { ReactComponent as ArrowForward } from "./icons/arrow-forward.svg";
+export { ReactComponent as SimpleCheckIcon } from "./icons/simple_check.svg";
 
 export { default as AvatarPlaceholderSrc } from "./user.png";
 export { default as HeroImageSrc } from "./hero.png";
