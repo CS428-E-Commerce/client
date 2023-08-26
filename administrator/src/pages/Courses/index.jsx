@@ -136,7 +136,7 @@ const CoursesPage = memo(() => {
                   <TableCell>{row?.coachname ?? "N/A"}</TableCell>
                   <TableCell>{row?.maxSlot ?? "N/A"}</TableCell>
                   <TableCell>{row?.cost ?? "N/A"}</TableCell>
-                  <TableCell sx={{ color: row?.status === "AWAIT" ? "orange" : row?.status === "ACTIVE" ? "green" : row?.status === "DECLINED" ? "red" : "inherit" }}>{row?.status ? capitalizeFirstLetter(row?.status) : "N/A"}</TableCell>
+                  <TableCell sx={{ color: row?.status?.toLowerCase() === "await" ? "orange" : row?.status?.toLowerCase() === "active" ? "green" : row?.status?.toLowerCase() === "declined" ? "red" : "inherit" }}>{row?.status ? capitalizeFirstLetter(row?.status) : "N/A"}</TableCell>
                   <TableCell>
                     <Button variant="outlined" onClick={(e) => { handleOpen(e, row) }}>Edit</Button>
                   </TableCell>
@@ -172,9 +172,9 @@ const CoursesPage = memo(() => {
                 label="Status"
                 onChange={handleChange}
               >
-                <MenuItem value={"AWAIT"}>Await</MenuItem>
-                <MenuItem value={"ACTIVE"}>Active</MenuItem>
-                <MenuItem value={"DECLINED"}>Declined</MenuItem>
+                <MenuItem value={"await"}>Await</MenuItem>
+                <MenuItem value={"active"}>Active</MenuItem>
+                <MenuItem value={"declined"}>Declined</MenuItem>
               </Select>
             </FormControl>
           </Box>
