@@ -1,6 +1,6 @@
 import { push } from "connected-react-router";
 import dayjs from "dayjs";
-import { memo, useEffect, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import {
@@ -25,6 +25,7 @@ const MyProfilePage = memo(() => {
   const [courses, setCourses] = useState([]);
   const [user, setUser] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const avatar = useRef();
 
   useEffect(() => {
     const init = async () => {
@@ -68,13 +69,30 @@ const MyProfilePage = memo(() => {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    await ApiService.PUT(`/api/user`, data);
+    await ApiService.PUT(`/api/user`, { ...data, avatar: avatar?.current });
     ToastService.success("Successfully update profile info");
   };
 
   const handleChange = e => {
     const { name, value } = e.target;
     setData(data => ({ ...data, [name]: value }));
+  };
+
+  const encodeImageToBase64 = (file, callback) => {
+    const reader = new FileReader();
+    reader.onload = event => {
+      const encodedImage =
+        "data:" + file.type + ";base64," + event.target.result.split(",")[1];
+      callback(encodedImage);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const onChangeImage = event => {
+    const selectedFile = event.target.files[0];
+    encodeImageToBase64(selectedFile, encodedImageString => {
+      avatar.current = encodedImageString;
+    });
   };
 
   return (
@@ -217,12 +235,13 @@ const MyProfilePage = memo(() => {
             </div>
             <div className={classes.formGroup}>
               <label className={classes.inputLabel}>Avatar</label>
-              <input
+              <input type="file" accept="image/*" onChange={onChangeImage} />
+              {/* <input
                 className={classes.input}
                 name="avatar"
                 value={data.avatar || ""}
                 onChange={handleChange}
-              />
+              /> */}
             </div>
             <div className={classes.formGroup}>
               <label className={classes.inputLabel}>Address</label>

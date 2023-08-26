@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import { FormControl } from "@mui/material";
-import { memo, useEffect, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import Button from "components/Button";
@@ -30,6 +30,7 @@ const EditCourse = memo(() => {
     level: "Beginner",
   });
   const [coachId, setCoachId] = useState("");
+  const banner = useRef();
 
   useEffect(() => {
     const init = async () => {
@@ -65,8 +66,11 @@ const EditCourse = memo(() => {
   const handleSubmit = () => {
     data.cost *= 100;
 
-    console.log({ data });
-    ApiService.POST("/api/courses", { coachId, ...data }) // TODO: How to insert coachId ????
+    ApiService.POST("/api/courses", {
+      coachId,
+      ...data,
+      banner: banner?.current,
+    })
       .then(() => {
         ToastService.success("Create course successfully");
       })
@@ -78,6 +82,23 @@ const EditCourse = memo(() => {
   const handleDelete = async () => {
     await ApiService.POST("/api/courses/delete", { id });
     dispatch(push("/dashboard/courses"));
+  };
+
+  const encodeImageToBase64 = (file, callback) => {
+    const reader = new FileReader();
+    reader.onload = event => {
+      const encodedImage =
+        "data:" + file.type + ";base64," + event.target.result.split(",")[1];
+      callback(encodedImage);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const onChangeImage = event => {
+    const selectedFile = event.target.files[0];
+    encodeImageToBase64(selectedFile, encodedImageString => {
+      banner.current = encodedImageString;
+    });
   };
 
   return (
@@ -146,7 +167,8 @@ const EditCourse = memo(() => {
               </InputLabel>
             </Grid>
             <Grid item xs={12} sm={10}>
-              <TextField
+              <input type="file" accept="image/*" onChange={onChangeImage} />
+              {/* <TextField
                 required
                 fullWidth
                 id="banner"
@@ -157,7 +179,7 @@ const EditCourse = memo(() => {
                 autoComplete="off"
                 variant="outlined"
                 onChange={handleChange}
-              />
+              /> */}
             </Grid>
 
             <Grid item xs={12} sm={2} alignItems="center" display="flex">
