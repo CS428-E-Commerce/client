@@ -50,8 +50,8 @@ const TutorPages = memo(() => {
     getData()
   }, []);
 
-  const getData = () => {
-    ApiService.GET(`/api/coach`, {
+  const getData = async () => {
+    await ApiService.GET(`/api/coach`, {
       offset: page - 1,
       limit: 12,
       name: "",
@@ -89,8 +89,8 @@ const TutorPages = memo(() => {
 
     dispatch(setLoading(true));
     ApiService.POST("/api/auth/signup", account)
-      .then(() => {
-        getData();
+      .then(async () => {
+        await getData();
         ToastService.success("Successfully created.");
       })
       .catch(error => {
@@ -115,8 +115,8 @@ const TutorPages = memo(() => {
       skills: skills?.current?.value ? skills?.current?.value?.split(`,`)?.map(i => i?.trim()) : [],
       certificates: certificates?.current?.value ? certificates?.current?.value?.split(`,`)?.map(i => i?.trim()) : [],
     })
-      .then(() => {
-        getData();
+      .then(async () => {
+        await getData();
         ToastService.success("Successfully updated.");
       })
       .catch(error => {

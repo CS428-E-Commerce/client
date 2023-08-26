@@ -43,8 +43,8 @@ const CoursesPage = memo(() => {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
   };
 
-  const getData = () => {
-    ApiService.GET(`/api/courses`, {
+  const getData = async () => {
+    await ApiService.GET(`/api/courses`, {
       code: null,
       coachId: null,
       userId: null,
@@ -83,8 +83,8 @@ const CoursesPage = memo(() => {
       courseId,
       verificationCode: status,
     })
-      .then(() => {
-        getData();
+      .then(async () => {
+        await getData();
         ToastService.success("Successfully updated.");
       })
       .catch(error => {
