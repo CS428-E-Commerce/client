@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import clsx from "clsx";
-import { memo } from "react";
+import { memo, useRef } from "react";
 import { useForm } from "react-hook-form";
 
 import Button from "components/Button";
@@ -10,7 +10,6 @@ import classes from "./styles.module.scss";
 
 const schema = yup.object().shape({
   username: yup.string().required("Username is required"),
-  avatar: yup.string().required("Avatar is required"),
   certificates: yup.string().required("Certificates is required"),
   skills: yup.string().required("Skills is required"),
   yearExperience: yup.number().required("YearExperience is required"),
@@ -20,6 +19,8 @@ const schema = yup.object().shape({
 });
 
 const RegisterFormFinalStep = memo(({ next }) => {
+  const avatar = useRef();
+
   const {
     register,
     handleSubmit,
@@ -29,7 +30,24 @@ const RegisterFormFinalStep = memo(({ next }) => {
   });
 
   const onSubmit = async data => {
-    next(data);
+    next({ ...data, avatar: avatar?.current });
+  };
+
+  const encodeImageToBase64 = (file, callback) => {
+    const reader = new FileReader();
+    reader.onload = event => {
+      const encodedImage =
+        "data:" + file.type + ";base64," + event.target.result.split(",")[1];
+      callback(encodedImage);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const onChangeImage = event => {
+    const selectedFile = event.target.files[0];
+    encodeImageToBase64(selectedFile, encodedImageString => {
+      avatar.current = encodedImageString;
+    });
   };
 
   return (
@@ -49,13 +67,11 @@ const RegisterFormFinalStep = memo(({ next }) => {
       <div className={clsx(classes.formGroup, classes.formGroupMarginTop)}>
         <label className={classes.formLabel}>Avatar</label>
         <input
-          {...register("avatar")}
-          className={classes.input}
-          placeholder="Your Avatar"
+          className="w-100"
+          type="file"
+          accept="image/*"
+          onChange={onChangeImage}
         />
-        {errors.avatar?.message && (
-          <p className={classes.error}>{errors.avatar.message}</p>
-        )}
       </div>
 
       <div className={clsx(classes.formGroup, classes.formGroupMarginTop)}>
