@@ -66,7 +66,7 @@ const TutorProfilePage = memo(() => {
                       {data?.coachInfo?.username ?? "N/A"}
                     </h1>
                     <span className={classes.shortDescription}>
-                      5 years teaching experience
+                      {data?.yearExperience ?? 0} years teaching experience
                     </span>
                   </div>
 
