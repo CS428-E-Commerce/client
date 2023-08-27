@@ -57,7 +57,7 @@ const UserMenu = memo(({ title }) => {
   };
 
   const navigateMyCourses = () => {
-    dispatch(push("/change-password"));
+    dispatch(push("/my-course"));
   };
 
   const logout = () => {
