@@ -56,6 +56,10 @@ const UserMenu = memo(({ title }) => {
     dispatch(push("/change-password"));
   };
 
+  const navigateMyCourses = () => {
+    dispatch(push("/change-password"));
+  };
+
   const logout = () => {
     localStorage.clear();
     window.location.href = "/";
@@ -104,6 +108,7 @@ const UserMenu = memo(({ title }) => {
                     <MenuItem onClick={navigateDashboard}>Dashboard</MenuItem>
                   )}
                   <MenuItem onClick={navigateProfile}>Profile</MenuItem>
+                  <MenuItem onClick={navigateMyCourses}>My Courses</MenuItem>
                   <MenuItem onClick={navigateChangePassword}>
                     Change Password
                   </MenuItem>
