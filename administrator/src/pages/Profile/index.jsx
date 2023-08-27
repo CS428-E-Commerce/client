@@ -113,7 +113,7 @@ const TutorProfilePage = memo(() => {
                           className={classes.courseCard}
                           key={course.id}
                           onClick={() =>
-                            dispatch(push(`/courses/${course.id}`))
+                            dispatch(push(`/course/${course?.id}?coachId=${course?.coachId}`))
                           }
                         >
                           <div className={classes.coverImageWrapper}>
