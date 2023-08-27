@@ -7,7 +7,7 @@ import {
   GraduateHatIcon,
   StarIcon,
 } from "assets/images";
-import { formatNumber } from "services/common_service";
+import { formatNumber, formatRate } from "services/common_service";
 
 import classes from "./styles.module.scss";
 
@@ -54,7 +54,8 @@ const CourseTutor = memo(
           <div className={classes.reviews}>
             <StarIcon className={classes.starIcon} />
             <span>
-              {totalRate} &#40;{formatNumber(coachRateTurn)} reviews&#41;
+              {formatRate(totalRate)} &#40;{formatNumber(coachRateTurn)}{" "}
+              reviews&#41;
             </span>
           </div>
           <div className={classes.lessonsTaught}>

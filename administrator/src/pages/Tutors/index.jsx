@@ -10,7 +10,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Loading from "components/Loading";
 import ApiService from "services/api_service";
-import { formatNumber } from "services/common_service";
+import { formatNumber, formatRate } from "services/common_service";
 import { ToastService } from "services/toast_service";
 import classes from "./styles.module.scss";
 import TextField from '@mui/material/TextField';
@@ -184,7 +184,7 @@ const TutorPages = memo(() => {
                   <TableCell>{row?.totalCourse ? (
                     <span>{formatNumber(row?.totalCourse)} classes</span>
                   ) : "N/A"}</TableCell>
-                  <TableCell>{row?.totalRate ?? "N/A"}</TableCell>
+                  <TableCell>{formatRate(row?.totalRate) ?? "N/A"}</TableCell>
                   <TableCell>{row?.yearExperience ?? 0}</TableCell>
                   <TableCell>
                     <Button variant="outlined" onClick={(e) => { handleOpenEdit(e, row) }}>Edit</Button>

@@ -1,7 +1,7 @@
 import { memo } from "react";
 
 import { StarsIcon } from "assets/images";
-import { formatNumber } from "services/common_service";
+import { formatNumber, formatRate } from "services/common_service";
 
 import classes from "./styles.module.scss";
 
@@ -26,7 +26,9 @@ const Overview = memo(
           <h2 className={classes.name}>Taught by {coachName}</h2>
           <div className={classes.stats}>
             <StarsIcon className={classes.startIcon} />
-            <span className={classes.rating}>{coachTotalRate}</span>{" "}
+            <span className={classes.rating}>
+              {formatRate(coachTotalRate)}
+            </span>{" "}
             <span className={classes.classesTaught}>
               &#40;{formatNumber(coachTotalCourse)} classes&#41;
             </span>

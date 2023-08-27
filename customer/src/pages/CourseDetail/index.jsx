@@ -27,6 +27,7 @@ import Overview from "./components/Overview";
 import PaymentForm from "./components/PaymentForm";
 import Testimonial from "./components/Testimonial";
 import classes from "./styles.module.scss";
+import { formatRate } from "services/common_service";
 
 const CourseDetail = memo(() => {
   const dispatch = useDispatch();
@@ -148,7 +149,7 @@ const CourseDetail = memo(() => {
         <Overview
           coachAvatar={data?.coach_detail?.avatar ?? AvatarPlaceholderSrc}
           coachName={data?.coach_detail?.username ?? "N/A"}
-          coachTotalRate={data?.coach?.totalRate ?? "N/A"}
+          coachTotalRate={formatRate(data?.coach?.totalRate) ?? "N/A"}
           coachTotalCourse={data?.coach?.totalCourse ?? "N/A"}
           courseBanner={data?.course?.banner}
         />
@@ -162,7 +163,7 @@ const CourseDetail = memo(() => {
           coachRateTurn={data?.coach?.rateTurn}
           coachTotalCourses={data?.coach?.totalCourse}
           coachEmail={data?.coach_detail?.username}
-          totalRate={data?.coach?.totalRate}
+          totalRate={formatRate(data?.coach?.totalRate)}
         />
 
         {user && (
