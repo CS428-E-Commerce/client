@@ -27,7 +27,7 @@ import Overview from "./components/Overview";
 import PaymentForm from "./components/PaymentForm";
 import Testimonial from "./components/Testimonial";
 import classes from "./styles.module.scss";
-import { formatRate } from "services/common_service";
+import { formatCent, formatRate } from "services/common_service";
 
 const CourseDetail = memo(() => {
   const dispatch = useDispatch();
@@ -235,12 +235,16 @@ const CourseDetail = memo(() => {
               <div className={classes.orderDetails}>
                 <div className={classes.orderDetailsHeading}>Order details</div>
                 <div className={classes.orderDetail}>
-                  <span>$6.00 x 1 class</span>
-                  <span>$6.00</span>
+                  <span>
+                    {formatCent(data?.course?.cost) ?? "N/A"} x 1 class
+                  </span>
+                  <span>{formatCent(data?.course?.cost) ?? "N/A"}</span>
                 </div>
                 <div className={classes.total}>
                   <span className={classes.text}>Total</span>
-                  <span className={classes.value}>$6.00</span>
+                  <span className={classes.value}>
+                    {formatCent(data?.course?.cost) ?? "N/A"}
+                  </span>
                 </div>
               </div>
               {clientSecret && stripePromise ? (
