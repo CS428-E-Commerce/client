@@ -11,7 +11,7 @@ export const exportCSV = (data, filename) => {
 
 export const formatRate = rate => {
   if (rate === undefined || rate === null) return "N/A";
-  return Math.floor(rate * 10) / 10;
+  return (Math.floor(rate * 10) / 10)?.toFixed(1);
 };
 
 export const formatNumber = number => {
