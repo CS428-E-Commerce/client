@@ -101,7 +101,7 @@ const TutorProfilePage = memo(() => {
               </section>
 
               <section className={classes.coursesSection}>
-                <h2 className={classes.coursesHeading}>My Courses</h2>
+                <h2 className={classes.coursesHeading}>My courses</h2>
                 <div className={classes.courses}>
                   {data?.courses
                     ?.filter(course => course.status.toUpperCase() === "ACTIVE")
